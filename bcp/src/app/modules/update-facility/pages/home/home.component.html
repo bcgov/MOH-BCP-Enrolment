@@ -1,0 +1,29 @@
+<h1>{{pageTitle}}</h1>
+<hr/>
+
+<common-page-section layout='noTips'>
+    <p><strong>Who can complete this form?</strong></p>
+    <p>This form is to be completed by an applicant to cancel an MSP Facility Number OR change details of an Medical Services Plan (MSP) Facility Number. All information must be authorized by the responsible practitioner (the "Administrator"). If there are any changes to the information in this form after it has been submitted, a new form must be completed and submitted by the Administrator.</p>
+
+    <p><strong>What can the form be used for?</strong></p>
+    <p>This form may be used to:</p>
+    <ul>
+        <li>Change the address of the facility associated with an MSP Facility Number</li>
+        <li>Change details about the facility's Business Cost Premium (BCP) enrolment</li>
+        <li>Change the Facility Administrator</li>
+        <li>Cancel a Facility Number</li>
+        <li>Submit another change or request</li>
+    </ul>
+
+    <p><strong>What do you need to fill out this form?</strong></p>
+    <p>To complete this form you will require at least the following information:</p>
+    <ul>
+        <li>Name of the current Facility Administrator</li>
+        <li>Facility (practice, clinic, site) name and MSP Facility Number</li>
+    </ul>
+</common-page-section>
+
+<bcp-consent-modal (accept)='accept($event)'
+                   (validToken)='setToken($event)'
+                   [hasToken]='hasToken()'
+                   [initialVisibility]='initialModalVisibility'></bcp-consent-modal>

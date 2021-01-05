@@ -1,0 +1,422 @@
+<h1>{{pageTitle}}</h1>
+<p>To cancel or change details for a Medical Services Plan Facility Number, the Administrator must be an active medical practitioner.</p>
+<hr/>
+
+<common-page-section layout='noTips'>
+  <form [formGroup]="formGroup">
+    <h2>Change of Facility Address or Mailing Address</h2>
+    <p>To change the address of the facility associated with an MSP Facility Number, provide the effective date of the address change, the previous address and the new address.</p>
+    <p>A change in the physical location of the facility may result in a new MSP Facility Number being issued for the facility and may also impact</p>
+    <ol>
+      <li>eligibility for the Business Cost Premium; and</li>
+      <li>the Business Cost Premium amount payable.</li>
+    </ol>
+    <hr/>
+    
+    <a name='physical-address'></a>
+    <div class="form-group pl-4">
+      <common-checkbox label='Change facility physical address'
+                       formControlName='checkChangeFacilityAddress'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeFacilityAddress'
+         class='border-left ml-4 pl-3'>
+      <h3>Previous facility physical address</h3>
+      <hr/>
+
+      <form [formGroup]="changeFacilityAddressFG">
+
+        <!-- Change Facility Address -->
+
+        <div class='ml-4'>
+          <div class="form-group">
+            <common-address-validator label='Facility physical address'
+                              formControlName='changeFacilityAddressPreviousAddress'
+                              maxlength='60'
+                              (select)='changeFacilityAddressPreviousAddressSelected($event)'
+                              [serviceUrl]='addressServiceUrl'></common-address-validator>
+            <common-error-container [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors">
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.required">
+                  Facility address is a required field
+              </div>
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.maxlength">
+                  Facility address max length must be 60 or fewer characters.
+              </div>
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.pattern">
+                  Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+              </div>
+            </common-error-container>
+          </div>
+
+          <div class="form-group">
+            <common-city label='City'
+                        name="changeFacilityAddressPreviousCity"
+                        formControlName="changeFacilityAddressPreviousCity"
+                        placeholder=""
+                        [maxlength]="30"></common-city>
+          </div>
+
+          <div class="form-group">
+            <div class='label'>Province</div>
+            <div class='pb-2'>British Columbia</div>
+          </div>
+
+          <div class="form-group">
+            <common-postal-code name="changeFacilityAddressPreviousPostalCode"
+                                label='Postal code'
+                                placeholder=''
+                                formControlName="changeFacilityAddressPreviousPostalCode">
+            </common-postal-code>
+          </div>
+
+          <div class="form-group">
+            <common-phone-number name='changeFacilityAddressPreviousFax'
+                                formControlName='changeFacilityAddressPreviousFax'
+                                label='Contact fax number (optional)'
+                                [enablePlaceHolder]='false'
+                                [allowInternational]='false'></common-phone-number>
+          </div>
+        </div>
+
+        <h3>New facility physical address</h3>
+        <hr/>
+
+        <div class='ml-4'>
+          <div class="form-group">
+            <!-- Label has intentional trailing space for accessiblity validators -->
+            <common-address-validator label='Facility physical address '
+                              formControlName='changeFacilityAddressNewAddress'
+                              maxlength='60'
+                              (select)='changeFacilityAddressNewAddressSelected($event)'
+                              [serviceUrl]='addressServiceUrl'></common-address-validator>
+            <common-error-container [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors">
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.required">
+                  Facility address is a required field
+              </div>
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.maxlength">
+                  Facility address max length must be 60 or fewer characters.
+              </div>
+              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.pattern">
+                  Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+              </div>
+            </common-error-container>
+          </div>
+
+          <div class="form-group">
+            <common-city label='City'
+                          name="changeFacilityAddressNewCity"
+                          formControlName="changeFacilityAddressNewCity"
+                          placeholder=""
+                          [maxlength]="30"></common-city>
+          </div>
+
+          <div class="form-group">
+            <div class='label'>Province</div>
+            <div class='pb-2'>British Columbia</div>
+          </div>
+
+          <div class="form-group">
+            <common-postal-code name="changeFacilityAddressNewPostalCode"
+                                label='Postal code'
+                                placeholder=''
+                                formControlName="changeFacilityAddressNewPostalCode">
+            </common-postal-code>
+          </div>
+
+          <div class="form-group">
+            <common-phone-number name='changeFacilityAddressNewFax'
+                                formControlName='changeFacilityAddressNewFax'
+                                label='Contact fax number (optional)'
+                                [enablePlaceHolder]='false'
+                                [allowInternational]='false'></common-phone-number>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <common-date name='changeFacilityAddressEffectiveDate'
+                       formControlName='changeFacilityAddressEffectiveDate'
+                       label='Effective date of address change'
+                       [dateRangeStart]='retroActiveStartDate'
+                       [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        </div>
+      </form>
+      
+    </div>
+
+<!-- Change Mailing Address-->
+
+    <a name='mailing-address'></a>
+    <div class="form-group pl-4">
+      <common-checkbox label='Change facility mailing address'
+                        formControlName='checkChangeMailingAddress'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeMailingAddress'
+          class='border-left ml-4 pl-3'>
+      <h3>Previous mailing address</h3>
+      <hr/>
+
+      <form [formGroup]="changeMailingAddressFG">
+        <div class='ml-4'>
+          <div class="form-group">
+            <common-address-validator label='Mailing address'
+                              formControlName='changeMailingAddressPreviousAddress'
+                              maxlength='60'
+                              (select)='changeMailingAddressPreviousAddressSelected($event)'
+                              [serviceUrl]='addressServiceUrl'></common-address-validator>
+            <common-error-container [displayError]="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors">
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.required">
+                  Mailing address is a required field
+              </div>
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.maxlength">
+                  Mailing address max length must be 60 or fewer characters.
+              </div>
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.pattern">
+                  Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+              </div>
+            </common-error-container>
+          </div>
+
+          <div class="form-group">
+            <common-city label='City'
+                          name="changeMailingAddressPreviousCity"
+                          formControlName="changeMailingAddressPreviousCity"
+                          placeholder=""
+                          [maxlength]="30"></common-city>
+          </div>
+
+          <div class="form-group">
+            <div class='label'>Province</div>
+            <div class='pb-2'>British Columbia</div>
+          </div>
+
+          <div class="form-group">
+            <common-postal-code name="changeMailingAddressPreviousPostalCode"
+                                label='Postal code'
+                                placeholder=''
+                                formControlName="changeMailingAddressPreviousPostalCode">
+            </common-postal-code>
+          </div>
+        </div>
+
+        <h3>New Mailing Address</h3>
+        <hr/>
+
+        <div class='ml-4'>
+          <div class="form-group">
+            <!-- Label has intentional trailing space for accessiblity validators -->
+            <common-address-validator label='Mailing address '
+                              formControlName='changeMailingAddressNewAddress'
+                              maxlength='60'
+                              (select)='changeMailingAddressNewAddressSelected($event)'
+                              [serviceUrl]='addressServiceUrl'></common-address-validator>
+            <common-error-container [displayError]="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors">
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.required">
+                  Mailing address is a required field
+              </div>
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.maxlength">
+                  Mailing address max length must be 60 or fewer characters.
+              </div>
+              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.pattern">
+                  Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+              </div>
+            </common-error-container>
+          </div>
+
+          <div class="form-group">
+            <common-city label='City'
+                          name="changeMailingAddressNewCity"
+                          formControlName="changeMailingAddressNewCity"
+                          placeholder=""
+                          [maxlength]="30"></common-city>
+          </div>
+
+          <div class="form-group">
+            <div class='label'>Province</div>
+            <div class='pb-2'>British Columbia</div>
+          </div>
+
+          <div class="form-group">
+            <common-postal-code name="changeMailingAddressNewPostalCode"
+                                label='Postal code'
+                                placeholder=''
+                                formControlName="changeMailingAddressNewPostalCode">
+            </common-postal-code>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <common-date name='changeMailingAddressEffectiveDate'
+                        formControlName='changeMailingAddressEffectiveDate'
+                        label='Effective date of address change'
+                        [dateRangeStart]='retroActiveStartDate'
+                        [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+    
+<!-- Business Cost Premium -->
+
+    <a name='bcp'></a>
+    <h2 class='mt-5'>Business Cost Premium</h2>
+    <p>The <strong>Business Cost Premium</strong> applies to Eligible Fees claimed by Eligible Physicians for services that are provided in a community-based office that has been issued an MSP Facility Number. MSP Facility Numbers are issued to qualifying facilities, based on the physical location of the facility.</p>
+    <p><strong>Eligible Physicians</strong> are those practitioners who are responsible to pay for some or all of the lease, rental, or ownership costs of the community-based office that has been issued an MSP Facility Number. Eligible Physicians must apply to be attached to the MSP Number for a facility to claim the Business Cost Premium on Eligible Fees for services provided at that facility.</p>
+    <hr/>
+
+<!-- BCP Change applies to fees -->
+    
+    <div class="form-group pl-4">
+      <common-checkbox label='The applicant requests that BCP applies to Eligible Fees of Eligible Physicians attached to this facility.'
+                        formControlName='checkChangeAppliesFees'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeAppliesFees'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="changeAppliesFeesFG">
+        <div class="form-group">
+          <common-date name='changeAppliesFeesEffectiveDate'
+                       formControlName='changeAppliesFeesEffectiveDate'
+                       label='Effective date'
+                       [dateRangeStart]='bcpStartDate'
+                       [errorMessage]='dateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+    <p>Indicate below to cancel BCP enrolment or change the BCP effective/cancellation date.</p>
+
+<!-- BCP Cancel -->
+    
+    <div class="form-group pl-4">
+      <common-checkbox label='Cancel BCP'
+                        formControlName='checkCancelBCP'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkCancelBCP'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="cancelBCPFG">
+        <div class="form-group">
+          <common-date name='cancelBCPEffectiveDate'
+                        formControlName='cancelBCPEffectiveDate'
+                        label='Cancel effective date'
+                        [dateRangeStart]='bcpStartDate'
+                        [errorMessage]='dateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+<!-- BCP Change Effective Date -->
+    
+    <div class="form-group pl-4">
+      <common-checkbox label='Change BCP effective date'
+                        formControlName='checkChangeBCPEffectiveDate'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeBCPEffectiveDate'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="changeBCPEffectiveDateFG">
+        <div class="form-group">
+          <common-date name='changeBCPEffectiveDateEffectiveDate'
+                        formControlName='changeBCPEffectiveDateEffectiveDate'
+                        label='New BCP effective date'
+                        [dateRangeStart]='bcpStartDate'
+                        [errorMessage]='dateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+<!-- BCP Change Cancel Date -->
+    
+    <div class="form-group pl-4">
+      <common-checkbox label='Change BCP cancellation date'
+                        formControlName='checkChangeBCPCancelDate'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeBCPCancelDate'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="changeBCPCancelDateFG">
+        <div class="form-group">
+          <common-date name='changeBCPCancelDateCancelDate'
+                        formControlName='changeBCPCancelDateCancelDate'
+                        label='New BCP cancel date'
+                        [dateRangeStart]='bcpStartDate'
+                        [errorMessage]='dateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+    <a name='change-admin'></a>
+    <h2 class='mt-5'>Change Responsible Administrator</h2>
+    <p>The Administrator must be an active medical practitioner.</p>
+    <hr/>
+
+<!-- BCP Change Cancel Date -->
+
+    <div class="form-group pl-4">
+      <common-checkbox label='Change Administrator information'
+                        formControlName='checkChangeAdminInfo'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkChangeAdminInfo'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="changeAdminInfoFG">
+        <bcp-core-practitioner-info [formGroup]='changeAdminInfoFG'
+                                    [showValidationError]='showValidationError'></bcp-core-practitioner-info>
+
+        <div class="form-group">
+          <common-date name='changeAdminInfoEffectiveDate'
+                        formControlName='changeAdminInfoEffectiveDate'
+                        label='Effective date of change'
+                        [dateRangeStart]='retroActiveStartDate'
+                        [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+<!-- Cancel Facility Number -->
+
+    <a name='cancel-facility'></a>
+    <h2 class='mt-5'>Cancellation of Facility Number</h2>
+    <p>To authorize cancellation of a MSP Facility Number</p>
+    <hr/>
+    <div class="form-group pl-4">
+      <common-checkbox label='Cancel Facility Number'
+                        formControlName='checkCancelFacilityNumber'></common-checkbox>
+    </div>
+
+    <div *ngIf='dataService.checkCancelFacilityNumber'
+          class='border-left ml-4 pl-3'>
+      <form [formGroup]="cancelFacilityNumberFG">
+        <div class="form-group">
+          <common-date name='cancelFacilityNumberCancelDate'
+                        formControlName='cancelFacilityNumberCancelDate'
+                        label='Cancellation Date'
+                        [dateRangeStart]='retroActiveStartDate'
+                        [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        </div>
+      </form>
+    </div>
+
+    <h2 class='mt-5'>Other Change or Request</h2>
+    <p>Administrators may request other changes or provide additional information associated with an MSP Facility Number not included in the standard fields provided in this form, including where a prior Eligible Physician is no longer providing services at this facility for which the Business Cost Premium on Eligible Fees would otherwise be paid. Requests in this field may be manually entered by HIBC against the MSP Facility Number, following which the Administrator will be notified of any such changes.</p>
+    <hr/>
+
+    <a name='other-request'></a>
+    <div class='form-group'>
+      <restricted-textarea label='Please enter any other change or request here'
+                            name='otherChangeRequests'
+                            formControlName='otherChangeRequests'
+                            id='otherChangeRequests'
+                            [maxlength]='OTHER_REQUEST_MAX_LENGTH'></restricted-textarea>
+    </div>
+
+    <common-error-container [displayError]='containsMissingInfoError'>
+      You need to choose at least one option in this page in order to continue.
+    </common-error-container>
+
+    <common-error-container [displayError]='systemDownError'>
+      Unable to continue, system unavailable. Please try again later.
+    </common-error-container>
+
+  </form>
+</common-page-section>

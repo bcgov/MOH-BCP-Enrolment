@@ -1,0 +1,19 @@
+<label for="{{labelforId}}" class="control-label">{{label}}</label>
+
+<input class='form-control'
+       id="{{labelforId}}"
+       type="text"
+       [value]="extNumber"
+       (change)="onValueChange( $event.target.value )"
+       (blur)="onBlur( $event )"
+       [attr.maxlength]="maxlength"/>
+
+<!-- Error messages for component -->
+<common-error-container [displayError]="controlDir && !disabled && (controlDir.dirty || controlDir.touched) && controlDir?.errors">
+  <div *ngIf="controlDir?.errors?.required">
+    {{_defaultErrMsg.required}}
+  </div>
+  <div *ngIf="controlDir?.errors?.invalid">
+    {{_defaultErrMsg.invalid}}
+  </div>
+</common-error-container>

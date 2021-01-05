@@ -1,0 +1,28 @@
+@import '../../../../styles/variables.scss';
+
+.review--header {
+  margin-left: 0px;
+  margin-right: auto;
+  margin-bottom: 0px;
+
+  padding-left: 0px;
+}
+
+.review--icon {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: 0px;
+  padding-right: 0px;
+  text-align: right;
+  align-items: right;
+ }
+
+.review--background-color {
+  background-color: #F2F2F2;
+}
+
+@media print {
+  :host .review-container {
+    page-break-inside: avoid;
+  }
+}

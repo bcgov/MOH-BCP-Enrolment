@@ -1,0 +1,43 @@
+<common-page-framework layout='blank'>
+
+  <form [formGroup]='formGroup'>
+    <h1>{{pageTitle}}</h1>
+
+    <p class="border-bottom">Review your application and provide your signature before submission</p>
+
+    <div class="message-container border-warning" *ngIf='showDuplicateWarning'>
+        <p class="confirm-icon--warning">
+          <i class="fa fa-2x fa-exclamation-circle text-warning pr-2" aria-label="warning"></i>
+        </p>
+        <span>
+          This Facility may already have a Facility Number. If you are certain this is the first time
+          a Facility Number has been requested for this facility continue to submit this form and
+          contact <a href="{{links.hibc}}" target="_blank">Health Insurance BC</a> and provide the
+          reference number that will be provided once you have submitted your request.
+        </span>
+      </div>
+
+    <div class='border-warning' >
+
+    </div>
+
+    <bcp-review-applicant></bcp-review-applicant>
+    <bcp-review-facility></bcp-review-facility>
+    <bcp-review-facility-mailing-info></bcp-review-facility-mailing-info>
+    <bcp-review-facility-bcp></bcp-review-facility-bcp>
+
+    <div class="row col-md-12 ml-0 pl-0 align-items-center">
+      <div class="col-md-12 pl-0">
+        <h2 class="border-bottom">Declaration</h2>
+      </div>
+      <div class="row col-md-12 ml-0 pl-0 align-items-left" [innerHtml]='dataService.declarationText'>
+
+      </div>
+    </div>
+
+    <h3>{{signatureLabel}}</h3>
+    <bcp-signature name='signature'
+                   formControlName='signature'
+                   [errorMessage]='errorMessage'></bcp-signature>
+  </form>
+</common-page-framework>

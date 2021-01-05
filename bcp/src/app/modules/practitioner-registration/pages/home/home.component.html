@@ -1,0 +1,21 @@
+<h1 class="border-bottom">{{pageTitle}}</h1>
+
+<common-page-section layout='noTips'>
+    <p><strong>Who can complete this form?</strong></p>
+    <p>This form is to be completed and submitted by an Eligible Physician (the "Practitioner").</p>
+
+    <p><strong>What can the form be used for?</strong></p>
+    <p>This form may be used to add, change details of, or cancel the Practitioner's attachment to a Medical Services Plan Facility Number for payment of the Business Cost Premium on Eligible Fees.</p>
+    <p>Eligible Physicians must complete and submit this form to make changes to the effective date of attachments or cancellations previously submitted.</p>
+
+    <p><strong>Complete and submit separate copies of this form if you:</strong></p>
+    <ul>
+        <li>Intend to cancel their attachment to a Medical Services Plan Facility Number and add an attachment to a new Medical Services Plan Facility Number.</li>
+        <li>Attach to more than one Medical Services Plan Facility Number concurrently, if you qualify at each facility as an Eligible Practitioner.</li>
+    </ul>
+</common-page-section>
+
+<bcp-consent-modal (accept)='accept($event)'
+                   (validToken)='setToken($event)'
+                   [hasToken]='hasToken()'
+                   [initialVisibility]='initialModalVisibility'></bcp-consent-modal>

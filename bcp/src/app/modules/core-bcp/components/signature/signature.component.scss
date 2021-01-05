@@ -1,0 +1,26 @@
+$canvasWidth: 500px; // must match values in ts file
+
+
+bcp-signature {
+    .card {
+        max-width: $canvasWidth;
+    }
+    
+    signature-pad canvas {
+        background-color: #eee;
+    }
+    
+    .signature-display {
+        border: 2px dashed #d3d3d3;
+    }
+        
+}
+
+.dotted-line {
+    border: 2px dashed black;
+    width: 100%;
+    max-width: $canvasWidth;
+    position: absolute; // relies on .modal-body having position: relative
+    bottom: 5rem;
+
+}

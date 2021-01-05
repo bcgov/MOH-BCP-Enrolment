@@ -1,0 +1,113 @@
+<common-page-framework layout="blank">
+
+  <common-confirm-template [displayIcon]="displayIcon">
+
+    <div class="print-hide" confirmationTitle>
+      <ng-container *ngTemplateOutlet="confirmTitle"></ng-container>
+    </div>
+
+    <div message>
+      <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+    </div>
+
+    <div AdditionalInfo *ngIf="!isError">
+      <div class="print-hide">
+        <h2 class="border-bottom"><strong>Next Steps</strong></h2>
+        <common-page-section layout='noTips'>
+          <ul>
+            <li>Please print this page for your records.</li>
+            <li>Health Insurance BC will mail you and the Facility Administrator a letter confirming the status of your request.</li>
+            <li>Please contact <a href='{{hibcLink}}' target='_blank'>Health Insurance BC</a> if you have any questions.</li>
+          </ul>
+        </common-page-section>
+      </div>
+
+      <div class="print-only my-4">
+        <p>
+          To be completed and submitted by an Eligible Physician (the "Practitioner") to add, change details of,
+          or cancel the Practitioner's attachment to an MSP Facility Number for payment of the Business Cost
+          Premium on Eligible Fees.
+        </p>
+        <p>
+          Eligible Physicians who intend to cancel their attachment to an MSP Facility Number and add an
+          attachment to a new MSP Facility Number must complete and submit separate copies of this form.
+        </p>
+        <p>
+          Eligible Physicians must complete and submit this form to make changes to the effective date of
+          attachments or cancellations previously submitted.
+        </p>
+        <p>
+          Practitioners may attach to more than one MSP Facility Number concurrently provided they qualify
+          at each facility as an Eligible Practitioner. A separate form must be submitted for each MSP
+          Facility Number that Eligible Physicians wish to attach to.
+        </p>
+      </div>
+
+      <!-- Prinable section should have same contents as Review page -->
+      <div class="print-only">
+
+        <bcp-review-practitioner-info></bcp-review-practitioner-info>
+        <bcp-review-practitioner-facility></bcp-review-practitioner-facility>
+        <bcp-review-practitioner-attachment></bcp-review-practitioner-attachment>
+      </div>
+      
+    </div>
+
+  </common-confirm-template>
+
+</common-page-framework>
+
+<div *ngIf="!isError" class="print-only">
+  <div class="print-page-break">&nbsp;</div>
+  <common-header [serviceName]='title'
+                 urlBaseName='bcp'
+                 [shouldShowPrintLogo]='true'></common-header>
+
+  <common-page-framework layout="blank">
+    <div class="print-only">
+      <common-confirm-template [displayIcon]="displayIcon">
+
+        <div message>
+          <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+        </div>
+
+      </common-confirm-template>
+
+      <h2 class='border-bottom'>Declaration</h2>
+      <p [innerHtml]='declarationText'></p>
+
+      <img [src]='signature' alt='Signature'>
+
+      <div class="row print-review-row">
+        <div class='col-6 review-key'><strong>Date signed</strong></div>
+        <div class="col-6 review-value">{{ dateOfAcceptance }}</div>
+      </div>
+
+      <div class="pt-4" [innerHTML]='privacyStatement'></div>
+    </div>
+  </common-page-framework>
+</div>
+
+<ng-template #confirmTitle>
+  <button (click)="print($event)" class="btn btn-clear float-right">
+    <strong>Print
+      <i class="fa fa-print fa-lg"
+        aria-hidden="true"></i>
+    </strong>
+  </button>
+  <h1 class='border-bottom'>{{pageTitle}}</h1>
+</ng-template>
+
+<ng-template #confirmMessage>
+  <div>
+    <div class='mt-2 mb-2 confirmation-message' [innerHTML]='confirmationMessage'></div>
+  </div>
+
+  <div *ngIf="!isError" class="row">
+    <div class='col-6 review-key'>Date of Submission</div>
+    <div class="col-6 review-value">{{submissionDate}}</div>
+
+    <div class='col-6 review-key'>Reference Number</div>
+    <div class="col-6 review-value">{{referenceNumber}}</div>
+  </div>
+</ng-template>

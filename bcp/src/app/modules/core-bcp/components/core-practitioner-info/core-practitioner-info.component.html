@@ -1,0 +1,52 @@
+<form [(formGroup)]="formGroup" novalidate>
+    <div class="form-group">
+        <common-name label='First name'
+                    name='firstName'
+                    formControlName='firstName'
+                    [maxlength]="15"></common-name>
+        <common-error-container [displayError]='showValidationError'>
+        {{ validationErrorMessage }}
+        </common-error-container>
+    </div>
+
+    <div class="form-group">
+        <common-name label='Last name'
+                    name='lastName'
+                    formControlName='lastName'
+                    [maxlength]="35"></common-name>
+        <common-error-container [displayError]='showValidationError'>
+        {{ validationErrorMessage }}
+        </common-error-container>
+    </div>
+
+    <div class="form-group">
+        <bcp-practitioner-number name='MSPPracNumber'
+                                formControlName='mspPracNumber'></bcp-practitioner-number>
+        <common-error-container [displayError]='showValidationError'>
+        {{ validationErrorMessage }}
+        </common-error-container>
+    </div>
+
+    <div class="form-group">
+        <common-email name='email'
+                    formControlName='email'
+                    label='Email address (optional)'
+                    [maxlength]="50"></common-email>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-10">
+        <common-phone-number name='phoneNumber'
+                                formControlName='phoneNumber'
+                                label='Phone number'
+                                [enablePlaceHolder]='false'
+                                [allowInternational]='false'></common-phone-number>
+        </div>
+
+        <div class="col-2">
+            <bcp-phone-extension name='phoneNumberExt'
+                            formControlName='phoneNumberExt'
+                            label='Extension'></bcp-phone-extension>
+        </div>
+    </div>
+</form>

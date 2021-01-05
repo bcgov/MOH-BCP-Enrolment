@@ -1,0 +1,26 @@
+<form [formGroup]="formGroup" novalidate>
+  <h1>{{pageTitle}}</h1>
+  <p>Review your application and provide your signature before submission</p>
+  <hr/>
+
+  <div class='border-warning'></div>
+
+  <bcp-review-facility-admin></bcp-review-facility-admin>
+  <bcp-review-facility-info></bcp-review-facility-info>
+  <bcp-review-physical-address></bcp-review-physical-address>
+  <bcp-review-mailing-address></bcp-review-mailing-address>
+  <bcp-review-bcp></bcp-review-bcp>
+  <bcp-review-change-admin></bcp-review-change-admin>
+  <bcp-review-cancel-facility></bcp-review-cancel-facility>
+  <bcp-review-other-request></bcp-review-other-request>
+  
+  <div class="row col-md-12 ml-0 pl-0 align-items-center">
+    <div class="col-md-12 pl-0">
+      <h2 class="border-bottom">Declaration</h2>
+    </div>
+    <div class="row col-md-12 ml-0 pl-0 align-items-left" [innerHtml]='dataService.declarationTextForHtml'>
+    </div>
+  </div>
+  <h3>{{signatureLabel}}</h3>
+  <bcp-signature name='signature' formControlName='signature' [errorMessage]='errorMessage'></bcp-signature>
+</form>

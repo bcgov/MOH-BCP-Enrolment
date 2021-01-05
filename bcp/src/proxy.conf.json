@@ -1,0 +1,13 @@
+{
+    "/bcp/api": {
+        "target": "https://moh-bcp-dev.pathfinder.gov.bc.ca",
+        "changeOrigin": true,
+        "secure": false
+    },
+    "/bcp/app/images":{
+        "target" : "http://localhost:4300",
+        "pathRewrite": {
+            "^/bcp": ""
+        }
+    }
+}

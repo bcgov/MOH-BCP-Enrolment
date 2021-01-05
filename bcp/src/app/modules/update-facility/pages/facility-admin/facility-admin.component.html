@@ -1,0 +1,79 @@
+<h1>Administrator and Facility Information</h1>
+<p>Please provide us with information about your current registration so that we can update the proper account.</p>
+<hr/>
+<form [formGroup]="formGroup">
+  <h2>Administrator Information</h2>
+  <hr />
+  
+  <common-page-section>
+    <div class="form-group">
+      <common-name label="First name"
+                  name='firstName'
+                  formControlName='firstName'
+                  [maxlength]='15'></common-name>
+    </div>
+
+    <div class="form-group">
+      <common-name label="Last name"
+                  name='lastName'
+                  formControlName='lastName'
+                  [maxlength]='35'></common-name>
+    </div>
+
+    <div class="form-group">
+      <common-email label="Contact email (optional)"
+                    name='email'
+                    formControlName='email'
+                    [maxlength]="50"></common-email>
+    </div>
+
+    <div class="d-sm-flex">
+      <div class="form-group col-sm-8 pl-0">
+        <common-phone-number name='phone'
+                              formControlName='phone'
+                              label='Contact phone number'
+                              [enablePlaceHolder]='false'
+                              [allowInternational]='false'></common-phone-number>
+      </div>
+
+      <div class="form-group col-sm-4 pl-0, pr-0">
+        <bcp-phone-extension name='phoneExt'
+                             formControlName='phoneExt'
+                             label='Extension (optional)'></bcp-phone-extension>
+      </div>
+    </div>
+  </common-page-section>
+
+  <h2>Facility Information</h2>
+  <hr/>
+  <common-page-section>
+    <div class='form-group'>
+      <div>
+        <label class="control-label" for="facilityName">Facility or Practice Name</label>
+        <input id="facilityName" formControlName="facilityName" class="form-control" maxlength="70">
+        <common-error-container [displayError]="validFormControl(formGroup, 'facilityName')">
+          <div *ngIf ="formGroup.controls?.facilityName?.errors?.required">
+            Facility Name is a required field
+          </div>
+          <div *ngIf ="formGroup.controls?.facilityName?.errors?.pattern">
+            Facility Name must contain letters, numbers and/or symbols(e.g. #, @, !).
+          </div>
+        </common-error-container>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <bcp-facility-number name='facilityMSPNumber'
+                           formControlName='facilityMSPNumber'
+                           [maxlength]="5"></bcp-facility-number>
+    </div>
+
+    <div class="form-group">
+      <common-phone-number name='facilityFax'
+                          formControlName='facilityFax'
+                          label='Contact fax number (optional)'
+                          [enablePlaceHolder]='false'
+                          [allowInternational]='false'></common-phone-number>
+    </div>
+  </common-page-section>
+</form>

@@ -1,0 +1,18 @@
+<label for='pracNumber'>{{label}}</label>
+  <input type="text"
+         class='form-control'
+         name='pracNumber'
+         id='pracNumber'
+         [value]='pracNumber'
+         (change)='inputChange($event)'
+         (blur)='onBlur($event)'
+         [attr.maxlength]="5">
+
+<common-error-container [displayError]="(controlDir?.dirty || controlDir?.touched) &&  controlDir?.errors">
+  <div *ngIf="controlDir?.errors?.required">
+    {{_defaultErrMsg.required}}
+  </div>
+  <div *ngIf="controlDir?.errors?.invalidFormat && !controlDir?.errors?.required">
+    {{_defaultErrMsg.invalidFormat}}
+  </div>
+</common-error-container>

@@ -1,0 +1,200 @@
+<common-page-framework layout='blank'>
+  <h1>{{pageTitle}}</h1>
+  <p class="border-bottom">
+      To qualify a Facility must be located in British Columbia
+  </p>
+  <common-page-section layout="tips">
+
+    <form [formGroup]="facilityForm">
+
+      <div class="form-group">
+        <!-- Facility Name -->
+        <label class="control-label" for="facilityName">Facility or practice name<span class='text-muted font-weight-normal'> (i.e., name of clinic or medical office)</span></label>
+        <input id="facilityName" formControlName="facilityName" class="form-control" maxlength="70">
+        <common-error-container [displayError]="validFormControl(facilityForm,'facilityName')">
+          <div *ngIf ="facilityForm.controls?.facilityName?.errors?.required">
+              Facility Name is a required field
+          </div>
+          <div *ngIf ="facilityForm.controls?.facilityName?.errors?.pattern">
+              Facility Name must contain letters, numbers and/or symbols(e.g. #, @, !).
+          </div>
+        </common-error-container>
+      </div>
+
+      <div class="form-group">
+        <!-- NOTE: Removed until we are able to resolve issues with GeoCoder component -->
+        <common-address-validator label='Physical address'
+                                formControlName="address"
+                                maxlength="60"
+                                (select)="physicalAddressSelected($event)"
+                                [serviceUrl]="addressServiceUrl">
+        </common-address-validator>
+        <!-- <div>
+          <label class="control-label" for="address">Physical address</label>
+          <input id="PhysAddress" formControlName="address" class="form-control" maxlength="60">-->
+
+          <common-error-container
+            [displayError]="facilityForm.controls?.address?.touched && facilityForm.controls?.address?.errors">
+            <div *ngIf="facilityForm.controls?.address?.errors?.required">
+                Facility Address is a required field
+            </div>
+            <div *ngIf="facilityForm.controls?.address?.errors?.maxlength">
+                Facility Address max length must be 60 or fewer characters.
+            </div>
+            <div *ngIf="facilityForm.controls?.address?.errors?.pattern">
+                Facility Address must contain letters, numbers and/or symbols(e.g. #, @, !).
+            </div>
+          </common-error-container>
+        <!-- </div> -->
+      </div>
+
+      <div class="form-group">
+        <!-- City -->
+        <common-city name='facilityCity'
+                      formControlName="city"
+                      placeholder=""
+                      [maxlength]="30"></common-city>
+      </div>
+
+      <!-- Province is read only just display on screen -->
+      <div>
+        <div class='label'>Province</div>
+        <div class='pb-2'>{{facInfoProvince}}</div>
+      </div>
+
+      <div class="form-group">
+        <!-- Postal Code has masks by default not maxlength required-->
+        <common-postal-code name='facilityPostalCode'
+                            label='Postal code'
+                            placeholder=''
+                            formControlName='postalCode'></common-postal-code>
+        <common-error-container [displayError]="showInvalidPostalCodeError">
+          <div>{{invalidPostalCodeErrorMessage}}</div>
+        </common-error-container>
+      </div>
+
+      <div class="form-group">
+        <common-phone-number name='facilityFaxNumber'
+                              label='Contact fax number (optional)'
+                              formControlName='faxNumber'
+                              [enablePlaceHolder]='false'
+                              [allowInternational]='false'></common-phone-number>
+      </div>
+
+      <div class="form-group">
+        <common-date name='effectiveDate'
+                      label="Facility effective date"
+                      formControlName='effectiveDate'
+                      [dateRangeStart]="effectStartRange">
+          <div class="text-muted mb-2">
+            Please provide the date the facility initially opened and began operations
+          </div>
+        </common-date>
+      </div>
+      <div *ngIf="isEffectiveDateWarning" class="text-primary">
+        NOTE: The Effective Date you have provided is in the future. Claims submitted by
+        practitioners at the clinic must be after this date.
+      </div>
+
+
+      <div class="form-group">
+        <common-radio formControlName="isSameMailingAddress"
+                      name="isSameMailingAddress"
+                      label="Is the mailing address the same as the physical facility address?"
+                      display="table-row-group"
+                      [errorMessage]="sameMailAddrError">
+        </common-radio>
+      </div>
+
+    </form>
+
+    <aside>
+      <h2>Tip</h2>
+      <p>"Facility effective date" is the date the facility initially opens and begins operations. (The Business Cost Premium cannot be claimed for physician services provided earlier than the facility effective date.)</p>
+    </aside>
+  </common-page-section>
+  <h2 class='border-bottom' *ngIf="showMailingAddress">Facility Mailing Address</h2>
+  <common-page-section layout="tips">
+    <div class="form-group col-sm-8 p-sm-0" *ngIf="showMailingAddress">
+
+      <form [formGroup]="facilityForm">
+
+        <div class="form-group">
+          <common-address-validator label='Mailing address'
+            formControlName="mailingAddress" maxlength="60"
+            (select)="mailingAddressSelected($event)"
+            [serviceUrl]="addressServiceUrl">
+          </common-address-validator>
+        <!-- <label class="control-label" for="mailingAddress">Mailing address</label>
+        <input id="MailingsAddress" formControlName="mailingAddress" class="form-control" maxlength="60">-->
+        <common-error-container
+          [displayError]="facilityForm.controls?.mailingAddress?.touched && facilityForm.controls?.mailingAddress?.errors">
+          <div *ngIf="facilityForm.controls?.mailingAddress?.errors?.required">
+              Facility Mailing Address is a required field.
+          </div>
+          <div *ngIf="facilityForm.controls?.mailingAddress?.errors?.pattern">
+              Facility Mailing Address must contain letters, numbers and/or symbols(e.g. #, @, !).
+          </div>
+        </common-error-container>
+
+        <common-error-container [displayError]="facilityForm.controls.facInfoFaxNumber?.mailingAddress?.errors?.maxlength">
+          Facility Mailing Address max length must be 60 or fewer characters.
+        </common-error-container>
+        </div>
+
+
+        <div class="form-group">
+          <common-city label='City'
+                       name="mailingfacAdminFirstNameCity"
+                       formControlName="mailingCity"
+                       placeholder=""
+                       [maxlength]="30"></common-city>
+        </div>
+
+        <!-- Province is read only just display on screen -->
+        <div>
+          <div class='label'>Province</div>
+          <div class='pb-2'>{{facInfoMailProvince}}</div>
+        </div>
+
+        <div class="form-group pt-1">
+          <!-- Postal Code component defaults to Canadian-->
+          <common-postal-code name="mailingPostalCode"
+                              label='Postal code'
+                              placeholder=''
+                              formControlName="mailingPostalCode">
+          </common-postal-code>
+          <common-error-container [displayError]="showInvalidMailingPostalCodeError">
+            <div>{{invalidPostalCodeErrorMessage}}</div>
+          </common-error-container>
+        </div>
+
+      </form>
+    </div>
+  </common-page-section>
+  <h2>Business Cost Premium</h2>
+  <p>The Business Cost Premium applies to Eligible Fees claimed by Eligible Physicians for services that are provided in a community-based office that has been issued a Medical Services Plan Facility Number. Medical Services Plan Facility Numbers are issued to qualifying facilities, based on the physical location of the facility.</p>
+  <p class="border-bottom">Eligible Physicians are those practitioners who are responsible to pay for some or all of the lease, rental, or ownership costs of the community-based office that has been issued an Medical Services Plan Facility Number. Eligible Physicians must apply to be attached to the Medical Services Plan number for a facility to claim the Business Cost Premium on Eligible Fees for services provided at that facility.</p>
+  <common-page-section layout="tips">
+    <div class="form-group p-sm-0">
+      <form [formGroup]="facilityForm">
+        <div class="form-group">
+          <common-radio formControlName="isQualifyForBCP"
+                        name="isQualifyForBCP"
+                        [radioLabels]='isQualifyForBCPOptions'
+                        display="table-row-group"
+                        [errorMessage]="qualifyBcpError">
+          </common-radio>
+        </div>
+      </form>
+    </div>
+    <aside>
+      <h2>Tip</h2>
+      <p>To become eligible for the Business Cost Premium, practitioners must complete the "Practitioner Attachment To MSP Facility Number For Business Cost Premium" form, using the Facility Number supplied after successful completion of this form.</p>
+    </aside>
+  </common-page-section>
+
+  <common-error-container [displayError]='systemDownError'>
+    Unable to continue, system unavailable. Please try again later.
+  </common-error-container>
+</common-page-framework>

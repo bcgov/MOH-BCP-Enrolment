@@ -1,0 +1,36 @@
+@import '../../../../styles/variables.scss';
+
+
+// We need to use ViewEncapsulation.None for print css
+app-submission {
+
+  common-page-framework {
+    // Needs to be adjusted because there is no ComonFormActionBar / Stepper
+    min-height: calc(100vh - 132px)
+  }
+  @media print {
+    common-page-framework {
+      min-height: auto;
+    }
+  }
+
+  // Based off of .message-container styles in <common-confirm-template>'s .scss file in common lib.
+  .under-review {
+    display: flex;
+    border: 3px solid blue;
+    padding: 2rem 1rem;
+    margin-top: 1rem;
+    font-size: $h3-font-size;
+
+    @include media-breakpoint-down(sm) {
+      height: auto;
+      margin: initial;
+    }
+  }
+
+
+}
+
+.confirmation-message {
+  font-size: 1.5rem;
+}

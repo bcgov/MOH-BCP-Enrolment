@@ -1,0 +1,8 @@
+common-page-framework {
+  // Needs to be manually tweaked because we don't have Action Bar or Stepper
+  min-height: calc(100vh - 130px);
+}
+
+section {
+  max-width: 19rem;
+}

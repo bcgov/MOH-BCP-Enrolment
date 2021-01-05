@@ -1,0 +1,106 @@
+<common-page-framework layout='blank'>
+
+  <common-confirm-template [displayIcon]="displayIcon">
+
+    <div class="print-hide" confirmationTitle>
+      <ng-container *ngTemplateOutlet="confirmTitle"></ng-container>
+    </div>
+
+    <div message>
+      <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+    </div>
+
+    <div AdditionalInfo>
+
+      <div class="print-hide" *ngIf='!isError'>
+        <h2 class="border-bottom"><strong>Next Steps</strong></h2>
+        <common-page-section layout='noTips'>
+          <ul>
+            <li>The Facility Number listed above will be required to attach Eligible Physicians to this facility. Please print or save this page, or copy/paste the information in a secure location.</li>
+            <li>Health Insurance BC will also mail you a letter with your Facility Number.</li>
+            <li>To claim the Business Cost Premium on Eligible Fees for services provided at this facility, Eligible Physicians, including Facility Administrators, must also submit a <a href='{{ practitionerAttachmentLink }}' target='_blank'>"Practitioner Attachment to MSP Facility for Business Cost Premium" form</a>.</li>
+          </ul>
+        </common-page-section>
+      </div>
+
+      <div class="print-only my-4">
+        <p>This application form is for new applicants who do not have a valid MSP facility number.</p>
+        <p>
+          All information on this form must be authorized by the responsible principle practitioner of the facility
+          (the "Applicant"). If there are any changes to this submission after it has been received, a new form must be
+          completed and authorized by the Applicant.
+        </p>
+      </div>
+
+      <!-- Prinable section should have same contents as Review page -->
+      <div class="print-only">
+
+        <bcp-review-applicant></bcp-review-applicant>
+        <bcp-review-facility></bcp-review-facility>
+        <bcp-review-facility-mailing-info></bcp-review-facility-mailing-info>
+        <bcp-review-facility-bcp></bcp-review-facility-bcp>
+
+      </div>
+
+    </div>
+
+  </common-confirm-template>
+
+
+</common-page-framework>
+
+
+<div *ngIf='!isError' class="print-only">
+  <div class="print-page-break">&nbsp;</div>
+  <common-header [serviceName]='title'
+                 urlBaseName='bcp'
+                 [shouldShowPrintLogo]='true'></common-header>
+
+  <common-page-framework layout='blank'>
+    <common-confirm-template [displayIcon]="displayIcon">
+
+      <div message>
+        <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+      </div>
+    </common-confirm-template>
+
+    <h2 class='border-bottom'>Declaration</h2>
+    <p [innerHtml]='declarationText'></p>
+
+    <img [src]='signature' alt='Signature'>
+
+    <div class="row print-review-row">
+      <div class='col-6 review-key'>Date signed</div>
+      <div class="col-6 review-value">{{ dateOfAcceptance }}</div>
+    </div>
+
+    <div class="pt-4" [innerHTML]='privacyStatement'></div>
+  </common-page-framework>
+</div>
+
+
+<ng-template #confirmTitle>
+  <button *ngIf="!isError" (click)="print($event)" class="btn btn-clear float-right print-hide">
+    <strong>Print
+      <i class="fa fa-print fa-lg"
+        aria-hidden="true"></i>
+    </strong>
+  </button>
+  <h1 class='border-bottom'>{{pageTitle}}</h1>
+</ng-template>
+
+<ng-template #confirmMessage>
+
+  <div class='mt-0 p-2 text-dark confirmation-message' [innerHTML]='confirmationMessage'></div>
+
+  <div *ngIf="!isError" class="row">
+    <div class='col-6 review-key'>Date of Submission</div>
+    <div class="col-6 review-value">{{submissionDate}}</div>
+
+    <div class='col-6 review-key'>Reference Number</div>
+    <div class="col-6 review-value">{{referenceNumber}}</div>
+
+    <div class='col-6 review-key'>Facility Number</div>
+    <div class="col-6 review-value {{isUnderReview ? 'text-primary' : ''}} "> {{facilityNumberText}} </div>
+  </div>
+</ng-template>
