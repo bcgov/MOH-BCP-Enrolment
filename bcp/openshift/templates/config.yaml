@@ -20,14 +20,14 @@ metadata:
     description: |
       This configmap is used internally by NGINX
       to store config.
-  name: msp-web-config
+  name: bcp-web-config
 objects:
   - apiVersion: v1
     kind: ConfigMap
     metadata:
-      name: msp-web-config
+      name: bcp-web-config
       labels:
-        app: msp-web
+        app: bcp-web
     data:
       nginx.conf: |
         worker_processes auto;
@@ -100,7 +100,7 @@ objects:
 
             # serve our angular app here
             location / {
-              rewrite ^/msp(/.*)$ $1;
+              rewrite ^/bcp(/.*)$ $1;
 
               root /opt/app-root/src;
 
@@ -111,24 +111,6 @@ objects:
               gzip on;
               gzip_min_length 1000;
               gzip_types *;
-            }
-
-            # redirects
-            location /application/prepare {
-              return https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents;
-              # return 301 https://my.gov.bc.ca/msp/enrolment/check-eligibility;
-            }
-            location /assistance/prepare {
-              return https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents;
-              # return 301 https://my.gov.bc.ca/msp/assistance/home;
-            }
-            location /account-letter/personal-info {
-              return https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents;
-              # return 301 https://my.gov.bc.ca/msp/account-letter/request-acl;
-            }
-            location /deam-interim/msp/account/prepare {
-              return https://msp-deam-${MSP_ENV}.pathfinder.gov.bc.ca;
-              # return 301 https://my.gov.bc.ca/msp/deam-interim/;
             }
 
             location /api {
@@ -230,8 +212,8 @@ parameters:
   - description: SPA_ENV_AUTH_TOKEN
     name: SPA_ENV_AUTH_TOKEN
     required: true
-  - description: MSP_ENV
-    name: MSP_ENV
+  - description: BCP_ENV
+    name: BCP_ENV
     required: true
   - description: SOURCE_IMAGE_TAG
     name: SOURCE_IMAGE_TAG
