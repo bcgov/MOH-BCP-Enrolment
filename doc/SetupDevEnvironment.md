@@ -8,33 +8,33 @@
 oc project ...-dev
 ```
 
-2. create ./openshift/templates/nsp-aop-to-maximus-dev.yaml  (copy from -dev.yaml)
+2. create ./openshift/templates/nsp-bcp-to-maximus-dev.yaml  (copy from -dev.yaml)
    change the IP of proxy to dev proxy
    the apply using:
 ```console
-oc process -f nsp-aop-to-maximus-dev.yaml \
+oc process -f nsp-bcp-to-maximus-dev.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc apply -f -
 ```
 
 3. apply the internal NSPs:
 ```console
-oc process -f nsp-aopfrontend-to-all.yaml \
+oc process -f nsp-bcpweb-to-all.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc apply -f -
 ```
 
 4. apply the internal NSPs:
 ```console
-oc process -f nsp-oopfrontend-to-all.yaml \
+oc process -f nsp-bcpweb-to-all.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc apply -f -
 ```
 
 5. allow the dev project to pull from tools:
-   Go to the dev project (oc project a3c641-dev).
+   Go to the dev project (oc project e1aae2-dev).
 ```console
-oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n a3c641-tools
+oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n e1aae2-tools
 ```
 
 ## For each of the nodeJS apps, ie. splunk-forwarder, msp-service, captcha-service, spa-env-server
@@ -60,9 +60,9 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-dev.txt | oc a
 4. go to github, then actions, then try it.
 
 
-## For the MSP application
+## For the BCP application
 
-1. go to the msp directory
+1. go to the bcp directory
 
 2. go to openshift/templates
 

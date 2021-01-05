@@ -22,7 +22,7 @@ oc process -f openshift/templates/cicd.yaml \
 You should see a few secrets have been created (and a service account):
 
 ```console
-➜  MOH-MSP-Enrolment git:(main) ✗ oc get secrets |grep github
+➜  MOH-BCP-Enrolment git:(main) ✗ oc get secrets |grep github
 github-cicd-dockercfg-pn4x6   kubernetes.io/dockercfg
 github-cicd-token-c74j8       kubernetes.io/service-account-token
 github-cicd-token-p69fn       kubernetes.io/service-account-token
@@ -55,18 +55,18 @@ OPENSHIFTSERVERURL: https://silver.devops.gov.bc.ca:6443
 5. * You probably need to grant permission for the image puller to pull images from your `*-tools` namespace. The following commands will do this; update the command and run them in each each of dev, test and prod.
 
 ```console
-oc policy add-role-to-user edit system:serviceaccount:a3c641-tools:default \
+oc policy add-role-to-user edit system:serviceaccount:e1aae2-tools:default \
   -n $(oc project --short)
 ```
 
 ```console
 oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default \
-  -n a3c641-tools
+  -n e1aae2-tools
 ```
 
 run in dev/test/prod:
 ```
-oc policy add-role-to-user system:image-puller system:serviceaccount:a3c641-dev:default --namespace=a3c641-tools
+oc policy add-role-to-user system:image-puller system:serviceaccount:e1aae2-dev:default --namespace=e1aae2-tools
 ```
 
 Switch back to tools
@@ -128,23 +128,23 @@ oc process -f spa-env-server/openshift/templates/deploy.yaml \
 
 **Pro Tip**: Add `params-*.txt` to .gitignore to make sure sensitive prod values are never stored in a repo.
 
-## `msp` Component
+## `bcp` Component
 
-8. The following instructions are for the build and deployment of the `msp` component. The build uses the on-cluster `nodejs:10` S2I image to run any scripts from `package.json` which require node. This step produces an artifacts image (msp-web-artifacts) that used as part of chained build. These artifacts are (from `npm run build`) are then consumed by the NGINX image which is pulled in from the RedHat Container Registry. This results in an image named `msp-web` that can be deployed.
+8. The following instructions are for the build and deployment of the `bcp` component. The build uses the on-cluster `nodejs:10` S2I image to run any scripts from `package.json` which require node. This step produces an artifacts image (bcp-web-artifacts) that used as part of chained build. These artifacts are (from `npm run build`) are then consumed by the NGINX image which is pulled in from the RedHat Container Registry. This results in an image named `bcp-web` that can be deployed.
 
 The deployment mounts a `ConfigMap` containing the necessary NGINX config.
 
 ### Build
 
-9. The GitHub Workflow (Actions) will use `oc` to trigger commands on-cluster. This workflow is located [here](../.github/workflows/msp.yml) in the `.github/workflows` folder of this project.
+9. The GitHub Workflow (Actions) will use `oc` to trigger commands on-cluster. This workflow is located [here](../.github/workflows/bcp.yml) in the `.github/workflows` folder of this project.
 
 This workflow is setup to **automatically run** whenever files in these paths are changed:
 
 ```yaml
     paths:
-      - "msp/src/**/*.html"
-      - "msp/src/**/*.ts"
-      - "msp/package*.json"
+      - "bcp/src/**/*.html"
+      - "bcp/src/**/*.ts"
+      - "bcp/package*.json"
 ```
 
 This workflow is triggered whenever files change in these paths for a PR or direct merge to the `main` branch. Also, for demonstration purposes, this workflow can be triggered manually.
@@ -156,25 +156,25 @@ When the entire workflow triggers, it will create a new image and automatically 
 Create the OCP image `BuildConfig` using the provided OCP template:
 
 ```console
-oc process -f msp/openshift/templates/build.yaml | \
+oc process -f bcp/openshift/templates/build.yaml | \
   oc create -f -
 ```
 
 ### Deploy
 
-10. The deployment for the `msp` component is straight forward as it has little to no environment variables. The first step in the deploument is to create a `ConfigMap` with the necessary NGINX config:
+10. The deployment for the `bcp` component is straight forward as it has little to no environment variables. The first step in the deploument is to create a `ConfigMap` with the necessary NGINX config:
 
 ```console
-oc process -f msp/openshift/templates/config.yaml | \
+oc process -f bcp/openshift/templates/config.yaml | \
   oc create -f -
 ```
 
 Once created deploy the web application:
 
 ```console
-oc process -f msp/openshift/templates/deploy.yaml \
+oc process -f bcp/openshift/templates/deploy.yaml \
   -p NAMESPACE=$(oc project --short) \
-  -p SOURCE_IMAGE_NAMESPACE=a3c641-tools \
+  -p SOURCE_IMAGE_NAMESPACE=e1aae2-tools \
   -p SOURCE_IMAGE_TAG=dev | \
   oc create -f -
 ```

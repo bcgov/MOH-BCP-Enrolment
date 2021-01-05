@@ -8,25 +8,25 @@
 oc project ...-test
 ```
 
-2. create ./openshift/templates/nsp-msp-to-maximus-test.yaml  (copy from -dev.yaml)
+2. create ./openshift/templates/nsp-bcp-to-maximus-test.yaml  (copy from -dev.yaml)
    change the IP of proxy to test proxy
    the apply using:
 ```console
-oc process -f nsp-msp-to-maximus-test.yaml \
+oc process -f nsp-bcp-to-maximus-test.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc apply -f -
 ```
 
 3. apply the internal NSPs:
 ```console
-oc process -f nsp-mspweb-to-all.yaml \
+oc process -f nsp-bcpweb-to-all.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc apply -f -
 ```
 4. allow the test project to pull from tools:
-   Go to the test project (oc project a3c641-test).
+   Go to the test project (oc project e1aae2-test).
 ```console
-oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n a3c641-tools
+oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n e1aae2-tools
 ```
 
 ## For each of the nodeJS apps, ie. splunk-forwarder, msp-service, captcha-service, spa-env-server
@@ -52,9 +52,9 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-test.txt | oc 
 4. go to github, then actions, then try it.
 
 
-## For the MSP application
+## For the BCP application
 
-1. go to the msp directory
+1. go to the bcp directory
 
 2. go to openshift/templates
 
