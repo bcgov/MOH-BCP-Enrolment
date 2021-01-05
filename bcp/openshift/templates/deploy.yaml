@@ -30,7 +30,7 @@ objects:
       app: bcp-enrolment-web
     name: ${NAME}-to-api
   spec:
-    host: "${NAME}-${MSP_ENV}.${CLUSTER_DOMAIN}"
+    host: "${NAME}-${BCP_ENV}.${CLUSTER_DOMAIN}"
     path: "/api"
     port:
       targetPort: 8080-tcp
@@ -139,10 +139,10 @@ objects:
                 value: ${SPLUNK_AUTH_TOKEN}
               - name: SPA_ENV_AUTH_TOKEN
                 value: ${USE_SPLUNK_FORWARDER}
-              - name: MSP_ENV
-                value: ${MSP_ENV}
-              - name: MSP_VERSION
-                value: ${MSP_VERSION}
+              - name: BCP_ENV
+                value: ${BCP_ENV}
+              - name: BCP_VERSION
+                value: ${BCP_VERSION}
               - name: ROUTER_DEFAULT_SERVER_TIMEOUT
                 value: ${ROUTER_DEFAULT_SERVER_TIMEOUT}
               - name: ROUTER_DEFAULT_CLIENT_TIMEOUT
@@ -213,11 +213,11 @@ parameters:
 - description: SPA_ENV_AUTH_TOKEN
   name: SPA_ENV_AUTH_TOKEN
   required: true
-- description: MSP_ENV
-  name: MSP_ENV
+- description: BCP_ENV
+  name: BCP_ENV
   required: true
-- description: MSP_VERSION
-  name: MSP_VERSION
+- description: BCP_VERSION
+  name: BCP_VERSION
   required: true
 - description: ROUTER_DEFAULT_SERVER_TIMEOUT
   name: ROUTER_DEFAULT_SERVER_TIMEOUT
