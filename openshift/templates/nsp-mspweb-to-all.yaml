@@ -20,80 +20,80 @@ metadata:
     description: |
       The Network Security Policies (NSP) for the associated
       Platform Services registry application.
-  name: nsp-mspweb-to-all
+  name: nsp-bcpweb-to-all
 objects:
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: msp-to-spa-env-server
+      name: bcp-to-spa-env-server
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       description: |
-        allow msp frontend to talk to spa-env-server
+        allow bcp frontend to talk to spa-env-server
       source:
         - - '$namespace=${NAMESPACE}'
-          - 'role=mspfrontend'
+          - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
           - 'role=spaenv'
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: msp-to-address-service
+      name: bcp-to-address-service
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       description: |
-        allow msp frontend to talk to spa-env-server
+        allow bcp frontend to talk to spa-env-server
       source:
         - - '$namespace=${NAMESPACE}'
-          - 'role=mspfrontend'
+          - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
           - 'role=addressservice'
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: msp-to-msp-service
+      name: bcp-to-msp-service
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       description: |
-        allow msp frontend to talk to msp-service
+        allow bcp frontend to talk to msp-service
       source:
         - - '$namespace=${NAMESPACE}'
-          - 'role=mspfrontend'
+          - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
           - 'role=mspservice'
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: msp-to-splunk-forwarder
+      name: bcp-to-splunk-forwarder
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       description: |
-        allow msp frontend to talk to splunk-forwarder
+        allow bcp frontend to talk to splunk-forwarder
       source:
         - - '$namespace=${NAMESPACE}'
-          - 'role=mspfrontend'
+          - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
           - 'role=splunkforwarder'
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: msp-to-captcha-service
+      name: bcp-to-captcha-service
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       description: |
-        allow msp frontend to talk to captcha-service
+        allow bcp frontend to talk to captcha-service
       source:
         - - '$namespace=${NAMESPACE}'
-          - 'role=mspfrontend'
+          - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
           - 'role=captchaservice'

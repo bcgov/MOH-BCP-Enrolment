@@ -20,7 +20,7 @@ metadata:
     description: |
       The Network Security Policies (NSP) for the associated
       Platform Services registry application.
-  name: nsp-mspweb-to-all
+  name: nsp-bcpweb-to-all
 objects:
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: ExternalNetwork
@@ -48,7 +48,7 @@ objects:
       # `oc get externalnetwork` or `kubctl get externalnetwork`.
       name: addressdoctor
       labels:
-        app: msp-web
+        app: bcp-web
     spec:
       # This name will be used internally by Aporeto; it should match
       # the `name` field in metadata above.
