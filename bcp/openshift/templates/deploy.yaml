@@ -216,9 +216,6 @@ parameters:
 - description: BCP_ENV
   name: BCP_ENV
   required: true
-- description: BCP_VERSION
-  name: BCP_VERSION
-  required: true
 - description: ROUTER_DEFAULT_SERVER_TIMEOUT
   name: ROUTER_DEFAULT_SERVER_TIMEOUT
   value: "60s"
