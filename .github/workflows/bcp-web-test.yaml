@@ -1,0 +1,32 @@
+name: bcp-web-test build
+on:
+  push:
+    paths:
+      - "bcp/src/**/*.html"
+      - "bcp/src/**/*.ts"
+      - "bcp/src/**/*.js"
+      - "bcp/src/**/*.scss"
+      - "bcp/package*.json"
+  workflow_dispatch:
+defaults:
+  run:
+    working-directory: ./bcp
+jobs:
+  image-build:
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Artifact Build
+        env:
+          NAMESPACE: e1aae2-tools
+          BUILD_NAME: bcp-web-artifact-build
+          IMAGE_NAME: bcp-web-artifacts
+        uses: redhat-developer/openshift-actions@v1.1
+        with:
+          version: "latest"
+          openshift_server_url: ${{ secrets.OpenShiftServerURL}}
+          parameters: '{"apitoken": "${{ secrets.OpenShiftToken }}", "acceptUntrustedCerts": "true"}'
+          cmd: |
+            'version'
+            'start-build ${BUILD_NAME} -n ${NAMESPACE} --follow'
+            'tag -n ${NAMESPACE} ${NAMESPACE}/${IMAGE_NAME}:latest ${NAMESPACE}/${IMAGE_NAME}:dev'
