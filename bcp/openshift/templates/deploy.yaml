@@ -138,7 +138,7 @@ objects:
               - name: SPLUNK_AUTH_TOKEN
                 value: ${SPLUNK_AUTH_TOKEN}
               - name: SPA_ENV_AUTH_TOKEN
-                value: ${USE_SPLUNK_FORWARDER}
+                value: ${SPA_ENV_AUTH_TOKEN}
               - name: BCP_ENV
                 value: ${BCP_ENV}
               - name: BCP_VERSION
