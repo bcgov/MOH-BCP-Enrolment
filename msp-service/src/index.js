@@ -134,7 +134,7 @@ app.use('/', function (req, res, next) {
             nounIndex = pathnameParts.indexOf("siteregIntegration");
         }
 		if (nounIndex < 0) {                                                                                                                          
-            nounIndex = pathnameParts.indexOf("bcp");                                                                                  
+            nounIndex = pathnameParts.indexOf("bcpIntegration");                                                                                  
         } 
 
         if (nounIndex < 0 ||
@@ -150,13 +150,14 @@ app.use('/', function (req, res, next) {
                 return;                                                                                                                            
             } 
 		}
-		else {
-			// Finally, check that resource ID against the nonce
-			if (pathnameParts[nounIndex + 1] != decoded.data.nonce) {
-				denyAccess("resource id and nonce are not equal: " + pathnameParts[nounIndex + 1] + "; " + decoded.data.nonce, res, req);
-				return;
-			}
-		}
+        // No need to check nonce, as it's not in a BCP api request url.
+		// else {
+		// 	// Finally, check that resource ID against the nonce
+		// 	if (pathnameParts[nounIndex + 1] != decoded.data.nonce) {
+		// 		denyAccess("resource id and nonce are not equal: " + pathnameParts[nounIndex + 1] + "; " + decoded.data.nonce, res, req);
+		// 		return;
+		// 	}
+		// }
     }
     // OK its valid let it pass thru this event
     next(); // pass control to the next handler
