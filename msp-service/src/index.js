@@ -135,10 +135,12 @@ app.use('/', function (req, res, next) {
         }
 		if (nounIndex < 0) {                                                                                                                          
             nounIndex = pathnameParts.indexOf("bcpIntegration");                                                                                  
+        }
+        if (nounIndex < 0) {                                                                                                                          
+            nounIndex = pathnameParts.indexOf("bcpAttachment");                                                                                  
         } 
 
-        if (nounIndex < 0 ||
-            pathnameParts.length < nounIndex + 2) {
+        if (nounIndex < 0) {
             denyAccess("missing noun or resource id", res, req);
             return;
         }
