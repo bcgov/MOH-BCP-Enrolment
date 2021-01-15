@@ -13,7 +13,7 @@ const fs = require('fs');
 const { version: projectVersion } = require('../package.json');
 
 require('child_process').exec('git rev-parse --short HEAD', function(err, stdout) {
-    console.log('Last commit hash on this branch is:', stdout);
+    console.log('Last commit hash on this branch is: ', stdout);
     const trimmed = stdout.replace("\n", '');
     const time = new Date();
     const timezone = {timeZone: "America/Vancouver"};
@@ -22,6 +22,9 @@ require('child_process').exec('git rev-parse --short HEAD', function(err, stdout
     // Checking we have a realistic response
     let success = false;
     let content;
+
+    console.log('buildTime: ', buildTime);
+    console.log('projectVersion: ', projectVersion)
     if (buildTime.length && projectVersion.length) {
         success = true;
     }
