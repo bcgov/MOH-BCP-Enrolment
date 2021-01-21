@@ -1,6 +1,6 @@
 {
   "name": "address-service",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "http-proxy-middleware": "^0.20.0",
     "json-stringify-safe": "^5.0.1",
     "jsonwebtoken": "^7.3.0",
+    "nodejs-traceroute": "^1.2.0",
     "winston": "^2.3.1",
     "xml-js": "^1.6.11"
   },

@@ -5,8 +5,9 @@ const express = require('express');
 const xmlConvert = require('xml-js');
 const soap = require('easy-soap-request');
 const soapRequest = require('./soapRequest.js');
-var packageJSON = require('./package.json');
+var packageJSON = require('../package.json');
 var winston = require('winston');
+const Traceroute = require('nodejs-traceroute');
 
 const clientCert = base64Decode(process.env.MUTUAL_TLS_PEM_CERT);
 const clientKey = base64Decode(process.env.MUTUAL_TLS_PEM_KEY_BASE64);
@@ -78,6 +79,40 @@ app.get('/test', function (req, res) {
         .then(resp => res.send(resp.data))
         .catch(err => { res.send(err.message); console.log(err.message); });
     return;
+});
+
+app.get('/traceroute', function (req, res) {
+    const address = req.query.address;
+    let responseBody = '';
+
+    res.setHeader('Content-Type', 'text/plain');
+ 
+    try {
+        const tracer = new Traceroute();
+        tracer
+            .on('pid', (pid) => {
+                console.log(`pid: ${pid}`);
+                responseBody += `pid: ${pid}\n`;
+            })
+            .on('destination', (destination) => {
+                console.log(`destination: ${destination}`);
+                responseBody += `destination: ${destination}\n`;
+            })
+            .on('hop', (hop) => {
+                console.log(`hop: ${JSON.stringify(hop)}`);
+                responseBody += `hop: ${JSON.stringify(hop)}\n`;
+            })
+            .on('close', (code) => {
+                console.log(`close: code ${code}`);
+                responseBody += `close: code ${code}\n`;
+                res.send(responseBody);
+            });
+    
+        tracer.trace(address);
+    } catch (ex) {
+        console.log(ex);
+        res.send(ex);
+    }
 });
 
 app.get('/address', function (req, res) {
