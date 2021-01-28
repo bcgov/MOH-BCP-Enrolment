@@ -99,6 +99,10 @@ objects:
                   value: ${LOG_LEVEL}
                 - name: PORT
                   value: "8080"
+                - name: SERVICE_IP
+                  value: ${SERVICE_IP}
+                - name: SERVICE_PORT
+                  value: ${SERVICE_PORT}
                 - name: MUTUAL_TLS_PEM_KEY_BASE64
                   value: ${MUTUAL_TLS_PEM_KEY_BASE64}
                 - name: MUTUAL_TLS_PEM_CERT
