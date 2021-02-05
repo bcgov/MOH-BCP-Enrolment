@@ -1,0 +1,60 @@
+<div class="card signature-display"
+     [ngClass]="{'border-danger': (controlDir?.touched || controlDir?.dirty) && controlDir?.errors?.required}">
+
+    <img [src]='image.fileContent'
+         *ngIf='image'
+         alt='Signature'>
+
+    <div class="card-body">
+        <i aria-hidden="true" class="fa fa-pencil fa-2x d-inline-block upload-icon"></i>
+        <p class="h3 text-dark d-inline-block">{{label}}</p>
+        <button class="btn btn-primary ml-4 d-block"
+                (click)='open()'>Sign</button>
+
+        <common-error-container [displayError]='(controlDir?.touched || controlDir?.dirty) && controlDir?.errors?.required'>
+           {{errorMessage}}
+        </common-error-container>
+    </div>
+
+</div>
+
+
+
+
+<div bsModal
+     #signatureModal="bs-modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="samplesModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-primary">
+                <h2 class="modal-title pull-left"
+                    id="samplesModalTitle">Signature</h2>
+            </div>
+
+            <div class="modal-body">
+                <signature-pad [options]="signaturePadOptions"
+                               (onEndEvent)='drawComplete()'></signature-pad>
+                <div class="dotted-line"></div>
+            </div>
+
+            <div class="modal-footer d-block">
+                <button class="btn btn-primary pull-right"
+                        type="submit"
+                        (click)="acceptModal()">Accept</button>
+
+                <button class="btn btn-default pull-right"
+                        type="submit"
+                        (click)="cancelModal()">Cancel</button>
+
+                <button class="btn btn-default"
+                        type="submit"
+                        (click)="clear()">Clear</button>
+            </div>
+
+        </div>
+    </div>
+</div>

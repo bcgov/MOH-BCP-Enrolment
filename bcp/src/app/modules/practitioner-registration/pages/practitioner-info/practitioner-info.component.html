@@ -1,0 +1,11 @@
+<h1>{{pageTitle}}</h1>
+<p class="border-bottom">To qualify as an Eligible Physician, you must be responsible to pay for some or all of the lease, rental, or ownership costs of the community-based office that has been issued a Medical Services Plan Facility Number.</p>
+
+<common-page-section>
+  <bcp-core-practitioner-info [formGroup]='formGroup'
+    [showValidationError]='showValidationError'></bcp-core-practitioner-info>
+
+  <common-error-container [displayError]='systemDownError'>
+    Unable to continue, system unavailable. Please try again later.
+  </common-error-container>
+</common-page-section>

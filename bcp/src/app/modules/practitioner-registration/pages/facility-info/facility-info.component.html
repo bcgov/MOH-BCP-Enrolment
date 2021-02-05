@@ -1,0 +1,11 @@
+<h1>{{pageTitle}}</h1>
+<p class="border-bottom">Provide facility information for the community-based office where you qualify as an Eligible Practitioner.</p>
+
+<bcp-core-facility-info name='facInfo'
+  [formGroup]='formGroup'
+  [showValidationError]='showValidationError'
+  (addressSelected)='addressSelected($event)'></bcp-core-facility-info>
+
+<common-error-container [displayError]='systemDownError'>
+  Unable to continue, system unavailable. Please try again later.
+</common-error-container>

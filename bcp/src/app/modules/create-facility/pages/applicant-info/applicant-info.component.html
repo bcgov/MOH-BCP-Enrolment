@@ -1,0 +1,76 @@
+<common-page-framework layout='blank'>
+  <h1>{{pageTitle}}</h1>
+  <p>To apply for a Medical Services Plan Facility Number, the Administrator must be an active medical practitioner.</p>
+  <hr>
+
+  <common-page-section>
+
+    <form [formGroup]="formGroup">
+
+      <div class="form-group">
+        <common-name label='First name'
+                     name='facAdminFirstName'
+                     formControlName='facAdminFirstName'
+                     [maxlength]=15></common-name>
+        <common-error-container [displayError]='showValidationError'>
+          {{ validationErrorMessage }}
+        </common-error-container>
+      </div>
+
+      <div class="form-group">
+        <common-name label='Last name'
+                     name='facAdminLastName'
+                     formControlName='facAdminLastName'
+                     [maxlength]=35></common-name>
+        <common-error-container [displayError]='showValidationError'>
+          {{ validationErrorMessage }}
+        </common-error-container>
+      </div>
+
+      <div class="form-group">
+        <bcp-practitioner-number name='pracNumber'
+                                 formControlName='pracNumber'></bcp-practitioner-number>
+        <common-error-container [displayError]='showValidationError'>
+          {{ validationErrorMessage }}
+        </common-error-container>
+      </div>
+
+      <div class="form-group">
+        <common-email name='email'
+                      formControlName='email'
+                      label='Contact email (optional)'
+                      [maxlength]="50"></common-email>
+      </div>
+
+      <div class="d-sm-flex">
+        <div class="form-group col-sm-8 pl-0">
+          <common-phone-number name='phoneNumber'
+                               formControlName='phoneNumber'
+                               label='Contact phone number'
+                               [enablePlaceHolder]='false'
+                               [allowInternational]='false'></common-phone-number>
+        </div>
+
+        <div class="form-group col-sm-4 pl-0, pr-0">
+          <bcp-phone-extension name='extension'
+                               formControlName='extension'></bcp-phone-extension>
+        </div>
+      </div>
+
+      <common-error-container [displayError]='systemDownError'>
+        Unable to continue, system unavailable. Please try again later.
+      </common-error-container>
+
+    </form>
+    <aside>
+      <h2>Tip</h2>
+      <p>To confirm that the Facility Administrator is an active medical practitioner, the following fields will automatically be validated against Medical Services Plan records:</p>
+      <ul>
+        <li>First name</li>
+        <li>Last name</li>
+        <li>Medical Services Plan Practitioner Number</li>
+      </ul>
+    </aside>
+
+  </common-page-section>
+</common-page-framework>

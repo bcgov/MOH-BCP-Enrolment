@@ -1,0 +1,24 @@
+<label for="{{labelforId}}" class="control-label">{{label}}</label>
+
+<textarea class='form-control'
+          id="{{labelforId}}"
+          (change)="onValueChange($event.target.value)"
+          (blur)="onBlur($event)"
+          [(ngModel)]="text"
+          [attr.rows]='rows'></textarea>
+<div class="row">
+  <div class="col-6">
+    <!-- Error messages for component -->
+    <common-error-container [displayError]="controlDir && !disabled && (controlDir.dirty || controlDir.touched) && controlDir?.errors">
+      <div *ngIf="controlDir?.errors?.required">
+        {{_defaultErrMsg.required}}
+      </div>
+      <div *ngIf="controlDir?.errors?.overLimit">
+        {{_defaultErrMsg.overLimit}}
+      </div>
+    </common-error-container>
+  </div>
+  <div class="col-6">
+      <div class='text-right character-limit' [ngClass]="(text ? text.length : 0) > maxlength ? 'text-danger' : ''">Characters remaining: {{ maxlength - (text ? text.length : 0) }}</div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<h1>{{pageTitle}}</h1>
+<p class="border-bottom">To add a new attachment, cancel an existing attachment, or change an existing attachment you must provide the appropriate effective or cancellation date.</p>
+
+<!-- Form group for practitioner attachment types -->
+<form [formGroup]="formGroup">
+  <div class="form-group">
+    <common-radio formControlName="attachmentType"
+                  name="attachmentType"
+                  label="What change are you making for this attachment?"
+                  [radioLabels]='radioItems'
+                  display="table-row-group"></common-radio>
+  </div>
+</form>
+
+<!-- Form group for gathering information related to new attachments -->
+<form *ngIf='shouldShowNewSection' [formGroup]="newAttachmentForm">
+  <h2>Add new attachment</h2>
+  <p>Please provide the date the practitioner began practice at the facility as an Eligible Physician. The date must be after the Facility effective date (the date the facility began operations).</p>
+  <p>Locums or other temporary attachments must also provide the date at which the locum or other temporary attachment is completed.</p>
+  <hr/>
+
+  <div class="form-group">
+    <common-date label='Effective date for new attachment'
+                name="attachmentEffectiveDate"
+                formControlName="attachmentEffectiveDate"
+                [dateRangeStart]='effectiveDateStartRange'
+                [dateRangeEnd]='effectiveDateEndRange'
+                [errorMessage]='facilityEffectiveDateErrMsg'>
+    </common-date>
+  </div>
+
+  <div class="form-group">
+    <common-radio formControlName="newAttachmentType"
+                  name="newAttachmentType"
+                  label="Is this a Locum or other temporary attachment?"
+                  display="table-row-group">
+    </common-radio>
+  </div>
+
+  <div class="form-group" *ngIf='dataService.pracNewAttachmentType === true'>
+    <common-date label='Cancellation date for new attachment'
+                name="attachmentCancelDate"
+                formControlName="attachmentCancelDate"
+                [dateRangeStart]='cancelDateStartRange'
+                [dateRangeEnd]='cancelDateEndRange'
+                [errorMessage]='facilityCancelDateErrMsg'>
+    </common-date>
+  </div>
+</form>
+
+<form *ngIf='shouldShowCancelSection' [formGroup]="cancelAttachmentForm">
+  <h2>Cancel existing attachment</h2>
+  <p>If your existing attachment to an MSP Facility Number has ended, please provide the cancellation date.</p>
+  <hr/>
+  <div class="form-group">
+    <common-date label='Cancellation date for existing attachment'
+                  name="attachmentCancelDate"
+                  formControlName="attachmentCancelDate"
+                  [dateRangeStart]='cancelDateStartRange'
+                  [dateRangeEnd]='cancelDateEndRange'
+                  [errorMessage]='facilityCancelDateErrMsg'>
+    </common-date>
+  </div>
+</form>
+
+<form *ngIf='shouldShowChangeSection' [formGroup]="changeAttachmentForm">
+  <h2>Change existing attachment</h2>
+  <p>If your existing attachment to an MSP Facility Number has changed or requires correction, please provide the new effective attachment date and/or cancellation date.</p>
+  <hr/>
+  <div class="form-group">
+    <common-date label='New effective date for existing attachment (if applicable)'
+                  name="attachmentEffectiveDate"
+                  formControlName="attachmentEffectiveDate"
+                  [dateRangeStart]='effectiveDateStartRange'
+                  [dateRangeEnd]='effectiveDateEndRange'
+                  [errorMessage]='facilityEffectiveDateErrMsg'>
+    </common-date>
+  </div>
+
+  <div class="form-group">
+    <common-date label='New cancellation date for existing attachment (if applicable)'
+                  name="attachmentCancelDate"
+                  formControlName="attachmentCancelDate"
+                  [dateRangeStart]='cancelDateStartRange'
+                  [dateRangeEnd]='cancelDateEndRange'
+                  [errorMessage]='facilityCancelDateErrMsg'>
+    </common-date>
+  </div>
+
+  <common-error-container 
+    [displayError]="!changeAttachmentHasValue && (changeAttachmentForm.dirty || changeAttachmentForm.touched)">
+      At least one of the date fields is required
+  </common-error-container>
+</form>

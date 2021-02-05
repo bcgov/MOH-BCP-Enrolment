@@ -1,0 +1,21 @@
+<label for='facNumber'>{{label}}</label>
+  <input type="text"
+         class='form-control'
+         name='facNumber'
+         id='facNumber'
+         [(value)]='facNumber'
+         (change)='inputChange($event)'
+         (blur)='onBlur($event)'
+         [attr.maxlength]="maxlength">
+
+<common-error-container [displayError]="(controlDir?.dirty || controlDir?.touched) &&  controlDir?.errors">
+  <div *ngIf="controlDir?.errors?.required">
+    {{_defaultErrMsg.required}}
+  </div>
+  <div *ngIf="controlDir?.errors?.invalidFormat">
+    {{_defaultErrMsg.invalidFormat}}
+  </div>
+  <div *ngIf="controlDir?.errors?.invalidLength">
+    {{_defaultErrMsg.invalidLength}}
+  </div>
+</common-error-container>

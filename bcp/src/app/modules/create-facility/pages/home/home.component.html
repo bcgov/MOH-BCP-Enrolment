@@ -1,0 +1,26 @@
+<common-page-framework layout='blank'>
+  <h1 class="border-bottom">{{pageTitle}}</h1>
+
+  <p class='mb-1'><strong>Who can complete this form?</strong></p>
+  <p>This form is to be completed by applicants for facilities that do not have a valid Medical Services Plan Facility Number. <strong>Note: Submit only one application for a Facility Number for each facility.</strong></p>
+  <p>All information on this form must be authorized by the responsible Practitioner for the facility (the "Administrator") to which the Medical Services Plan Facility Number may be issued.</p>
+
+  <p class='mb-1'><strong>Requirements</strong></p>
+  <p>To complete this application form you will require the following:</p>
+  <ul>
+    <li>Facility Administrator information including name and Medical Services Plan practitioner number</li>
+    <li>Facility information including facility name, address and postal code</li>
+    <li>The signature of the Facility Administrator</li>
+  </ul>
+
+  <p class='mb-1'><strong>After you complete this form</strong></p>
+  <ul>
+    <li>To claim the Business Cost Premium on Eligible Fees for services provided at this facility, Eligible Physicians, including Facility Administrators, must submit a "Practitioner Attachment to MSP Facility for Business Cost Premium" form.</li>
+    <li>If there are any changes to the information contained in this document after it has been submitted, the Administrator must submit an "Application to Cancel or Change Details for Facilities with an MSP Facility Number" form.</li>
+  </ul>
+</common-page-framework>
+
+<bcp-consent-modal (accept)='accept($event)'
+                   (validToken)='setToken($event)'
+                   [hasToken]='hasToken()'
+                   [initialVisibility]='initialModalVisibility'></bcp-consent-modal>

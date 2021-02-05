@@ -1,0 +1,96 @@
+<common-page-framework layout="blank">
+
+  <common-confirm-template [displayIcon]="displayIcon">
+
+    <div class="print-hide" confirmationTitle>
+      <ng-container *ngTemplateOutlet="confirmTitle"></ng-container>
+    </div>
+
+    <div message>
+      <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+    </div>
+
+    <div AdditionalInfo *ngIf="!isError">
+      <div class="print-hide">
+        <h2 class="border-bottom"><strong>Next Steps</strong></h2>
+        <common-page-section layout='noTips'>
+          <ul>
+            <li>Please <a href='javascript:void(0)' (click)='printPage()'>print</a> this page for your records.</li>
+            <li>Health Insurance BC will mail you a letter confirming the status of your request.</li>
+            <li>Please contact <a href='{{hibcLink}}' target='_blank'>Health Insurance BC</a> if you have any questions.</li>
+          </ul>
+        </common-page-section>
+      </div>
+
+      <!-- Prinable section should have same contents as Review page -->
+      <div class="print-only">
+        <bcp-review-facility-admin></bcp-review-facility-admin>
+        <bcp-review-facility-info></bcp-review-facility-info>
+        <bcp-review-physical-address></bcp-review-physical-address>
+        <bcp-review-mailing-address></bcp-review-mailing-address>
+        <bcp-review-bcp></bcp-review-bcp>
+        <bcp-review-change-admin></bcp-review-change-admin>
+        <bcp-review-cancel-facility></bcp-review-cancel-facility>
+        <bcp-review-other-request></bcp-review-other-request>
+      </div>
+      
+    </div>
+
+  </common-confirm-template>
+
+</common-page-framework>
+
+<div *ngIf="!isError" class="print-only">
+  <div class="print-page-break">&nbsp;</div>
+  <common-header [serviceName]='title'
+                 urlBaseName='bcp'
+                 [shouldShowPrintLogo]='true'></common-header>
+
+  <common-page-framework layout="blank">
+    <div class="print-only">
+      <common-confirm-template [displayIcon]="displayIcon">
+
+        <div message>
+          <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+        </div>
+
+      </common-confirm-template>
+
+      <h2 class='border-bottom'>Declaration</h2>
+      <p [innerHtml]='declarationText'></p>
+
+      <img [src]='signature' alt='Signature'>
+
+      <div class="row print-review-row">
+        <div class='col-6 review-key'><strong>Date signed</strong></div>
+        <div class="col-6 review-value">{{ dateOfAcceptance }}</div>
+      </div>
+
+      <div class="pt-4" [innerHTML]='privacyStatement'></div>
+    </div>
+  </common-page-framework>
+</div>
+
+<ng-template #confirmTitle>
+  <button (click)="print($event)" class="btn btn-clear float-right">
+    <strong>Print
+      <i class="fa fa-print fa-lg"
+        aria-hidden="true"></i>
+    </strong>
+  </button>
+  <h1 class='border-bottom'>{{pageTitle}}</h1>
+</ng-template>
+
+<ng-template #confirmMessage>
+  <div>
+    <div class='mt-2 mb-2 confirmation-message'>{{confirmationMessage}}</div>
+  </div>
+
+  <div *ngIf="!isError" class="row">
+    <div class='col-6 review-key'>Date of Submission</div>
+    <div class="col-6 review-value">{{submissionDate}}</div>
+
+    <div class='col-6 review-key'>Reference Number</div>
+    <div class="col-6 review-value">{{referenceNumber}}</div>
+  </div>
+</ng-template>

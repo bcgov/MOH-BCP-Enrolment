@@ -1,0 +1,112 @@
+<!--#region Section  -->
+
+<div class='review-container'>
+  <!--Section - Heading-->
+  <div *ngIf="!hideReviewSection"
+      class="row review--header border-bottom">
+    <div class="col-md-10 pl-0 ml-0">
+      <h2>{{header}}</h2>
+    </div>
+    <div *ngIf="!displayPrintView" class="col-md-2 review--icon">
+      <button class="btn btn-edit" (click)="redirect(redirectPath)" aria-label="Edit">
+        Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <!--Section - Content -->
+  <div *ngIf="!hideReviewSection && !showCheckBoxList"
+        class="col-md-12 ml-0 mt-0 {{displayPrintView? 'pl-2 pt-2 pb-2': 'pl-4 pt-4 pb-4 review--background-color'}}">
+    <div *ngFor="let section of sections; let formIndex=index" >
+      <ng-container *ngIf='section.isSubSection'
+                    [ngTemplateOutlet]='subSectionTemplate'
+                    [ngTemplateOutletContext]="{section:section}">
+      </ng-container>
+      <ng-container *ngIf='!section.isSubSection'
+                    [ngTemplateOutlet]='basicSectionTemplate'
+                    [ngTemplateOutletContext]="{section:section}">
+      </ng-container>
+    </div>
+  </div>
+
+  <!--#endregion -->
+
+  <!--Section - Content -->
+  <div *ngIf="!hideReviewSection && showCheckBoxList"
+        class="col-md-12 ml-0 pl-2 mt-0 {{displayPrintView? '': 'review--background-color'}}">
+    <div *ngFor="let form of sectionItems; let formIndex=index" class="pl-2 pb-2">
+      <div class="row" *ngFor="let item of form; let i=index">
+        <div class='col-md-12'>
+        <span [innerHTML]="item.label"> </span>
+
+          <span class='ml-2'>
+            {{item.value}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--#endregion -->
+
+  <ng-template #subSectionTemplate let-section='section'>
+    <h3 class='mt-3'>{{section.title}}</h3>
+    <div class="row mb-2" *ngFor="let item of section.items; let i=index">
+
+      <ng-container *ngIf='item.label'>
+        <div class='col-md-6 pl-5'>
+          {{item.label}}{{item.hideColon ? '' : ':'}}
+        </div>
+        <div class='col-md-6'>
+          <ng-container *ngIf='containsMultiLine(item.value)'>
+            <b [innerHTML]='getMultiLineHTML(item.value)'></b>
+          </ng-container>
+          <ng-container *ngIf='!containsMultiLine(item.value)'>
+            <b>{{item.value}}</b>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf='!item.label'>
+        <div class='col-md-12'>
+          <ng-container *ngIf='containsMultiLine(item.value)'>
+            <span [innerHTML]='getMultiLineHTML(item.value)'></span>
+          </ng-container>
+          <ng-container *ngIf='!containsMultiLine(item.value)'>
+            {{item.value}}
+          </ng-container>
+        </div>
+      </ng-container>
+      
+    </div>
+  </ng-template>
+
+  <ng-template #basicSectionTemplate let-item='section'>
+    <div class="row">
+      <ng-container *ngIf='item.label'>
+        <div class='col-md-6'>
+          {{item.label}}{{item.hideColon ? '' : ':'}}
+        </div>
+        <div class='col-md-6'>
+          <ng-container *ngIf='containsMultiLine(item.value)'>
+            <b [innerHTML]='getMultiLineHTML(item.value)'></b>
+          </ng-container>
+          <ng-container *ngIf='!containsMultiLine(item.value)'>
+            <b>{{item.value}}</b>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf='!item.label'>
+        <div class='col-md-12'>
+          <ng-container *ngIf='containsMultiLine(item.value)'>
+            <span [innerHTML]='getMultiLineHTML(item.value)'></span>
+          </ng-container>
+          <ng-container *ngIf='!containsMultiLine(item.value)'>
+            {{item.value}}
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+</div>

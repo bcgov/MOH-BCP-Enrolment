@@ -1,0 +1,78 @@
+<form [(formGroup)]="formGroup">
+    <div class="form-group">
+
+      <label class="control-label" for="name">{{facilityLabel}}</label>
+      <input id="facilityName" formControlName="name" class="form-control" maxlength="70">
+
+      <common-error-container
+        [displayError]="formGroup.controls?.name?.touched && formGroup.controls?.name?.errors">
+        <div *ngIf ="formGroup.controls?.name?.errors?.required">
+            {{facilityLabel}} is a required field
+        </div>
+        <div *ngIf ="formGroup.controls?.name?.errors?.pattern">
+            {{facilityLabel}} must contain letters, numbers and/or symbols(e.g. #, @, !).
+        </div>
+      </common-error-container>
+    </div>
+
+    <div class="form-group">
+      <bcp-facility-number name='mspNumber'
+                           formControlName='mspNumber'></bcp-facility-number>
+      <common-error-container [displayError]='showValidationError'>
+        {{ validationErrorMessage }}
+      </common-error-container>
+    </div>
+
+    <div class="form-group">
+      
+      <common-address-validator label='{{physicalAddrLabel}}'
+        formControlName="address"
+        maxlength="60"
+        (select)="physicalAddressSelected($event)"
+        [serviceUrl]="addressServiceUrl">
+      </common-address-validator>
+      <!-- <div>
+        <label class="control-label" for="address">{{physicalAddrLabel}}</label>
+        <input id="Address" formControlName="address" class="form-control" maxlength="60">-->
+        <common-error-container
+          [displayError]="formGroup.controls?.address?.touched && formGroup.controls?.address?.errors">
+          <div *ngIf="formGroup.controls?.address?.errors?.required">
+              {{physicalAddrLabel}} is a required field.
+          </div>
+          <div *ngIf="formGroup.controls?.address?.errors?.pattern">
+              {{physicalAddrLabel}} must contain letters, numbers and/or symbols(e.g. #, @, !).
+          </div>
+        </common-error-container>
+      <!-- </div> -->
+    </div>
+
+    <div class="form-group">
+      <common-city name='city'
+                    formControlName="city"
+                    placeholder=""
+                    [maxlength]="30"></common-city>
+    </div>
+
+    <div>
+      <div class='label'>Province</div>
+      <div class='pb-2 mb-1'>{{formGroup.value.province}}</div>
+    </div>
+
+    <div class="form-group">
+      <common-postal-code name='postalCode'
+                          label='Postal code'
+                          placeholder=''
+                          formControlName='postalCode'></common-postal-code>
+      <common-error-container [displayError]='showValidationError'>
+        {{ validationErrorMessage }}
+      </common-error-container>
+    </div>
+
+    <div class="form-group">
+        <common-phone-number name='faxNumber'
+            formControlName='faxNumber'
+            label='Fax number (optional)'
+            [enablePlaceHolder]='false'
+            [allowInternational]='false'></common-phone-number>
+    </div>
+  </form>
