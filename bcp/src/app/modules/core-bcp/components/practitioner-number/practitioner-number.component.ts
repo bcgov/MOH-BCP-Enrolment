@@ -14,7 +14,7 @@ export class PractitionerNumberComponent extends AbstractFormControl implements 
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,
-    invalidFormat: LabelReplacementTag + ' is invalid format. Please make sure it is numeric and does not contain special characers or spaces.'
+    invalidFormat: LabelReplacementTag + ' is invalid format. Please make sure it is alpha numeric and does not contain special characers or spaces.'
   };
 
   constructor(@Optional() @Self() public controlDir: NgControl) {
@@ -49,7 +49,7 @@ export class PractitionerNumberComponent extends AbstractFormControl implements 
 
   private validateSelf(): ValidationErrors | null {
     if ( this.pracNumber ) {
-      const criteria: RegExp = /^[0-9]*$/;
+      const criteria: RegExp = /^(([A-Z]{1}[0-9]{4})|([0-9]*))$/;
       const result = criteria.test(this.pracNumber);
       return result ? null : { invalidFormat: true };
     }
