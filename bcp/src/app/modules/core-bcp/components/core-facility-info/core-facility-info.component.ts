@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ErrorMessage, Address } from 'moh-common-lib';
 import { BaseDataService } from '../../../../services/base-data.service';
 import { environment } from '../../../../../environments/environment';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 @Component({
   selector: 'bcp-core-facility-info',
@@ -26,7 +27,14 @@ export class CoreFacilityInfoComponent {
   facilityLabel: string = 'Facility or practice name';
   physicalAddrLabel: string = 'Physical address';
 
+  constructor(private spaEnvService: SpaEnvService) {}
+
   physicalAddressSelected(address: Address) {
     this.addressSelected.emit(address);
+  }
+
+  get isAddressValidatorEnabled(): boolean {
+    const env = this.spaEnvService.getValues();
+    return env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 }

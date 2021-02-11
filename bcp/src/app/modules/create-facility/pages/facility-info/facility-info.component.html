@@ -23,7 +23,14 @@
 
       <div class="form-group">
         <!-- NOTE: Removed until we are able to resolve issues with GeoCoder component -->
-        <common-address-validator label='Physical address'
+        <common-geocoder-input *ngIf='!isAddressValidatorEnabled'
+                                label='Physical address'
+                                formControlName="address"
+                                maxlength="60"
+                                (select)="physicalAddressSelected($event)">
+        </common-geocoder-input>
+        <common-address-validator *ngIf='isAddressValidatorEnabled'
+                                label='Physical address'
                                 formControlName="address"
                                 maxlength="60"
                                 (select)="physicalAddressSelected($event)"
@@ -120,8 +127,18 @@
       <form [formGroup]="facilityForm">
 
         <div class="form-group">
-          <common-address-validator label='Mailing address'
-            formControlName="mailingAddress" maxlength="60"
+          <common-geocoder-input
+            *ngIf='!isAddressValidatorEnabled'  
+            label='Mailing address'
+            formControlName="mailingAddress"
+            maxlength="60"
+            (select)="mailingAddressSelected($event)">
+          </common-geocoder-input>
+          <common-address-validator
+            *ngIf='isAddressValidatorEnabled'  
+            label='Mailing address'
+            formControlName="mailingAddress"
+            maxlength="60"
             (select)="mailingAddressSelected($event)"
             [serviceUrl]="addressServiceUrl">
           </common-address-validator>

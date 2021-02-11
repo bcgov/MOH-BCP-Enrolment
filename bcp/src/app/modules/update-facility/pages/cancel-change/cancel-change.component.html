@@ -30,7 +30,15 @@
 
         <div class='ml-4'>
           <div class="form-group">
-            <common-address-validator label='Facility physical address'
+            <common-geocoder-input
+                              *ngIf='!isAddressValidatorEnabled'
+                              label='Facility physical address'
+                              formControlName='changeFacilityAddressPreviousAddress'
+                              maxlength='60'
+                              (select)='changeFacilityAddressPreviousAddressSelected($event)'></common-geocoder-input>
+            <common-address-validator
+                              *ngIf='isAddressValidatorEnabled'
+                              label='Facility physical address'
                               formControlName='changeFacilityAddressPreviousAddress'
                               maxlength='60'
                               (select)='changeFacilityAddressPreviousAddressSelected($event)'
@@ -84,7 +92,15 @@
         <div class='ml-4'>
           <div class="form-group">
             <!-- Label has intentional trailing space for accessiblity validators -->
-            <common-address-validator label='Facility physical address '
+            <common-geocoder-input
+                              *ngIf='!isAddressValidatorEnabled'
+                              label='Facility physical address '
+                              formControlName='changeFacilityAddressNewAddress'
+                              maxlength='60'
+                              (select)='changeFacilityAddressNewAddressSelected($event)'></common-geocoder-input>
+            <common-address-validator
+                              *ngIf='isAddressValidatorEnabled'
+                              label='Facility physical address '
                               formControlName='changeFacilityAddressNewAddress'
                               maxlength='60'
                               (select)='changeFacilityAddressNewAddressSelected($event)'
@@ -159,7 +175,15 @@
       <form [formGroup]="changeMailingAddressFG">
         <div class='ml-4'>
           <div class="form-group">
-            <common-address-validator label='Mailing address'
+            <common-geocoder-input
+                              *ngIf='!isAddressValidatorEnabled'
+                              label='Mailing address'
+                              formControlName='changeMailingAddressPreviousAddress'
+                              maxlength='60'
+                              (select)='changeMailingAddressPreviousAddressSelected($event)'></common-geocoder-input>
+            <common-address-validator
+                              *ngIf='isAddressValidatorEnabled'
+                              label='Mailing address'
                               formControlName='changeMailingAddressPreviousAddress'
                               maxlength='60'
                               (select)='changeMailingAddressPreviousAddressSelected($event)'
@@ -205,7 +229,15 @@
         <div class='ml-4'>
           <div class="form-group">
             <!-- Label has intentional trailing space for accessiblity validators -->
-            <common-address-validator label='Mailing address '
+            <common-geocoder-input
+                              *ngIf='!isAddressValidatorEnabled'
+                              label='Mailing address '
+                              formControlName='changeMailingAddressNewAddress'
+                              maxlength='60'
+                              (select)='changeMailingAddressNewAddressSelected($event)'></common-geocoder-input>
+            <common-address-validator
+                              *ngIf='isAddressValidatorEnabled'
+                              label='Mailing address '
                               formControlName='changeMailingAddressNewAddress'
                               maxlength='60'
                               (select)='changeMailingAddressNewAddressSelected($event)'
