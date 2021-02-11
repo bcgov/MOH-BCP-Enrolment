@@ -7,7 +7,6 @@ const soap = require('easy-soap-request');
 const soapRequest = require('./soapRequest.js');
 var packageJSON = require('../package.json');
 var winston = require('winston');
-const Traceroute = require('nodejs-traceroute');
 
 const clientCert = base64Decode(process.env.MUTUAL_TLS_PEM_CERT);
 const clientKey = base64Decode(process.env.MUTUAL_TLS_PEM_KEY_BASE64);
@@ -81,40 +80,6 @@ app.get('/test', function (req, res) {
     return;
 });
 
-app.get('/traceroute', function (req, res) {
-    const address = req.query.address;
-    let responseBody = '';
-
-    res.setHeader('Content-Type', 'text/plain');
- 
-    try {
-        const tracer = new Traceroute();
-        tracer
-            .on('pid', (pid) => {
-                console.log(`pid: ${pid}`);
-                responseBody += `pid: ${pid}\n`;
-            })
-            .on('destination', (destination) => {
-                console.log(`destination: ${destination}`);
-                responseBody += `destination: ${destination}\n`;
-            })
-            .on('hop', (hop) => {
-                console.log(`hop: ${JSON.stringify(hop)}`);
-                responseBody += `hop: ${JSON.stringify(hop)}\n`;
-            })
-            .on('close', (code) => {
-                console.log(`close: code ${code}`);
-                responseBody += `close: code ${code}\n`;
-                res.send(responseBody);
-            });
-    
-        tracer.trace(address);
-    } catch (ex) {
-        console.log(ex);
-        res.send(ex);
-    }
-});
-
 app.get('/address', function (req, res) {
 
     const address = req.query.address;
@@ -174,6 +139,76 @@ app.get('/address', function (req, res) {
             }
             else
                 reply.Address.push(formatAddressData(dataSet.Address));
+
+            res.send(reply);
+        })
+        .catch(err => {
+            const error = { "error": err.message || err };
+            winston.error(err.message);
+            res.send(error);
+            console.log(error);
+        });
+});
+
+app.get('/address-raw', function (req, res) {
+
+    const address = req.query.address;
+    const url = soapRequest.address.url;
+    const myheaders = soapRequest.address.headers;
+    const xml = soapRequest.address.request
+                    .replace("{address}", address)
+                    .replace("{country}", "Canada");
+
+    const agent = new https.Agent({
+        rejectUnauthorized: false,
+        cert: clientCert,
+        key: clientKey,
+    });
+
+    const extraOpts = {
+        httpsAgent: agent
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+
+    const opts = {
+        url: url, headers: myheaders,
+        xml: xml,
+        timeout: 5000,
+        extraOpts: extraOpts
+    };
+
+    const soapOpts = {
+        url: url, headers: myheaders,
+        xml: xml,
+        timeout: 5000,
+        extraOpts: extraOpts,
+        checkServerIdentity: () => { return null; },
+    };
+
+    soap(soapOpts)
+        .then(data => {
+            const { headers, body, statusCode } = data.response;
+
+            //console.log(headers);
+            //console.log(statusCode);
+            const result = xmlConvert.xml2json(body, { compact: true, spaces: 2, alwaysChildren: false });
+            const json = JSON.parse(result);
+
+            // This is a hack.  Need to parse more elegantly
+            const processResult = json['S:Envelope']['S:Body'].ProcessResponse.ProcessResult;
+            const dataSet = processResult.Results.Result.ResultDataSet.ResultData;
+
+            // If dataSet is an Array, we have multiple responses
+            // console.log(dataSet.length)
+            const reply = { Address: [] }
+            if (dataSet.length) {
+                for (let address of dataSet) {
+                    reply.Address.push(address.Address);
+                }
+            }
+            else
+                reply.Address.push(dataSet.Address);
 
             res.send(reply);
         })
@@ -262,6 +297,7 @@ function formatAddressData(data) {
     result.Country = getTextData(data, 'Country');
     result.Residue = getTextData(data, 'Residue');
     result.DeliveryAddressLines = getTextData(data, 'DeliveryAddressLines');
+    result.AddressLines = getAddressLines(data);
     result.AddressComplete = data.AddressComplete._text.replace('\n', ' ');
     return result;
 }
@@ -271,5 +307,24 @@ function getTextData(data, key) {
         return data[key].string._text;
     } else {
         return '';
+    }
+}
+
+function getAddressLines(data) {
+    if (!data) {
+        return [];
+    } else if (data.DeliveryAddressLines
+               && Array.isArray(data.DeliveryAddressLines.string)) {
+        const lines = [];
+        for(let i=0; i<data.DeliveryAddressLines.string.length; i++) {
+            lines.push(data.DeliveryAddressLines.string[i]._text);
+        }
+        return lines;
+    } else if (data.DeliveryAddressLines
+               && data.DeliveryAddressLines.string
+               && data.DeliveryAddressLines.string._text) {
+        return [data.DeliveryAddressLines.string._text];
+    } else {
+        return [];
     }
 }
