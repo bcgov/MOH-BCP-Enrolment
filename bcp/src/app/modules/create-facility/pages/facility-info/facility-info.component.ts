@@ -14,6 +14,7 @@ import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-a
 import { CreateFacilityApiService } from '../../services/create-facility-api.service';
 import { IRadioItems } from 'moh-common-lib/lib/components/radio/radio.component';
 import { environment } from '../../../../../environments/environment';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 @Component({
   selector: 'app-facility-info',
@@ -63,7 +64,8 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     private api: CreateFacilityApiService,
     private cdr: ChangeDetectorRef,
     private splunkLoggerService: SplunkLoggerService,
-    protected containerService: ContainerService) {
+    protected containerService: ContainerService,
+    private spaEnvService: SpaEnvService) {
     super(router, containerService, pageStateService);
     this.validFormControl = validMultiFormControl;
   }
@@ -287,12 +289,16 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     }
   }
 
+  get isAddressValidatorEnabled(): boolean {
+    const env = this.spaEnvService.getValues();
+    return env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
+  }
+
   physicalAddressSelected(address: Address) {
     // console.log('%c ADDRESS (physicalAddr): %o', 'color:red', address);
 
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -305,13 +311,18 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     this.facilityForm.patchValue({
       address: address.addressLine1,
       city: address.city,
-      postalCode: address.postal
     });
+    if (this.isAddressValidatorEnabled) {
+      this.facilityForm.patchValue({
+        postalCode: address.postal
+      });
+    }
 
     this.dataService.facInfoPhysicalAddress = address.addressLine1;
     this.dataService.facInfoCity = address.city;
-    this.dataService.facInfoPostalCode = address.postal;
-
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.facInfoPostalCode = address.postal;
+    }
     // this.physicalAddress = address;
   }
 
@@ -319,18 +330,23 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     // console.log('%c ADDRESS: %o', 'color:red', address);
 
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     this.facilityForm.patchValue({
       mailingAddress: address.addressLine1,
-      mailingCity: address.city,
-      mailingPostalCode: address.postal
+      mailingCity: address.city
     });
+    if (this.isAddressValidatorEnabled) {
+      this.facilityForm.patchValue({
+        mailingPostalCode: address.postal
+      });
+    }
     this.dataService.facInfoMailAddress = address.addressLine1;
     this.dataService.facInfoMailCity = address.city;
-    this.dataService.facInfoMailPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.facInfoMailPostalCode = address.postal;
+    }
    // this.mailingAddress = address;
   }
 

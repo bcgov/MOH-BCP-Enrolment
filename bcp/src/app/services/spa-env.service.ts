@@ -15,6 +15,7 @@ const serverEnvs = {
   SPA_ENV_BCP_MAINTENANCE_START: '',
   SPA_ENV_BCP_MAINTENANCE_END: '',
   SPA_ENV_BCP_MAINTENANCE_MESSAGE: '',
+  SPA_ENV_ENABLE_ADDRESS_VALIDATOR: '',
 };
 
 // Used in HTTP request
@@ -64,6 +65,10 @@ export class SpaEnvService extends AbstractHttpService {
     // When the SpaEnv server is being deployed it can return an HTML error
     // page, and it should resolve shortly, so we try again.
     return this.post<SpaEnvResponse>(url, null).pipe(retry(3));
+  }
+
+  public getValues(): SpaEnvResponse {
+    return this._values.getValue();
   }
 
   protected handleError(error: HttpErrorResponse) {

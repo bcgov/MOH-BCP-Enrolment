@@ -24,8 +24,16 @@
     </div>
 
     <div class="form-group">
-      
-      <common-address-validator label='{{physicalAddrLabel}}'
+      <common-geocoder-input
+        *ngIf='!isAddressValidatorEnabled'
+        label='{{physicalAddrLabel}}'
+        formControlName="address"
+        maxlength="60"
+        (select)="physicalAddressSelected($event)">
+      </common-geocoder-input>
+      <common-address-validator
+        *ngIf='isAddressValidatorEnabled'
+        label='{{physicalAddrLabel}}'
         formControlName="address"
         maxlength="60"
         (select)="physicalAddressSelected($event)"

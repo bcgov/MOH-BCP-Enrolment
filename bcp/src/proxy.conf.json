@@ -1,6 +1,6 @@
 {
     "/bcp/api": {
-        "target": "https://moh-bcp-dev.pathfinder.gov.bc.ca",
+        "target": "https://bcp-web-e1aae2-dev.apps.silver.devops.gov.bc.ca",
         "changeOrigin": true,
         "secure": false
     },

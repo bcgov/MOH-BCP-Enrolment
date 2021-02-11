@@ -10,6 +10,7 @@ import { RegisterPractitionerApiService } from '../../services/register-practiti
 import { stripPostalCodeSpaces } from '../../../core-bcp/models/helperFunc';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
 import { parseISO, compareAsc, isAfter } from 'date-fns';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterV
                private fb: FormBuilder,
                private dataService: RegisterPractitionerDataService,
                private splunkLoggerService: SplunkLoggerService,
-               private apiService: RegisterPractitionerApiService  ) {
+               private apiService: RegisterPractitionerApiService,
+               private spaEnvService: SpaEnvService) {
     super(router, containerService, pageStateService);
   }
 
@@ -68,8 +70,7 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterV
 
   addressSelected(address: Address) {
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -81,13 +82,24 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterV
     }
     this.formGroup.patchValue({
       address: address.addressLine1,
-      city: address.city,
-      postalCode: address.postal
+      city: address.city
     });
+    if (this.isAddressValidatorEnabled) {
+      this.formGroup.patchValue({
+        postalCode: address.postal
+      });
+    }
     this.dataService.pracFacilityAddress = address.addressLine1;
     this.dataService.pracFacilityCity = address.city;
-    this.dataService.pracFacilityPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.pracFacilityPostalCode = address.postal;
+    }
     this.address = address;
+  }
+
+  get isAddressValidatorEnabled(): boolean {
+    const env = this.spaEnvService.getValues();
+    return env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
   continue() {

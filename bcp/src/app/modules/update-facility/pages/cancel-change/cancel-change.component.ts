@@ -11,6 +11,7 @@ import { SplunkLoggerService } from '../../../../services/splunk-logger.service'
 import { formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
 import { validatePostalCode } from '../../../core-bcp/models/validators';
 import { environment } from '../../../../../environments/environment';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
                private fb: FormBuilder,
                public dataService: UpdateFacilityDataService,
                private splunkLoggerService: SplunkLoggerService,
-               private apiService: UpdateFacilityApiService ) {
+               private apiService: UpdateFacilityApiService,
+               private spaEnvService: SpaEnvService) {
     super(router, containerService, pageStateService);
   }
 
@@ -364,10 +366,14 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     }, 50);
   }
 
+  get isAddressValidatorEnabled(): boolean {
+    const env = this.spaEnvService.getValues();
+    return  env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
+  }
+
   changeFacilityAddressPreviousAddressSelected(address: Address) {
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -380,17 +386,22 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     this.changeFacilityAddressFG.patchValue({
       changeFacilityAddressPreviousAddress: address.addressLine1,
       changeFacilityAddressPreviousCity: address.city,
-      changeFacilityAddressPreviousPostalCode: address.postal
     });
+    if (this.isAddressValidatorEnabled) {
+      this.changeFacilityAddressFG.patchValue({
+        changeFacilityAddressPreviousPostalCode: address.postal
+      });
+    }
     this.dataService.changeFacilityAddressPreviousAddress = address.addressLine1;
     this.dataService.changeFacilityAddressPreviousCity = address.city;
-    this.dataService.changeFacilityAddressPreviousPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.changeFacilityAddressPreviousPostalCode = address.postal;
+    }
   }
 
   changeFacilityAddressNewAddressSelected(address: Address) {
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -402,18 +413,23 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     }
     this.changeFacilityAddressFG.patchValue({
       changeFacilityAddressNewAddress: address.addressLine1,
-      changeFacilityAddressNewCity: address.city,
-      changeFacilityAddressNewPostalCode: address.postal
+      changeFacilityAddressNewCity: address.city
     });
+    if (this.isAddressValidatorEnabled) {
+      this.changeFacilityAddressFG.patchValue({
+        changeFacilityAddressNewPostalCode: address.postal
+      });
+    }
     this.dataService.changeFacilityAddressNewAddress = address.addressLine1;
     this.dataService.changeFacilityAddressNewCity = address.city;
-    this.dataService.changeFacilityAddressNewPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.changeFacilityAddressNewPostalCode = address.postal;
+    }
   }
 
   changeMailingAddressPreviousAddressSelected(address: Address) {
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -425,18 +441,23 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     }
     this.changeMailingAddressFG.patchValue({
       changeMailingAddressPreviousAddress: address.addressLine1,
-      changeMailingAddressPreviousCity: address.city,
-      changeMailingAddressPreviousPostalCode: address.postal
+      changeMailingAddressPreviousCity: address.city
     });
+    if (this.isAddressValidatorEnabled) {
+      this.changeMailingAddressFG.patchValue({
+        changeMailingAddressPreviousPostalCode: address.postal
+      });
+    }
     this.dataService.changeMailingAddressPreviousAddress = address.addressLine1;
     this.dataService.changeMailingAddressPreviousCity = address.city;
-    this.dataService.changeMailingAddressPreviousPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.changeMailingAddressPreviousPostalCode = address.postal;
+    }
   }
 
   changeMailingAddressNewAddressSelected(address: Address) {
     if (!address.addressLine1
-      && !address.city
-      && !address.postal) {
+      && !address.city) {
       return;
     }
     if (address.province !== BRITISH_COLUMBIA) {
@@ -448,12 +469,18 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     }
     this.changeMailingAddressFG.patchValue({
       changeMailingAddressNewAddress: address.addressLine1,
-      changeMailingAddressNewCity: address.city,
-      changeMailingAddressNewPostalCode: address.postal
+      changeMailingAddressNewCity: address.city
     });
+    if (this.isAddressValidatorEnabled) {
+      this.changeMailingAddressFG.patchValue({
+        changeMailingAddressNewPostalCode: address.postal
+      });
+    }
     this.dataService.changeMailingAddressNewAddress = address.addressLine1;
     this.dataService.changeMailingAddressNewCity = address.city;
-    this.dataService.changeMailingAddressNewPostalCode = address.postal;
+    if (this.isAddressValidatorEnabled) {
+      this.dataService.changeMailingAddressNewPostalCode = address.postal;
+    }
   }
 
   get dateErrorMessage(): ErrorMessage {
