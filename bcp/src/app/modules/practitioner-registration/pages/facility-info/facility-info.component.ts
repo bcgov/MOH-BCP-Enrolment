@@ -11,6 +11,7 @@ import { stripPostalCodeSpaces } from '../../../core-bcp/models/helperFunc';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
 import { parseISO, compareAsc, isAfter } from 'date-fns';
 import { SpaEnvService } from '../../../../services/spa-env.service';
+import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
 
 
 @Component({
@@ -72,6 +73,9 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterV
     if (!address.addressLine1
       && !address.city) {
       return;
+    }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
     }
     if (address.province !== BRITISH_COLUMBIA) {
       this.formGroup.patchValue({

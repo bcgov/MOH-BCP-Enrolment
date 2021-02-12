@@ -43,7 +43,8 @@
                               maxlength='60'
                               (select)='changeFacilityAddressPreviousAddressSelected($event)'
                               [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors">
+            <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                    [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors">
               <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.required">
                   Facility address is a required field
               </div>
@@ -105,7 +106,8 @@
                               maxlength='60'
                               (select)='changeFacilityAddressNewAddressSelected($event)'
                               [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors">
+            <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                    [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors">
               <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.required">
                   Facility address is a required field
               </div>
@@ -188,7 +190,8 @@
                               maxlength='60'
                               (select)='changeMailingAddressPreviousAddressSelected($event)'
                               [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container [displayError]="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors">
+            <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                    [displayError]="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors">
               <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.required">
                   Mailing address is a required field
               </div>
@@ -242,7 +245,8 @@
                               maxlength='60'
                               (select)='changeMailingAddressNewAddressSelected($event)'
                               [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container [displayError]="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors">
+            <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                    [displayError]="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors">
               <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.required">
                   Mailing address is a required field
               </div>

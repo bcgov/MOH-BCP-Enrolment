@@ -40,7 +40,7 @@
           <label class="control-label" for="address">Physical address</label>
           <input id="PhysAddress" formControlName="address" class="form-control" maxlength="60">-->
 
-          <common-error-container
+          <common-error-container *ngIf='!isAddressValidatorEnabled'
             [displayError]="facilityForm.controls?.address?.touched && facilityForm.controls?.address?.errors">
             <div *ngIf="facilityForm.controls?.address?.errors?.required">
                 Facility Address is a required field
@@ -144,7 +144,7 @@
           </common-address-validator>
         <!-- <label class="control-label" for="mailingAddress">Mailing address</label>
         <input id="MailingsAddress" formControlName="mailingAddress" class="form-control" maxlength="60">-->
-        <common-error-container
+        <common-error-container *ngIf='!isAddressValidatorEnabled'
           [displayError]="facilityForm.controls?.mailingAddress?.touched && facilityForm.controls?.mailingAddress?.errors">
           <div *ngIf="facilityForm.controls?.mailingAddress?.errors?.required">
               Facility Mailing Address is a required field.

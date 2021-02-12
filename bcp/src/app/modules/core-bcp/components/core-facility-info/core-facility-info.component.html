@@ -42,7 +42,7 @@
       <!-- <div>
         <label class="control-label" for="address">{{physicalAddrLabel}}</label>
         <input id="Address" formControlName="address" class="form-control" maxlength="60">-->
-        <common-error-container
+        <common-error-container *ngIf='!isAddressValidatorEnabled'
           [displayError]="formGroup.controls?.address?.touched && formGroup.controls?.address?.errors">
           <div *ngIf="formGroup.controls?.address?.errors?.required">
               {{physicalAddrLabel}} is a required field.
