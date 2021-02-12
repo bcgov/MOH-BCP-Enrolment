@@ -12,6 +12,7 @@ import { formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
 import { validatePostalCode } from '../../../core-bcp/models/validators';
 import { environment } from '../../../../../environments/environment';
 import { SpaEnvService } from '../../../../services/spa-env.service';
+import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
 
 
 @Component({
@@ -383,6 +384,9 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
       alert('Please select a valid BC address.');
       return;
     }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
+    }
     this.changeFacilityAddressFG.patchValue({
       changeFacilityAddressPreviousAddress: address.addressLine1,
       changeFacilityAddressPreviousCity: address.city,
@@ -410,6 +414,9 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
       });
       alert('Please select a valid BC address.');
       return;
+    }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
     }
     this.changeFacilityAddressFG.patchValue({
       changeFacilityAddressNewAddress: address.addressLine1,
@@ -439,6 +446,9 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
       alert('Please select a valid BC address.');
       return;
     }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
+    }
     this.changeMailingAddressFG.patchValue({
       changeMailingAddressPreviousAddress: address.addressLine1,
       changeMailingAddressPreviousCity: address.city
@@ -466,6 +476,9 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
       });
       alert('Please select a valid BC address.');
       return;
+    }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
     }
     this.changeMailingAddressFG.patchValue({
       changeMailingAddressNewAddress: address.addressLine1,

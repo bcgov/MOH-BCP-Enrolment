@@ -15,6 +15,7 @@ import { CreateFacilityApiService } from '../../services/create-facility-api.ser
 import { IRadioItems } from 'moh-common-lib/lib/components/radio/radio.component';
 import { environment } from '../../../../../environments/environment';
 import { SpaEnvService } from '../../../../services/spa-env.service';
+import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
 
 @Component({
   selector: 'app-facility-info',
@@ -308,6 +309,9 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
       alert('Please select a valid BC address.');
       return;
     }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
+    }
     this.facilityForm.patchValue({
       address: address.addressLine1,
       city: address.city,
@@ -332,6 +336,9 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     if (!address.addressLine1
       && !address.city) {
       return;
+    }
+    if (this.isAddressValidatorEnabled) {
+      address.addressLine1 = getFullAddressText(address);
     }
     this.facilityForm.patchValue({
       mailingAddress: address.addressLine1,
