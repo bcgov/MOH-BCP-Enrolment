@@ -1,6 +1,6 @@
 {
   "name": "moh-bcp",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
