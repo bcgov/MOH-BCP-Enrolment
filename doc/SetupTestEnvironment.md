@@ -8,22 +8,40 @@
 oc project ...-test
 ```
 
-2. create ./openshift/templates/nsp-bcp-to-maximus-test.yaml  (copy from -dev.yaml)
-   change the IP of proxy to test proxy
-   the apply using:
+2. Switch Apporeto to Kubernetes network policy
+Make sure you're in test:
 ```console
-oc process -f nsp-bcp-to-maximus-test.yaml \
-  -p NAMESPACE=$(oc project --short) | \
-  oc apply -f -
+oc get nsp
+```
+And obtain name (such as builder-to-internet), and delete it, ie:
+```console
+oc delete nsp address-service-to-address-doctor msp-service-to-cloudflare msp-service-to-maximus-servers msp-service-to-splunk-forwarder msp-to-address-service msp-to-captcha-service msp-to-msp-service  msp-to-spa-env-server msp-to-splunk-forwarder splunk-forwarder-to-cloudflare splunk-forwarder-to-maximus-servers
 ```
 
-3. apply the internal NSPs:
+Same with endpoints:
 ```console
-oc process -f nsp-bcpweb-to-all.yaml \
-  -p NAMESPACE=$(oc project --short) | \
-  oc apply -f -
+oc get en
 ```
-4. allow the test project to pull from tools:
+And obtain names, then delete, ie:
+```console
+oc delete en addressdoctor cloudflare maximus-servers
+```
+
+3. apply the quickstart (for tools, make sure your default oc project is tools):
+cd /openshift/templates
+```console
+oc process -f quickstart.yaml NAMESPACE_PREFIX=e1aae2 -p ENVIRONMENT=test | oc apply -f -
+```
+
+4. To check things out:
+The oc process should have created 3 networkpolicies and 2 network security policies.  To check them:
+oc get nsp
+oc get networkpolicy
+To look more in detail, for example:
+oc describe nsp/any-to-any
+oc describe networkpolicy/allow-all-internal
+
+5. allow the test project to pull from tools:
    Go to the test project (oc project e1aae2-test).
 ```console
 oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n e1aae2-tools
@@ -64,12 +82,13 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-test.txt | oc 
 ```console
 oc process -f openshift/templates/config.yaml --param-file=params-test.txt | oc apply -f -
 ```
+
 5. create the trio of dc, service, routes using the deploy.yaml file:
 ```console
 oc process -f openshift/templates/deploy.yaml --param-file=params-test.txt | oc apply -f -
 ```
 
-## some checks in the new test environment (and compare with dev):
+## some checks in the new test environment (and compare with test):
 
 1. check the dc's
    oc get dc
