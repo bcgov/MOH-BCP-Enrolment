@@ -27,10 +27,9 @@ And obtain names, then delete, ie:
 oc delete en addressdoctor cloudflare maximus-servers
 ```
 
-3. apply the quickstart (for tools, make sure your default oc project is tools):
-cd /openshift/templates
+3. Apply the quickstart bcpweb to all (for dev, make sure your default oc project is dev):
 ```console
-oc process -f quickstart.yaml NAMESPACE_PREFIX=e1aae2 -p ENVIRONMENT=dev | oc apply -f -
+oc process -f quickbcpweb-toall.yaml NAMESPACE=e1aae2-dev | oc apply -f -
 ```
 
 4. To check things out:
@@ -108,7 +107,7 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-dev.txt | oc a
    in cases of not working, delete the objects and recreate.
 
 4. check the external networks
-   oc get ne
+   oc get en
    oc get ns ... -o yaml
 
 5. check secrets

@@ -27,11 +27,10 @@ And obtain names, then delete, ie:
 oc delete en addressdoctor cloudflare maximus-servers
 ```
 
-3. apply the quickstart (for tools, make sure your default oc project is tools):
-cd /openshift/templates
+3. Apply the quickstart bcpweb to all (for dev, make sure your default oc project is dev):
 ```console
-oc process -f quickstart.yaml NAMESPACE_PREFIX=e1aae2 -p ENVIRONMENT=test | oc apply -f -
-```
+oc process -f quickbcpweb-toall.yaml NAMESPACE=e1aae2-test | oc apply -f -
+``
 
 4. To check things out:
 The oc process should have created 3 networkpolicies and 2 network security policies.  To check them:

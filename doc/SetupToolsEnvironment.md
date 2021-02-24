@@ -190,9 +190,9 @@ oc get en
 And obtain names, then delete, ie:
 oc delete en all-things-external all-things-external-builder
 
-apply the quickstart (for tools, make sure your default oc project is tools):
+apply the quickstart bcpweb to all (for tools, make sure your default oc project is tools):
 cd /openshift/templates
-oc process -f quickstart.yaml NAMESPACE_PREFIX=e1aae2 -p ENVIRONMENT=tools | oc apply -f -
+oc process -f quickbcpweb-toall.yaml NAMESPACE=e1aae2-tools | oc apply -f -
 
 To check things out:
 The oc process should have created 3 networkpolicies and 2 network security policies.  To check them:
