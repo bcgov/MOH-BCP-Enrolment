@@ -1,10 +1,34 @@
 <h1>{{pageTitle}}</h1>
 <p class="border-bottom">Provide facility information for the community-based office where you qualify as an Eligible Practitioner.</p>
 
-<bcp-core-facility-info name='facInfo'
+<bcp-core-facility-info *ngIf='!isAddressValidatorEnabled'
+  name='facInfo'
   [formGroup]='formGroup'
   [showValidationError]='showValidationError'
   (addressSelected)='addressSelected($event)'></bcp-core-facility-info>
+
+<div class="row"
+     *ngIf='isAddressValidatorEnabled'>
+  <div class="col-md-6">
+    <bcp-core-facility-info
+      name='facInfo'
+      [formGroup]='formGroup'
+      [showValidationError]='showValidationError'
+      (addressSelected)='addressSelected($event)'></bcp-core-facility-info>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-5 aside-col">
+    <aside>
+      <h2>Tip</h2>
+      <p>
+        As you type the street address, this form will suggest valid postal addresses.
+        Click an address to automatically enter it.
+        If the address has a suite or apartment number, please type it with digits, no spaces, and a dash (-) before the street address.
+        For example, 111-215 Sample Road. If the address does not appear in the list of suggested postal addresses, please type it manually.
+      </p>
+    </aside>
+  </div>
+</div>
 
 <common-error-container [displayError]='systemDownError'>
   Unable to continue, system unavailable. Please try again later.
