@@ -22,12 +22,12 @@
   },
   "homepage": "https://github.com/bcgov/MSP-BCP-Enrolment/address-service/#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "easy-soap-request": "^3.2.0",
     "express": "^4.15.0",
     "http-proxy-middleware": "^0.20.0",
     "json-stringify-safe": "^5.0.1",
-    "jsonwebtoken": "^7.3.0",
+    "jsonwebtoken": "^8.3.0",
     "nodejs-traceroute": "^1.2.0",
     "winston": "^2.3.1",
     "xml-js": "^1.6.11"
