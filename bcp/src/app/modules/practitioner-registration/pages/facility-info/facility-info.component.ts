@@ -103,7 +103,7 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterV
 
   get isAddressValidatorEnabled(): boolean {
     const env = this.spaEnvService.getValues();
-    return env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
+    return env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
   continue() {

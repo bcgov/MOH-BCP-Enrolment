@@ -29,61 +29,80 @@
         <!-- Change Facility Address -->
 
         <div class='ml-4'>
-          <div class="form-group">
-            <common-geocoder-input
-                              *ngIf='!isAddressValidatorEnabled'
-                              label='Facility physical address'
-                              formControlName='changeFacilityAddressPreviousAddress'
-                              maxlength='60'
-                              (select)='changeFacilityAddressPreviousAddressSelected($event)'></common-geocoder-input>
-            <common-address-validator
-                              *ngIf='isAddressValidatorEnabled'
-                              label='Facility physical address'
-                              formControlName='changeFacilityAddressPreviousAddress'
-                              maxlength='60'
-                              (select)='changeFacilityAddressPreviousAddressSelected($event)'
-                              [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container *ngIf='!isAddressValidatorEnabled'
-                                    [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors">
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.required">
-                  Facility address is a required field
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <common-geocoder-input
+                                  *ngIf='!isAddressValidatorEnabled'
+                                  label='Facility physical address'
+                                  formControlName='changeFacilityAddressPreviousAddress'
+                                  maxlength='60'
+                                  (select)='changeFacilityAddressPreviousAddressSelected($event)'></common-geocoder-input>
+                <common-address-validator
+                                  *ngIf='isAddressValidatorEnabled'
+                                  label='Facility physical address'
+                                  formControlName='changeFacilityAddressPreviousAddress'
+                                  maxlength='60'
+                                  (select)='changeFacilityAddressPreviousAddressSelected($event)'
+                                  [serviceUrl]='addressServiceUrl'></common-address-validator>
+                <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                        [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors">
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.required">
+                      Facility address is a required field
+                  </div>
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.maxlength">
+                      Facility address max length must be 60 or fewer characters.
+                  </div>
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.pattern">
+                      Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                  </div>
+                </common-error-container>
               </div>
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.maxlength">
-                  Facility address max length must be 60 or fewer characters.
+
+              <div class="form-group">
+                <common-city label='City'
+                            name="changeFacilityAddressPreviousCity"
+                            formControlName="changeFacilityAddressPreviousCity"
+                            placeholder=""
+                            [maxlength]="30"></common-city>
               </div>
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.pattern">
-                  Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+
+              <div class="form-group">
+                <div class='label'>Province</div>
+                <div class='pb-2'>British Columbia</div>
               </div>
-            </common-error-container>
-          </div>
 
-          <div class="form-group">
-            <common-city label='City'
-                        name="changeFacilityAddressPreviousCity"
-                        formControlName="changeFacilityAddressPreviousCity"
-                        placeholder=""
-                        [maxlength]="30"></common-city>
+              <div class="form-group">
+                <common-postal-code name="changeFacilityAddressPreviousPostalCode"
+                                    label='Postal code'
+                                    placeholder=''
+                                    formControlName="changeFacilityAddressPreviousPostalCode">
+                </common-postal-code>
+              </div>
+            </div>
+            <div class="col-md-4 aside-col"
+                 *ngIf='isAddressValidatorEnabled'>
+              <aside>
+                <h2>Tip</h2>
+                <p>
+                  As you type the street address, this form will suggest valid postal addresses.
+                  Click an address to automatically enter it.
+                  If the address has a suite or apartment number, please type it with digits, no spaces, and a dash (-) before the street address.
+                  For example, 111-215 Sample Road. If the address does not appear in the list of suggested postal addresses, please type it manually.
+                </p>
+              </aside>
+            </div>
           </div>
-
-          <div class="form-group">
-            <div class='label'>Province</div>
-            <div class='pb-2'>British Columbia</div>
-          </div>
-
-          <div class="form-group">
-            <common-postal-code name="changeFacilityAddressPreviousPostalCode"
-                                label='Postal code'
-                                placeholder=''
-                                formControlName="changeFacilityAddressPreviousPostalCode">
-            </common-postal-code>
-          </div>
-
-          <div class="form-group">
-            <common-phone-number name='changeFacilityAddressPreviousFax'
-                                formControlName='changeFacilityAddressPreviousFax'
-                                label='Contact fax number (optional)'
-                                [enablePlaceHolder]='false'
-                                [allowInternational]='false'></common-phone-number>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <common-phone-number name='changeFacilityAddressPreviousFax'
+                                    formControlName='changeFacilityAddressPreviousFax'
+                                    label='Contact fax number (optional)'
+                                    [enablePlaceHolder]='false'
+                                    [allowInternational]='false'></common-phone-number>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -91,72 +110,81 @@
         <hr/>
 
         <div class='ml-4'>
-          <div class="form-group">
-            <!-- Label has intentional trailing space for accessiblity validators -->
-            <common-geocoder-input
-                              *ngIf='!isAddressValidatorEnabled'
-                              label='Facility physical address '
-                              formControlName='changeFacilityAddressNewAddress'
-                              maxlength='60'
-                              (select)='changeFacilityAddressNewAddressSelected($event)'></common-geocoder-input>
-            <common-address-validator
-                              *ngIf='isAddressValidatorEnabled'
-                              label='Facility physical address '
-                              formControlName='changeFacilityAddressNewAddress'
-                              maxlength='60'
-                              (select)='changeFacilityAddressNewAddressSelected($event)'
-                              [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container *ngIf='!isAddressValidatorEnabled'
-                                    [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors">
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.required">
-                  Facility address is a required field
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <!-- Label has intentional trailing space for accessiblity validators -->
+                <common-geocoder-input
+                                  *ngIf='!isAddressValidatorEnabled'
+                                  label='Facility physical address '
+                                  formControlName='changeFacilityAddressNewAddress'
+                                  maxlength='60'
+                                  (select)='changeFacilityAddressNewAddressSelected($event)'></common-geocoder-input>
+                <common-address-validator
+                                  *ngIf='isAddressValidatorEnabled'
+                                  label='Facility physical address '
+                                  formControlName='changeFacilityAddressNewAddress'
+                                  maxlength='60'
+                                  (select)='changeFacilityAddressNewAddressSelected($event)'
+                                  [serviceUrl]='addressServiceUrl'></common-address-validator>
+                <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                        [displayError]="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.touched && changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors">
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.required">
+                      Facility address is a required field
+                  </div>
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.maxlength">
+                      Facility address max length must be 60 or fewer characters.
+                  </div>
+                  <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.pattern">
+                      Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                  </div>
+                </common-error-container>
               </div>
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.maxlength">
-                  Facility address max length must be 60 or fewer characters.
+    
+              <div class="form-group">
+                <common-city label='City'
+                              name="changeFacilityAddressNewCity"
+                              formControlName="changeFacilityAddressNewCity"
+                              placeholder=""
+                              [maxlength]="30"></common-city>
               </div>
-              <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.pattern">
-                  Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+    
+              <div class="form-group">
+                <div class='label'>Province</div>
+                <div class='pb-2'>British Columbia</div>
               </div>
-            </common-error-container>
-          </div>
-
-          <div class="form-group">
-            <common-city label='City'
-                          name="changeFacilityAddressNewCity"
-                          formControlName="changeFacilityAddressNewCity"
-                          placeholder=""
-                          [maxlength]="30"></common-city>
-          </div>
-
-          <div class="form-group">
-            <div class='label'>Province</div>
-            <div class='pb-2'>British Columbia</div>
-          </div>
-
-          <div class="form-group">
-            <common-postal-code name="changeFacilityAddressNewPostalCode"
-                                label='Postal code'
-                                placeholder=''
-                                formControlName="changeFacilityAddressNewPostalCode">
-            </common-postal-code>
-          </div>
-
-          <div class="form-group">
-            <common-phone-number name='changeFacilityAddressNewFax'
-                                formControlName='changeFacilityAddressNewFax'
-                                label='Contact fax number (optional)'
-                                [enablePlaceHolder]='false'
-                                [allowInternational]='false'></common-phone-number>
+    
+              <div class="form-group">
+                <common-postal-code name="changeFacilityAddressNewPostalCode"
+                                    label='Postal code'
+                                    placeholder=''
+                                    formControlName="changeFacilityAddressNewPostalCode">
+                </common-postal-code>
+              </div>
+    
+              <div class="form-group">
+                <common-phone-number name='changeFacilityAddressNewFax'
+                                    formControlName='changeFacilityAddressNewFax'
+                                    label='Contact fax number (optional)'
+                                    [enablePlaceHolder]='false'
+                                    [allowInternational]='false'></common-phone-number>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <common-date name='changeFacilityAddressEffectiveDate'
-                       formControlName='changeFacilityAddressEffectiveDate'
-                       label='Effective date of address change'
-                       [dateRangeStart]='retroActiveStartDate'
-                       [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <common-date name='changeFacilityAddressEffectiveDate'
+                            formControlName='changeFacilityAddressEffectiveDate'
+                            label='Effective date of address change'
+                            [dateRangeStart]='retroActiveStartDate'
+                            [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+            </div>
+          </div>
         </div>
+        
       </form>
       
     </div>
@@ -176,53 +204,69 @@
 
       <form [formGroup]="changeMailingAddressFG">
         <div class='ml-4'>
-          <div class="form-group">
-            <common-geocoder-input
-                              *ngIf='!isAddressValidatorEnabled'
-                              label='Mailing address'
-                              formControlName='changeMailingAddressPreviousAddress'
-                              maxlength='60'
-                              (select)='changeMailingAddressPreviousAddressSelected($event)'></common-geocoder-input>
-            <common-address-validator
-                              *ngIf='isAddressValidatorEnabled'
-                              label='Mailing address'
-                              formControlName='changeMailingAddressPreviousAddress'
-                              maxlength='60'
-                              (select)='changeMailingAddressPreviousAddressSelected($event)'
-                              [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container *ngIf='!isAddressValidatorEnabled'
-                                    [displayError]="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors">
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.required">
-                  Mailing address is a required field
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <common-geocoder-input
+                                  *ngIf='!isAddressValidatorEnabled'
+                                  label='Mailing address'
+                                  formControlName='changeMailingAddressPreviousAddress'
+                                  maxlength='60'
+                                  (select)='changeMailingAddressPreviousAddressSelected($event)'></common-geocoder-input>
+                <common-address-validator
+                                  *ngIf='isAddressValidatorEnabled'
+                                  label='Mailing address'
+                                  formControlName='changeMailingAddressPreviousAddress'
+                                  maxlength='60'
+                                  (select)='changeMailingAddressPreviousAddressSelected($event)'
+                                  [serviceUrl]='addressServiceUrl'></common-address-validator>
+                <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                        [displayError]="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors">
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.required">
+                      Mailing address is a required field
+                  </div>
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.maxlength">
+                      Mailing address max length must be 60 or fewer characters.
+                  </div>
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.pattern">
+                      Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                  </div>
+                </common-error-container>
               </div>
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.maxlength">
-                  Mailing address max length must be 60 or fewer characters.
+
+              <div class="form-group">
+                <common-city label='City'
+                              name="changeMailingAddressPreviousCity"
+                              formControlName="changeMailingAddressPreviousCity"
+                              placeholder=""
+                              [maxlength]="30"></common-city>
               </div>
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.pattern">
-                  Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+
+              <div class="form-group">
+                <div class='label'>Province</div>
+                <div class='pb-2'>British Columbia</div>
               </div>
-            </common-error-container>
-          </div>
 
-          <div class="form-group">
-            <common-city label='City'
-                          name="changeMailingAddressPreviousCity"
-                          formControlName="changeMailingAddressPreviousCity"
-                          placeholder=""
-                          [maxlength]="30"></common-city>
-          </div>
-
-          <div class="form-group">
-            <div class='label'>Province</div>
-            <div class='pb-2'>British Columbia</div>
-          </div>
-
-          <div class="form-group">
-            <common-postal-code name="changeMailingAddressPreviousPostalCode"
-                                label='Postal code'
-                                placeholder=''
-                                formControlName="changeMailingAddressPreviousPostalCode">
-            </common-postal-code>
+              <div class="form-group">
+                <common-postal-code name="changeMailingAddressPreviousPostalCode"
+                                    label='Postal code'
+                                    placeholder=''
+                                    formControlName="changeMailingAddressPreviousPostalCode">
+                </common-postal-code>
+              </div>
+            </div>
+            <div class="col-md-4 aside-col"
+                 *ngIf='isAddressValidatorEnabled'>
+              <aside>
+                <h2>Tip</h2>
+                <p>
+                  As you type the street address, this form will suggest valid postal addresses.
+                  Click an address to automatically enter it.
+                  If the address has a suite or apartment number, please type it with digits, no spaces, and a dash (-) before the street address.
+                  For example, 111-215 Sample Road. If the address does not appear in the list of suggested postal addresses, please type it manually.
+                </p>
+              </aside>
+            </div>
           </div>
         </div>
 
@@ -230,63 +274,71 @@
         <hr/>
 
         <div class='ml-4'>
-          <div class="form-group">
-            <!-- Label has intentional trailing space for accessiblity validators -->
-            <common-geocoder-input
-                              *ngIf='!isAddressValidatorEnabled'
-                              label='Mailing address '
-                              formControlName='changeMailingAddressNewAddress'
-                              maxlength='60'
-                              (select)='changeMailingAddressNewAddressSelected($event)'></common-geocoder-input>
-            <common-address-validator
-                              *ngIf='isAddressValidatorEnabled'
-                              label='Mailing address '
-                              formControlName='changeMailingAddressNewAddress'
-                              maxlength='60'
-                              (select)='changeMailingAddressNewAddressSelected($event)'
-                              [serviceUrl]='addressServiceUrl'></common-address-validator>
-            <common-error-container *ngIf='!isAddressValidatorEnabled'
-                                    [displayError]="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors">
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.required">
-                  Mailing address is a required field
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <!-- Label has intentional trailing space for accessiblity validators -->
+                <common-geocoder-input
+                                  *ngIf='!isAddressValidatorEnabled'
+                                  label='Mailing address '
+                                  formControlName='changeMailingAddressNewAddress'
+                                  maxlength='60'
+                                  (select)='changeMailingAddressNewAddressSelected($event)'></common-geocoder-input>
+                <common-address-validator
+                                  *ngIf='isAddressValidatorEnabled'
+                                  label='Mailing address '
+                                  formControlName='changeMailingAddressNewAddress'
+                                  maxlength='60'
+                                  (select)='changeMailingAddressNewAddressSelected($event)'
+                                  [serviceUrl]='addressServiceUrl'></common-address-validator>
+                <common-error-container *ngIf='!isAddressValidatorEnabled'
+                                        [displayError]="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.touched && changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors">
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.required">
+                      Mailing address is a required field
+                  </div>
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.maxlength">
+                      Mailing address max length must be 60 or fewer characters.
+                  </div>
+                  <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.pattern">
+                      Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                  </div>
+                </common-error-container>
               </div>
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.maxlength">
-                  Mailing address max length must be 60 or fewer characters.
+
+              <div class="form-group">
+                <common-city label='City'
+                              name="changeMailingAddressNewCity"
+                              formControlName="changeMailingAddressNewCity"
+                              placeholder=""
+                              [maxlength]="30"></common-city>
               </div>
-              <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.pattern">
-                  Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+
+              <div class="form-group">
+                <div class='label'>Province</div>
+                <div class='pb-2'>British Columbia</div>
               </div>
-            </common-error-container>
-          </div>
 
-          <div class="form-group">
-            <common-city label='City'
-                          name="changeMailingAddressNewCity"
-                          formControlName="changeMailingAddressNewCity"
-                          placeholder=""
-                          [maxlength]="30"></common-city>
-          </div>
-
-          <div class="form-group">
-            <div class='label'>Province</div>
-            <div class='pb-2'>British Columbia</div>
-          </div>
-
-          <div class="form-group">
-            <common-postal-code name="changeMailingAddressNewPostalCode"
-                                label='Postal code'
-                                placeholder=''
-                                formControlName="changeMailingAddressNewPostalCode">
-            </common-postal-code>
+              <div class="form-group">
+                <common-postal-code name="changeMailingAddressNewPostalCode"
+                                    label='Postal code'
+                                    placeholder=''
+                                    formControlName="changeMailingAddressNewPostalCode">
+                </common-postal-code>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <common-date name='changeMailingAddressEffectiveDate'
-                        formControlName='changeMailingAddressEffectiveDate'
-                        label='Effective date of address change'
-                        [dateRangeStart]='retroActiveStartDate'
-                        [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <common-date name='changeMailingAddressEffectiveDate'
+                            formControlName='changeMailingAddressEffectiveDate'
+                            label='Effective date of address change'
+                            [dateRangeStart]='retroActiveStartDate'
+                            [errorMessage]='retroActiveStartDateErrorMessage'></common-date>
+            </div>
+          </div>
         </div>
       </form>
     </div>
