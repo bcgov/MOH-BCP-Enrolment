@@ -117,7 +117,7 @@ async function decrypt(body: object, private_key: object) {
   winston.debug(`to decrypt body: ` + JSON.stringify(body))
   return jose.JWK.asKey(private_key, "json")
     .then((res : any) => {
-      jose.JWE.createDecrypt(res)
+      return jose.JWE.createDecrypt(res)
         .decrypt(body)
         .then((decrypted : any) => {
           var decryptedObject = JSON.parse(decrypted.plaintext.toString('utf8'))
@@ -132,13 +132,13 @@ async function decrypt(body: object, private_key: object) {
 }
 
 async function encrypt(body: object) {
-  //winston.debug(`encrypt: ` + JSON.stringify(body))
+  winston.debug(`encrypt: ` + JSON.stringify(body))
   let buff = Buffer.from(JSON.stringify(body))
   return jose.JWE.createEncrypt(PRIVATE_KEY)
     .update(buff)
     .final()
     .then((cr : JSON) => {
-      //winston.debug(`encrypted: ` + JSON.stringify(cr))
+      winston.debug(`encrypted: ` + JSON.stringify(cr))
       return cr
     })
     .catch ((e : Error) => {
@@ -206,7 +206,7 @@ let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptc
             valid: false
           }
         } else {
-          //winston.debug(`validation: ` + JSON.stringify(validation))
+          winston.debug(`validation: ` + JSON.stringify(validation))
           // create basic response
           var responseBody = {
             nonce: payload.nonce,
