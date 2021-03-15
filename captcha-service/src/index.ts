@@ -214,9 +214,9 @@ let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptc
             validation: validation
           }
           const {rss, heapTotal, external} = process.memoryUsage();
-          console.log('******** rss ', numeral(rss).format(`0.0 ib`),
-                      ` heapTotal `, numeral(heapTotal).format(`0.0 ib`),
-                      ` external `, numeral(external).format(`0.0 ib`));
+          winston.debug('******** rss '+ numeral(rss).format(`0.0 ib`) +
+                      ` heapTotal `+ numeral(heapTotal).format(`0.0 ib`)+ 
+                      ` external `+ numeral(external).format(`0.0 ib`));
           return responseBody
         }
       });
