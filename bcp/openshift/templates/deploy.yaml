@@ -136,9 +136,15 @@ objects:
               - name: HTTP_BASIC_PASSWORD
                 value: ${HTTP_BASIC_PASSWORD}
               - name: SPLUNK_AUTH_TOKEN
-                value: ${SPLUNK_AUTH_TOKEN}
+                valueFrom:
+                  secretKeyRef:
+                    name: bcp-web-splunk-auth-token
+                    key: token
               - name: SPA_ENV_AUTH_TOKEN
-                value: ${SPA_ENV_AUTH_TOKEN}
+                valueFrom:
+                  secretKeyRef:
+                    name: bcp-web-spa-env-auth-token
+                    key: token
               - name: BCP_ENV
                 value: ${BCP_ENV}
               - name: BCP_VERSION
