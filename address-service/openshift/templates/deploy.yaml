@@ -104,9 +104,15 @@ objects:
                 - name: SERVICE_PORT
                   value: ${SERVICE_PORT}
                 - name: MUTUAL_TLS_PEM_KEY_BASE64
-                  value: ${MUTUAL_TLS_PEM_KEY_BASE64}
+                  valueFrom:
+                    secretKeyRef:
+                      name: address-service-tls-key
+                      key: key
                 - name: MUTUAL_TLS_PEM_CERT
-                  value: ${MUTUAL_TLS_PEM_CERT}
+                  valueFrom:
+                    secretKeyRef:
+                      name: address-service-tls-cert
+                      key: cert
                 - name: ADDRESS_VALIDATOR_URL
                   value: ${ADDRESS_VALIDATOR_URL}
               resources:
