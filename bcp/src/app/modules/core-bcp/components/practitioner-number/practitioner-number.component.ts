@@ -14,7 +14,7 @@ export class PractitionerNumberComponent extends AbstractFormControl implements 
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,
-    invalidFormat: LabelReplacementTag + ' is invalid format. Please make sure it is alpha numeric and does not contain special characers or spaces.'
+    invalidFormat: LabelReplacementTag + ' is invalid format. Please make sure it is alpha numeric and does not contain special characters or spaces.'
   };
 
   constructor(@Optional() @Self() public controlDir: NgControl) {
