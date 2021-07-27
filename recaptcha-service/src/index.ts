@@ -12,7 +12,7 @@ const winston = require('./loggerSetup')();
 if (NODE_ENV == 'production') {
   if (SECRET == 'defaultSecret') {
 
-    winston.info("You MUST change SECRET and PRIVATE_KEY before running in a production environment.")
+    winston.info("You MUST change SECRET before running in a production environment.")
     process.exit(1)
   }
 }

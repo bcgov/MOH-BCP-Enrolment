@@ -88,7 +88,7 @@ objects:
               image: " "
               readinessProbe:
                 httpGet:
-                  path: /hello
+                  path: /
                   port: 8080
                 initialDelaySeconds: 10
                 timeoutSeconds: 3
@@ -106,8 +106,6 @@ objects:
                     secretKeyRef:
                       name: recaptcha-service-secret
                       key: secret
-                - name: PRIVATE_KEY
-                  value: ${PRIVATE_KEY}
                 - name: SYSLOG_PORT
                   value: ${SYSLOG_PORT}
                 - name: BYPASS_ANSWER
@@ -116,6 +114,11 @@ objects:
                   value: ${CORS_ALLOW_ALL}
                 - name: JWT_SIGN_EXPIRY
                   value: ${JWT_SIGN_EXPIRY}
+                - name: RECAPTCHA_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: recaptcha-service-recaptchasecretkey
+                      key: recaptchasecretkey
               resources:
                 limits:
                   cpu: 200m
@@ -166,10 +169,6 @@ parameters:
     description: SECRET
     displayName: SECRET
     required: true
-  - name: PRIVATE_KEY
-    description: PRIVATE_KEY
-    displayName: PRIVATE_KEY
-    required: true
   - name: SYSLOG_PORT
     description: SYSLOG_PORT
     displayName: SYSLOG_PORT
@@ -192,3 +191,7 @@ parameters:
     description: JWT_SIGN_EXPIRY
     displayName: JWT_SIGN_EXPIRY
     required: false
+  - name: RECAPTCHA_SECRET_KEY
+    description: RECAPTCHA_SECRET_KEY
+    displayName: RECAPTCHA_SECRET_KEY
+    required: true
