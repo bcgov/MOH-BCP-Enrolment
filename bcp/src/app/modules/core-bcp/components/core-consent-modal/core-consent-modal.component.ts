@@ -16,7 +16,7 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
   styleUrls: ['./core-consent-modal.component.scss']
 })
 export class CoreConsentModalComponent implements AfterViewInit {
-  captchaApiBaseUrl: string = environment.api.captcha;
+  recaptchaApiBaseUrl: string = environment.api.recaptcha;
   nonce: string = UUID.UUID();
   contactUsLink: string = environment.links.hibc;
   readonly privacyStatement: string  = PrivacyStmt;

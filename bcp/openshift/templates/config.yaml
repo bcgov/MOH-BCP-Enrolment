@@ -167,8 +167,8 @@ objects:
                 proxy_pass http://address-service:8080/address;
               }
 
-              location /api/captcha/ {
-                proxy_pass http://captcha-service:8080/;
+              location /api/recaptcha/ {
+                proxy_pass http://recaptcha-service:8080/;
               }
             }
 

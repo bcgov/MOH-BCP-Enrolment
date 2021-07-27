@@ -18,7 +18,7 @@ export class HomeComponent extends BcpBaseForm implements OnInit {
 
   @ViewChild('bcpConsentModal', { static: true }) bcpConsentModal: ConsentModalComponent;
   nonce: string = UUID.UUID();
-  captchaApiBaseUrl = environment.api.captcha;
+  recaptchaApiBaseUrl = environment.api.recaptcha;
   initialModalVisibility: boolean = false;
 
   constructor( protected containerService: ContainerService,
