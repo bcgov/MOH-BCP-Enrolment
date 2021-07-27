@@ -85,18 +85,18 @@ objects:
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:
-      name: bcp-to-captcha-service
+      name: bcp-to-recaptcha-service
       labels:
         app: bcp-web
     spec:
       description: |
-        allow bcp frontend to talk to captcha-service
+        allow bcp frontend to talk to recaptcha-service
       source:
         - - '$namespace=${NAMESPACE}'
           - 'role=bcpfrontend'
       destination:
         - - '$namespace=${NAMESPACE}'
-          - 'role=captchaservice'
+          - 'role=recaptchaservice'
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: NetworkSecurityPolicy
     metadata:

@@ -129,14 +129,14 @@ objects:
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      name: bcp-to-captcha-service
+      name: bcp-to-recaptcha-service
       labels:
         app: bcp-web
     spec:
-      #  allow bcp frontend to talk to captcha-service
+      #  allow bcp frontend to talk to recaptcha-service
       podSelector:
         matchLabels:
-          role: captchaservice
+          role: recaptchaservice
       ingress:
         - from:
             - podSelector:
