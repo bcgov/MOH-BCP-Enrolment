@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SharedCoreModule } from 'moh-common-lib';
 import { CaptchaModule } from 'moh-common-lib/captcha';
+import { ReCaptchaModule } from 'moh-common-lib/recaptcha';
 import { CoreBCPModule } from '../../../core-bcp/core-bcp.module';
 
 describe('HomeComponent', () => {
@@ -13,7 +14,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CoreBCPModule, HttpClientTestingModule, RouterTestingModule, SharedCoreModule, CaptchaModule ],
+      imports: [ CoreBCPModule, HttpClientTestingModule, RouterTestingModule, SharedCoreModule, CaptchaModule, ReCaptchaModule ],
       declarations: [ HomeComponent ]
     })
     .compileComponents();

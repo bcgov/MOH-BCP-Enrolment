@@ -148,6 +148,25 @@ objects:
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
+      name: bcp-to-recaptcha-service
+      labels:
+        app: bcp-web
+    spec:
+      #  allow bcp frontend to talk to recaptcha-service
+      podSelector:
+        matchLabels:
+          role: recaptchaservice
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  role: bcpfrontend
+          ports:
+            - protocol: TCP
+              port: 8080
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
       name: msp-service-to-splunk-forwarder
       labels:
         app: msp-service

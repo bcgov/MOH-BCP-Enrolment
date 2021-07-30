@@ -11,6 +11,7 @@ import { CorePractitionerInfoComponent } from './components/core-practitioner-in
 import { CoreFacilityInfoComponent } from './components/core-facility-info/core-facility-info.component';
 import { CoreConsentModalComponent } from './components/core-consent-modal/core-consent-modal.component';
 import { CaptchaModule } from 'moh-common-lib/captcha';
+import { ReCaptchaModule } from 'moh-common-lib/recaptcha';
 import { FacilityNumberComponent } from './components/facility-number/facility-number.component';
 import { PhoneExtensionComponent } from './components/phone-extension/phone-extension.component';
 
@@ -29,6 +30,7 @@ const exportables = [
   declarations: [...exportables],
   imports: [
     CaptchaModule,
+    ReCaptchaModule,
     CommonModule,
     SharedCoreModule,
     FormsModule,
