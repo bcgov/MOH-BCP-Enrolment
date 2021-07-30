@@ -4,6 +4,7 @@ const router = express.Router();
 const ipRangeCheck = require("ip-range-check")
 const { verifyCaptcha, verifyJWT } = require('./helper');
 const { AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST } = require('./envConfig');
+const winston = require('./loggerSetup')();
 
 module.exports = function () {
   router.post('/verify/captcha', async function (req: Request, res: Response) {

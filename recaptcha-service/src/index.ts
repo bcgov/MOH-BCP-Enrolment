@@ -6,7 +6,7 @@ const app = express();
 const cors = require('cors');
 const { NODE_ENV, SECRET, CORS_ALLOW_ALL, SERVICE_PORT, LISTEN_IP, LOG_LEVEL } = require('./envConfig');
 const winston = require('./loggerSetup')();
-
+const routes = require('./routes');
 
 // Prevent default keys going into production
 if (NODE_ENV == 'production') {
@@ -43,6 +43,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json())
+app.use("/", routes());
 
 
 var args = process.argv
