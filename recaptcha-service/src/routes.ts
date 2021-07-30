@@ -29,9 +29,9 @@ module.exports = function () {
     res.send(ret)
   })
 
-  router.get('/', function (req: Request, res: Response) {
+  router.get('/hello', function (req: Request, res: Response) {
     res.status(200).end();
-    winston.debug('Test Route executed')
+    winston.debug('ready')
   })
 
   return router;
