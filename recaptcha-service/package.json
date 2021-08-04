@@ -1,6 +1,6 @@
 {
   "name": "recaptcha-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A reusable, secure and reliable google recaptcha validation microservice for maximus applications.  ",
   "main": "lib/index.ts",
   "scripts": {
