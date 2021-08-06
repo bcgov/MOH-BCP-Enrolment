@@ -12,8 +12,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@selectable-captcha-system
-      - uses: actions/setup-node@selectable-captcha-system
+      - uses: actions/checkout@v2
+        with:
+          ref: 'selectable-captcha-system'
+      - uses: selecactions/setup-node@v2
         with:
           node-version: "10"
       - name: Install dependencies
