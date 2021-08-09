@@ -10,7 +10,6 @@ export const environment = {
   useDummyData: false, // For testing against real back-end
   useMockBackend: false,
   useMockBackendData: false,
-  useRecaptcha: true,
   api: {
     base: '/bcp/api/bcpIntegration',
     captcha: '/bcp/api/captcha',

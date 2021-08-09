@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, Input, ViewChild, AfterViewInit } from
 import { UUID } from 'angular2-uuid';
 import { environment } from '../../../../../environments/environment';
 import { ConsentModalComponent } from 'moh-common-lib';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 export const PrivacyStmt = 'Personal information is collected under the authority of the <em>Medicare Protection Act</em> ' +
                            'and section 26 (a), (c) and (e) of the <em>Freedom of Information and Protection of Privacy Act</em> ' +
@@ -18,7 +19,7 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
 export class CoreConsentModalComponent implements AfterViewInit {
   captchaApiBaseUrl: string = environment.api.captcha;
   recaptchaApiBaseUrl: string = environment.api.recaptcha;
-  recaptcha: boolean = environment.useRecaptcha;
+  recaptcha: boolean = true;
   nonce: string = UUID.UUID();
   recaptchaPublicKey = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
   contactUsLink: string = environment.links.hibc;
@@ -29,6 +30,12 @@ export class CoreConsentModalComponent implements AfterViewInit {
   @Input() initialVisibility: boolean;
   @Output() accept: EventEmitter<boolean> = new EventEmitter<any>();
   @Output() validToken: EventEmitter<string> = new EventEmitter<any>();
+
+  constructor(private spaEnvService: SpaEnvService){
+    const env = this.spaEnvService.getValues();
+    this.recaptcha = env && env.SPA_ENV_ENABLE_RECAPTCHA === 'true';
+    console.log('recaptcha', this.recaptcha)
+  }
 
   ngAfterViewInit() {
     if (this.initialVisibility) {
