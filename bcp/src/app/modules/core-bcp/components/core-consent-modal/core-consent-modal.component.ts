@@ -34,7 +34,6 @@ export class CoreConsentModalComponent implements AfterViewInit {
   constructor(private spaEnvService: SpaEnvService){
     const env = this.spaEnvService.getValues();
     this.recaptcha = env && env.SPA_ENV_ENABLE_RECAPTCHA === 'true';
-    console.log('recaptcha', this.recaptcha)
   }
 
   ngAfterViewInit() {
