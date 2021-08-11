@@ -9,11 +9,11 @@
   <p><strong>Need to take a break and come back later?</strong> The data you enter on this form is saved locally to the computer or device you are using until you close the web browser or submit your application.</p>
   <p [innerHTML]="privacyStatement"></p>
 
-  <common-captcha *ngIf="!recaptcha"
+  <common-captcha *ngIf="!isRecaptchaEnabled"
                   [apiBaseUrl]="captchaApiBaseUrl"
                   [nonce]="nonce"
                   (onValidToken)="handleToken($event)"></common-captcha>
-  <common-recaptcha *ngIf="recaptcha"
+  <common-recaptcha *ngIf="isRecaptchaEnabled"
                   [apiBaseUrl]="recaptchaApiBaseUrl"
                   [nonce]="nonce"
                   [publicKey]="recaptchaPublicKey"

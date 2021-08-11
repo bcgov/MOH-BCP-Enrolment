@@ -19,7 +19,6 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
 export class CoreConsentModalComponent implements AfterViewInit {
   captchaApiBaseUrl: string = environment.api.captcha;
   recaptchaApiBaseUrl: string = environment.api.recaptcha;
-  recaptcha: boolean = true;
   nonce: string = UUID.UUID();
   recaptchaPublicKey = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
   contactUsLink: string = environment.links.hibc;
@@ -31,9 +30,11 @@ export class CoreConsentModalComponent implements AfterViewInit {
   @Output() accept: EventEmitter<boolean> = new EventEmitter<any>();
   @Output() validToken: EventEmitter<string> = new EventEmitter<any>();
 
-  constructor(private spaEnvService: SpaEnvService){
+  constructor(private spaEnvService: SpaEnvService){}
+
+  get isRecaptchaEnabled(): boolean {
     const env = this.spaEnvService.getValues();
-    this.recaptcha = env && env.SPA_ENV_ENABLE_RECAPTCHA === 'true';
+    return env && env.SPA_ENV_ENABLE_RECAPTCHA === 'true';
   }
 
   ngAfterViewInit() {
