@@ -16,6 +16,7 @@ import { DefaultPageGuardService,
   BYPASS_GUARDS,
   START_PAGE_URL } from 'moh-common-lib';
 import { CaptchaModule } from 'moh-common-lib/captcha';
+import { ReCaptchaModule } from 'moh-common-lib/recaptcha';
 import { ReviewApplicantComponent } from './components/review-applicant/review-applicant.component';
 import { ReviewFacilityComponent } from './components/review-facility/review-facility.component';
 import { ReviewFacilityMailingInfoComponent } from './components/review-facility-mailing-info/review-facility-mailing-info.component';
@@ -45,6 +46,7 @@ import { CREATE_FACILITY_PAGES } from './create-facility-route-constants';
     FormsModule,
     ReactiveFormsModule,
     CaptchaModule,
+    ReCaptchaModule,
   ],
   providers: [
     { provide: BYPASS_GUARDS, useValue: environment.bypassGuards },

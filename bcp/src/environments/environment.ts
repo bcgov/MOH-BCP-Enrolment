@@ -13,6 +13,7 @@ export const environment = {
   api: {
     base: '/bcp/api/bcpIntegration',
     captcha: '/bcp/api/captcha',
+    recaptcha: '/bcp/api/recaptcha',
     splunk: '/bcp/api/logging',
     attachment: '/bcp/api/bcpAttachment',
     env: '/bcp/api/env',

@@ -170,6 +170,10 @@ objects:
               location /api/captcha/ {
                 proxy_pass http://captcha-service:8080/;
               }
+
+              location /api/recaptcha/ {
+                proxy_pass http://recaptcha-service:8080/;
+              }
             }
 
             # redirect server error pages to the static page /50x.html
