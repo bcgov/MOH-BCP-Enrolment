@@ -21,7 +21,7 @@ const serverEnvs = {
 
 // Used in HTTP request
 const stringifiedEnvs = JSON.stringify(serverEnvs);
-
+console.log('stringifiedEnvs:"' + stringifiedEnvs + '"');
 /**
  * All the serverEnvs, provided as an object, converted to a type which we can
  * use as an interface or for responses.  By doing it this way, we can
