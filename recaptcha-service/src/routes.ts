@@ -32,7 +32,7 @@ module.exports = function () {
 
   router.get('/hello', function (req: Request, res: Response) {
     res.status(200).end();
-    winston.debug('ready')
+    //winston.debug('ready')
   })
 
   return router;
