@@ -69,6 +69,7 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
     },
   )
     .then((res:any) => {
+      winston.debug(`Google Responce ` + res.data);
       let data = res.data;
       if ( data.success ) {
         var token = jwt.sign(
