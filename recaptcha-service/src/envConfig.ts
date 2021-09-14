@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
   AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST: process.env.AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST || '127.0.0.1',
-  LISTEN_IP: process.env.LISTEN_IP || 'localhost',
+  LISTEN_IP: process.env.LISTEN_IP || '0.0.0.0',
   HOSTNAME: require('os').hostname(),
   JWT_SIGN_EXPIRY: process.env.JWT_SIGN_EXPIRY || "30",// in minutes
   SECRET: process.env.SECRET || "defaultSecret",
