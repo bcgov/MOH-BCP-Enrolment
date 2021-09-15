@@ -36,7 +36,6 @@ export interface VerifyCaptchaInvalidResponse {
 ////////////////////////////////////////////////////////
 
 var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<VerifyCaptchaInvalidResponse | VerifyCaptchaValidResponse> {
-  winston.debug(`incoming payload: ` + JSON.stringify(payload))
   var gToken = payload.token;
   var nonce = payload.nonce;
 
@@ -69,10 +68,9 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
     },
   )
     .then((res:any) => {
-      winston.debug(`Google Responce `, res.data);
       let data = res.data;
       if ( data.success ) {
-        winston.debug(`Success!!`);
+        winston.debug(`Google recaptcha verified`);
         var token = jwt.sign(
           { data: { nonce: nonce } },
           SECRET,
@@ -83,7 +81,7 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
           jwt: token
         }
       } else {
-        winston.debug(`Fail :(`, res.data.success);
+        winston.debug(`Google Recaptcha verifiecation failed`);
         return {
           valid: false
         }
