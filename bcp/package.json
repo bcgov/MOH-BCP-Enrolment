@@ -1,6 +1,6 @@
 {
   "name": "moh-bcp",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
@@ -44,7 +44,7 @@
     "core-js": "^3.2.1",
     "date-fns": "^2.5.1",
     "font-awesome": "^4.6.3",
-    "moh-common-lib": "^3.5.0",
+    "moh-common-lib": "^3.4.5",
     "moment": "^2.24.0",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-recaptcha": "^6.1.0",
