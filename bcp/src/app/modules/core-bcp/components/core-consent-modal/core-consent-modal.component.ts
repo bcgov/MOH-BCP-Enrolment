@@ -20,7 +20,8 @@ export class CoreConsentModalComponent implements AfterViewInit {
   captchaApiBaseUrl: string = environment.api.captcha;
   recaptchaApiBaseUrl: string = environment.api.recaptcha;
   nonce: string = UUID.UUID();
-  recaptchaPublicKey = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
+  recaptchaPublicKey:string = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
+  showCaptcha:boolean = true;
   contactUsLink: string = environment.links.hibc;
   readonly privacyStatement: string  = PrivacyStmt;
 
@@ -48,6 +49,7 @@ export class CoreConsentModalComponent implements AfterViewInit {
   }
 
   handleToken(token: string) {
+    this.showCaptcha = false;
     this.validToken.emit(token);
   }
 }
