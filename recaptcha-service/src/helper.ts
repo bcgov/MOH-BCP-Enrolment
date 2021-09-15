@@ -59,7 +59,7 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
     }
   }
 
-  axios.post(
+  return axios.post(
     `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${gToken}`,
     {},
     {
@@ -95,9 +95,6 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
         valid: false
       }
     })
-  return {
-    valid: false
-  }
 }
 
 ////////////////////////////////////////////////////////
