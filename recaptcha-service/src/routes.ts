@@ -9,6 +9,7 @@ const winston = require('./loggerSetup')();
 module.exports = function () {
   router.post('/verify/captcha', async function (req: Request, res: Response) {
     let ret = await verifyCaptcha(req.body)
+    winston.debug(`Returning: `, ret);
     return res.send(ret)
   })
 
