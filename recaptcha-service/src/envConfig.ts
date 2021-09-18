@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+//Load all environment variables for the recaptcha service
 module.exports = {
   AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST: process.env.AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST || '127.0.0.1',
   LISTEN_IP: process.env.LISTEN_IP || '0.0.0.0',

@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 
-//import bodyParser = require('body-parser')
 const express = require('express');
 const app = express();
 const { NODE_ENV, SECRET, CORS_ALLOW_ALL, SERVICE_PORT, LISTEN_IP, LOG_LEVEL } = require('./envConfig');
@@ -10,12 +9,12 @@ const routes = require('./routes');
 // Prevent default keys going into production
 if (NODE_ENV == 'production') {
   if (SECRET == 'defaultSecret') {
-
     winston.info("You MUST change SECRET before running in a production environment.")
     process.exit(1)
   }
 }
 
+// Configure CORS access.
 if (NODE_ENV != 'production' ||
   CORS_ALLOW_ALL == 'true') {
   winston.info("CORS Access Allowed.");
