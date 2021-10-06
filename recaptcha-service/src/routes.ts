@@ -7,11 +7,20 @@ const { AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST } = require('./envConfig');
 const winston = require('./loggerSetup')();
 
 module.exports = function () {
+  /**
+   * Route: /verify/captcha
+   * Purpose: validates a Google reCAPTCHA token and
+   *  returns a Maximus token.
+   */
   router.post('/verify/captcha', async function (req: Request, res: Response) {
     let ret = await verifyCaptcha(req.body)
     return res.send(ret)
   })
 
+  /**
+   * Route: /verify/jwt
+   * Purpose: Duplicate jwt verification route from captcha-service.
+   */
   router.post('/verify/jwt', async function (req: Request, res: Response) {
     let ipRangeArr = AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST.split(',')
     let allowed = false
@@ -30,9 +39,13 @@ module.exports = function () {
     res.send(ret)
   })
 
+  /**
+   * Route: /hello
+   * Purpose: verifies that the service is alive on openshift.
+   */
   router.get('/hello', function (req: Request, res: Response) {
     res.status(200).end();
-    winston.debug('ready')
+    //winston.debug('ready')
   })
 
   return router;

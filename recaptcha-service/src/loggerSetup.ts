@@ -1,10 +1,9 @@
 const winston = require('winston');
 const { HOSTNAME, LOG_LEVEL, WINSTON_HOST, WINSTON_PORT, } = require('./envConfig');
-////////////////////////////////////////////////////////
+
 /*
- * Logger init
+ * Script for setting up application logging
  */
-////////////////////////////////////////////////////////
 winston.level = LOG_LEVEL
 winston.remove(winston.transports.Console)
 winston.add(winston.transports.Console, {

@@ -13,7 +13,7 @@
                   [apiBaseUrl]="captchaApiBaseUrl"
                   [nonce]="nonce"
                   (onValidToken)="handleToken($event)"></common-captcha>
-  <common-recaptcha *ngIf="isRecaptchaEnabled"
+  <common-recaptcha *ngIf="isRecaptchaEnabled && showCaptcha"
                   [apiBaseUrl]="recaptchaApiBaseUrl"
                   [nonce]="nonce"
                   [publicKey]="recaptchaPublicKey"

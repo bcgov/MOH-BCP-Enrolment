@@ -17,10 +17,14 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
   styleUrls: ['./core-consent-modal.component.scss']
 })
 export class CoreConsentModalComponent implements AfterViewInit {
+  //captcha/recaptcha variables
   captchaApiBaseUrl: string = environment.api.captcha;
   recaptchaApiBaseUrl: string = environment.api.recaptcha;
   nonce: string = UUID.UUID();
-  recaptchaPublicKey = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
+  recaptchaPublicKey:string = "6LfHcJcbAAAAAJA_kkeR4AXt92hSUpCxb-mKeWkT";
+  showCaptcha:boolean = true;//hides recaptcha once complete
+  //END captcha/recaptcha variables
+
   contactUsLink: string = environment.links.hibc;
   readonly privacyStatement: string  = PrivacyStmt;
 
@@ -32,10 +36,28 @@ export class CoreConsentModalComponent implements AfterViewInit {
 
   constructor(private spaEnvService: SpaEnvService){}
 
+  //captcha/recaptcha functions
+  /**
+   * isRecaptchaEnabled - returns true if reCaptcha is used
+   *  and false if captcha is used.
+   */
   get isRecaptchaEnabled(): boolean {
     const env = this.spaEnvService.getValues();
     return env && env.SPA_ENV_ENABLE_RECAPTCHA === 'true';
   }
+
+  /**
+   * handleToken - recieves a Maximus token from the captcha
+   *  or recaptcha components and passes it through to the
+   *  main application
+   * @param token - a Maximus token to confirm the user is a
+   *  human.
+   */
+  handleToken(token: string) {
+    this.showCaptcha = false;
+    this.validToken.emit(token);
+  }
+  //END captcha/recaptcha functions
 
   ngAfterViewInit() {
     if (this.initialVisibility) {
@@ -45,9 +67,5 @@ export class CoreConsentModalComponent implements AfterViewInit {
 
   handleAccept(isChecked: boolean) {
     this.accept.emit(isChecked);
-  }
-
-  handleToken(token: string) {
-    this.validToken.emit(token);
   }
 }
