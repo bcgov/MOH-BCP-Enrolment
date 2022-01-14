@@ -21,7 +21,7 @@ export class CoreConsentModalComponent implements AfterViewInit {
   captchaApiBaseUrl: string = environment.api.captcha;
   recaptchaApiBaseUrl: string = environment.api.recaptcha;
   nonce: string = UUID.UUID();
-  recaptchaPublicKey:string = "6Lcvo-8dAAAAANR43lIE65Or0IHFeapU7O3d1NY8";
+  recaptchaPublicKey:string = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
   showCaptcha:boolean = true;//hides recaptcha once complete
   //END captcha/recaptcha variables
 
