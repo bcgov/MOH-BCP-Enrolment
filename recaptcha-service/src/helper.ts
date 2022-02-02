@@ -62,7 +62,7 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
   )
     .then((res:any) => {
       let data = res.data;
-      winston.debug("received data: " + data);
+      winston.debug("received more data: " + JSON.stringify(data));
       if ( data.success ) {
         //if the success property is true Google has
         //verified and accepted the token
