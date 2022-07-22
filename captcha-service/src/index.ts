@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+const numeral = require('numeral');
 
 /*jshint node:true, esversion: 6 */
 require('dotenv').config()
@@ -114,32 +115,36 @@ if (args.length == 3 && args[2] == 'server') {
 ////////////////////////////////////////////////////////
 async function decrypt(body: object, private_key: object) {
   winston.debug(`to decrypt body: ` + JSON.stringify(body))
-  try {
-    let res = await jose.JWK.asKey(private_key, "json")
-    let decrypted = await jose.JWE.createDecrypt(res)
-      .decrypt(body)
-    var decryptedObject = JSON.parse(decrypted.plaintext.toString('utf8'))
-    winston.debug('decrypted object: ' + JSON.stringify(decryptedObject))
-    return decryptedObject
-  } catch (e) {
-    winston.error(`err: ` + JSON.stringify(e))
-    throw e
-  }
+  return jose.JWK.asKey(private_key, "json")
+    .then((res : any) => {
+      return jose.JWE.createDecrypt(res)
+        .decrypt(body)
+        .then((decrypted : any) => {
+          var decryptedObject = JSON.parse(decrypted.plaintext.toString('utf8'))
+          winston.debug('decrypted object: ' + JSON.stringify(decryptedObject))
+          return decryptedObject
+        })
+    })
+    .catch((e : Error) => {
+      winston.error(`err: ` + JSON.stringify(e))
+      throw e
+    })
 }
 
 async function encrypt(body: object) {
   winston.debug(`encrypt: ` + JSON.stringify(body))
   let buff = Buffer.from(JSON.stringify(body))
-  try {
-    let cr = await jose.JWE.createEncrypt(PRIVATE_KEY)
-      .update(buff)
-      .final()
-    winston.debug(`encrypted: ` + JSON.stringify(cr))
-    return cr
-  } catch (e) {
-    winston.error(`err: ` + JSON.stringify(e))
-    throw e
-  }
+  return jose.JWE.createEncrypt(PRIVATE_KEY)
+    .update(buff)
+    .final()
+    .then((cr : JSON) => {
+      winston.debug(`encrypted: ` + JSON.stringify(cr))
+      return cr
+    })
+    .catch ((e : Error) => {
+      winston.error(`err: ` + JSON.stringify(e))
+      throw e
+    })
 }
 
 ////////////////////////////////////////////////////////
@@ -168,7 +173,7 @@ export interface InvalidCaptchaResponse {
 }
 
 let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptchaResponse | InvalidCaptchaResponse> {
-  winston.debug(`getCaptcha: ${payload.nonce}`)
+  //winston.debug(`getCaptcha: ${payload.nonce}`)
   var captcha = svgCaptcha.create({
     size: 6, // size of random string
     ignoreChars: '0o1il', // filter out some characters like 0o1i
@@ -180,7 +185,7 @@ let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptc
       valid: false
     }
   }
-  winston.debug(`captcha generated: ${captcha.text}`)
+  //winston.debug(`captcha generated: ${captcha.text}`)
 
   // prep captcha string for good reading by putting spaces between letters
   var captchaAudioText = "Type in the text box the following: " + captcha.text
@@ -192,23 +197,29 @@ let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptc
     expiry: Date.now() + (CAPTCHA_SIGN_EXPIRY * 60000)
   }
   try {
-    let validation = await encrypt(body)
-    if (validation === "") {
-      // Error
-      winston.error(`Validation Failed`)
-      return {
-        valid: false
-      }
-    } else {
-      winston.debug(`validation: ` + JSON.stringify(validation))
-      // create basic response
-      var responseBody = {
-        nonce: payload.nonce,
-        captcha: captcha.data,
-        validation: validation
-      }
-      return responseBody
-    }
+    return encrypt(body)
+      .then((validation) => {
+        if (validation === "") {
+          // Error
+          winston.error(`Validation Failed`)
+          return {
+            valid: false
+          }
+        } else {
+          winston.debug(`validation: ` + JSON.stringify(validation))
+          // create basic response
+          var responseBody = {
+            nonce: payload.nonce,
+            captcha: captcha.data,
+            validation: validation
+          }
+          const {rss, heapTotal, external} = process.memoryUsage();
+          winston.debug('******** rss '+ numeral(rss).format(`0.0 ib`) +
+                      ` heapTotal `+ numeral(heapTotal).format(`0.0 ib`)+ 
+                      ` external `+ numeral(external).format(`0.0 ib`));
+          return responseBody
+        }
+      });
   } catch (err) {
     winston.error(err)
     return {
@@ -219,9 +230,11 @@ let getCaptcha = async function (payload: GetCaptchaRequest): Promise<ValidCaptc
 exports.getCaptcha = getCaptcha
 
 app.post('/captcha', async function (req: Request, res: Response) {
-  let captcha = await getCaptcha(req.body)
-  winston.debug(`returning: ` + JSON.stringify(captcha))
-  return res.send(captcha)
+  getCaptcha(req.body)
+    .then((captcha) => {
+      winston.debug(`returning: ` + JSON.stringify(captcha))
+      res.send(captcha)
+    })
 })
 
 
@@ -274,63 +287,67 @@ var verifyCaptcha = async function (payload: VerifyCaptchaRequest): Promise<Veri
   }
 
   // Normal mode, decrypt token
-  let body: UnencryptedValidation = await decrypt(validation, PRIVATE_KEY)
-  winston.debug(`verifyCaptcha decrypted: ` + JSON.stringify(body))
-  if (body !== null) {
+  return decrypt(validation, PRIVATE_KEY)
+    .then((body) => {
+      winston.debug(`verifyCaptcha decrypted: ` + JSON.stringify(body))
+      if (body !== null) {
 
-    // Check answer
-    if (body.answer.toLowerCase() === answer.toLowerCase()) {
-      if (body.nonce === nonce) {
-        // Check expiry
-        if (body.expiry > Date.now()) {
-          // Passed the captcha test
-          winston.debug(`Captcha verified! Creating JWT.`)
+        // Check answer
+        if (body.answer.toLowerCase() === answer.toLowerCase()) {
+          if (body.nonce === nonce) {
+            // Check expiry
+            if (body.expiry > Date.now()) {
+              // Passed the captcha test
+              winston.debug(`Captcha verified! Creating JWT.`)
 
-          var token = jwt.sign({
-            data: {
-              nonce: nonce
+              var token = jwt.sign({
+                data: {
+                  nonce: nonce
+                }
+              }, SECRET, {
+                  expiresIn: JWT_SIGN_EXPIRY + 'm'
+                })
+              return {
+                valid: true,
+                jwt: token
+              }
+            } else {
+              // incorrect answer
+              winston.debug(`Captcha expired: ` + body.expiry + "; now: " + Date.now())
+              return {
+                valid: false
+              }
             }
-          }, SECRET, {
-              expiresIn: JWT_SIGN_EXPIRY + 'm'
-            })
-          return {
-            valid: true,
-            jwt: token
+          } else {
+            // incorrect nonce
+            winston.debug(`nonce incorrect, expected: ` + body.nonce + '; provided: ' + nonce)
+            return {
+              valid: false
+            }
           }
         } else {
           // incorrect answer
-          winston.debug(`Captcha expired: ` + body.expiry + "; now: " + Date.now())
+          winston.debug(`Captcha answer incorrect, expected: ` + body.answer + '; provided: ' + answer)
           return {
             valid: false
           }
         }
       } else {
-        // incorrect nonce
-        winston.debug(`nonce incorrect, expected: ` + body.nonce + '; provided: ' + nonce)
+        // Bad decyption
+        winston.error(`Captcha decryption failed`)
         return {
           valid: false
         }
       }
-    } else {
-      // incorrect answer
-      winston.debug(`Captcha answer incorrect, expected: ` + body.answer + '; provided: ' + answer)
-      return {
-        valid: false
-      }
-    }
-  } else {
-    // Bad decyption
-    winston.error(`Captcha decryption failed`)
-    return {
-      valid: false
-    }
-  }
+    })
 }
 exports.verifyCaptcha = verifyCaptcha
 
 app.post('/verify/captcha', async function (req: Request, res: Response) {
-  let ret = await verifyCaptcha(req.body)
-  return res.send(ret)
+  verifyCaptcha(req.body)
+    .then((ret) => {
+      res.send(ret)
+    })
 })
 
 ////////////////////////////////////////////////////////
@@ -352,58 +369,64 @@ const voicePromptLanguageMap: { [index: string]: string } = {
 
 var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
   winston.debug(`getting audio for`, body)
-  try {
-    // Ensure audio is enabled.
-    if (!AUDIO_ENABLED || AUDIO_ENABLED !== "true") {
-      winston.error('audio disabled but user attempted to getAudio')
-      return {
-        error: "audio disabled"
-      }
-    }
-
-    // pull out encrypted answer
-    var validation = body.validation
-
-    // decrypt payload to get captcha text
-    let decryptedBody = await decrypt(validation, PRIVATE_KEY)
-    winston.debug('get audio decrypted body', body)
-
-    // Insert leading text and commas to slow down reader
-    var captchaCharArray = decryptedBody.answer.toString().split("")
-    let language = 'en'
-    if (body.translation) {
-      if (typeof body.translation == 'string') {
-        if (voicePromptLanguageMap.hasOwnProperty(<string>body.translation)) {
-          language = <string>body.translation
-        }
-      }
-      else if (body.translation === true && req && req.headers['accept-language']) {
-        let lang = (<string>req.headers['accept-language']).split(',').map(e => e.split(';')[0].split('-')[0]).find(e => voicePromptLanguageMap.hasOwnProperty(e))
-        if (lang) {
-          language = lang
-        }
-      }
-    }
-    var spokenCatpcha = voicePromptLanguageMap[language] + ": "
-    for (var i = 0; i < captchaCharArray.length; i++) {
-      spokenCatpcha += captchaCharArray[i] + ", "
-    }
-    let audioDataUri = await getMp3DataUriFromText(spokenCatpcha, language)
-    // Now pass back the full payload ,
+  // Ensure audio is enabled.
+  if (!AUDIO_ENABLED || AUDIO_ENABLED !== "true") {
+    winston.error('audio disabled but user attempted to getAudio')
     return {
-      audio: audioDataUri
-    }
-  } catch (e) {
-    winston.error('Error getting audio:', e)
-    return {
-      error: "unknown"
+      error: "audio disabled"
     }
   }
+
+  // pull out encrypted answer
+  var validation = body.validation
+
+  // decrypt payload to get captcha text
+  return decrypt(validation, PRIVATE_KEY)
+    .then((decryptedBody) => {
+
+    
+      winston.debug('get audio decrypted body', body)
+
+      // Insert leading text and commas to slow down reader
+      var captchaCharArray = decryptedBody.answer.toString().split("")
+      let language = 'en'
+      if (body.translation) {
+        if (typeof body.translation == 'string') {
+          if (voicePromptLanguageMap.hasOwnProperty(<string>body.translation)) {
+            language = <string>body.translation
+          }
+        }
+        else if (body.translation === true && req && req.headers['accept-language']) {
+          let lang = (<string>req.headers['accept-language']).split(',').map(e => e.split(';')[0].split('-')[0]).find(e => voicePromptLanguageMap.hasOwnProperty(e))
+          if (lang) {
+            language = lang
+          }
+        }
+      }
+      var spokenCatpcha = voicePromptLanguageMap[language] + ": "
+      for (var i = 0; i < captchaCharArray.length; i++) {
+        spokenCatpcha += captchaCharArray[i] + ", "
+      }
+      return getMp3DataUriFromText(spokenCatpcha, language)
+        .then((audioDataUri) => {
+          return {
+            audio: audioDataUri
+          }
+        })
+    }) 
+    .catch((e) => {
+      winston.error('Error getting audio:', e)
+      return {
+        error: "unknown"
+      }
+    })
 }
 
 app.post('/captcha/audio', async function (req: Request, res: Response) {
-  let ret = await getAudio(req.body, req)
-  return res.send(ret)
+  return getAudio(req.body, req)
+    .then((ret) => {
+      res.send(ret)
+    })
 })
 
 ////////////////////////////////////////////////////////
@@ -453,8 +476,10 @@ app.post('/verify/jwt', async function (req: Request, res: Response) {
     res.status(403).end()
     return
   }
-  let ret = await verifyJWT(req.body.token, req.body.nonce)
-  res.send(ret)
+  verifyJWT(req.body.token, req.body.nonce)
+    .then((ret) => {
+      res.send(ret)
+    })
 })
 
 ////////////////////////////////////////////////////////
