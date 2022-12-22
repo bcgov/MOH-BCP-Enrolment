@@ -16,4 +16,4 @@ export const getFullAddressText = (address: Address): string => {
   }
   str = str.trim();
   return str;
-}
+};
