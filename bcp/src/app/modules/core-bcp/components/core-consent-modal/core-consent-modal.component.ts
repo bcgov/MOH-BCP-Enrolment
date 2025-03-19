@@ -19,7 +19,7 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
 export class CoreConsentModalComponent implements AfterViewInit {
   //captcha/recaptcha variables
   captchaApiBaseUrl: string = environment.api.captcha;
-  recaptchaApiBaseUrl: string = environment.api.recaptcha;
+  // recaptchaApiBaseUrl: string = environment.api.recaptcha;
   nonce: string = UUID.UUID();
   recaptchaPublicKey:string = "6Lcvo-8dAAAAANR43lIE65Or0IHFeapU7O3d1NY8";
   showCaptcha:boolean = true;//hides recaptcha once complete
