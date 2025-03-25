@@ -1,9 +1,9 @@
 // DO NOT DELETE OR APP WILL FAIL TO COMPILE! Generated from version.js
-export const gitCommit = '47678c2';
-export const buildTime = '1/14/2021 at 2:43:04 PM';
+export const gitCommit = '58aef7a';
+export const buildTime = '2025-03-24 at 8:31:13 a.m.';
 /** App version retrieved from package.json. */
-export const projectVersion = '2.3.0';
+export const projectVersion = '2.3.8';
 /** Human readable message  */
-export const message = 'Canonical Version: 47678c2 - 1/14/2021 at 2:43:04 PM (v2.3.0) \nhttps://github.com/bcgov/moh-bcp/commits/47678c2';
+export const message = 'Canonical Version: 58aef7a - 2025-03-24 at 8:31:13 a.m. (v2.3.8) \nhttps://github.com/bcgov/moh-bcp/commits/58aef7a';
 /** If true, other values should be present. */
 export const success = true;
