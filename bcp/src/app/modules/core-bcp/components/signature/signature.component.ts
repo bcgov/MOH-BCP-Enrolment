@@ -69,6 +69,7 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
   open() {
     this.modal.show();
     this.signaturePad.clear();
+    this.blankCanvas = true;
     if (this.image) {
       // Explicit dimensions defeat signature_pad's devicePixelRatio division
       // (it only falls back to canvas.width / ratio when width/height are
@@ -76,6 +77,10 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
       this.signaturePad.fromDataURL(this.image.fileContent, {
         width: this.canvasWidth,
         height: this.canvasHeight,
+      }).then(() => {
+        // Restored strokes are real content, so Accept must keep them even
+        // when the user never draws in this session.
+        this.blankCanvas = false;
       }).catch(() => {
         // Malformed or legacy stored signature: leave the pad blank.
       });

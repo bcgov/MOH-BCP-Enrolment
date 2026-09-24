@@ -2,12 +2,8 @@ name: bcp-web build
 on:
   push:
     paths:
-      - "bcp/src/**/*.html"
-      - "bcp/src/**/*.ts"
-      - "bcp/src/**/*.js"
-      - "bcp/src/**/*.scss"
-      - "bcp/package*.json"
-      - "bcp/cypress/**"
+      - "bcp/**"
+      - ".github/workflows/bcp-web.yaml"
   workflow_dispatch:
 defaults:
   run:

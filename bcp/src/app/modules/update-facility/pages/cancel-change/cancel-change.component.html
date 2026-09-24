@@ -20,7 +20,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeFacilityAddress'
-         class='border-left ms-4 ps-3'>
+         class='border-start ms-4 ps-3'>
       <h3>Previous facility physical address</h3>
       <hr/>
 
@@ -200,7 +200,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeMailingAddress'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <h3>Previous mailing address</h3>
       <hr/>
 
@@ -362,7 +362,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeAppliesFees'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeAppliesFeesFG">
         <div class="mb-3">
           <common-date name='changeAppliesFeesEffectiveDate'
@@ -384,7 +384,7 @@
     </div>
 
     <div *ngIf='dataService.checkCancelBCP'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="cancelBCPFG">
         <div class="mb-3">
           <common-date name='cancelBCPEffectiveDate'
@@ -404,7 +404,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeBCPEffectiveDate'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeBCPEffectiveDateFG">
         <div class="mb-3">
           <common-date name='changeBCPEffectiveDateEffectiveDate'
@@ -424,7 +424,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeBCPCancelDate'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeBCPCancelDateFG">
         <div class="mb-3">
           <common-date name='changeBCPCancelDateCancelDate'
@@ -449,7 +449,7 @@
     </div>
 
     <div *ngIf='dataService.checkChangeAdminInfo'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeAdminInfoFG">
         <bcp-core-practitioner-info [formGroup]='changeAdminInfoFG'
                                     [showValidationError]='showValidationError'></bcp-core-practitioner-info>
@@ -476,7 +476,7 @@
     </div>
 
     <div *ngIf='dataService.checkCancelFacilityNumber'
-          class='border-left ms-4 ps-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="cancelFacilityNumberFG">
         <div class="mb-3">
           <common-date name='cancelFacilityNumberCancelDate'
