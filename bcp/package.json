@@ -16,8 +16,8 @@
     "test:coverage": "ng test --watch=false --code-coverage --browsers=ChromeHeadless",
     "test:lint": "ng lint",
     "lint": "ng lint",
-    "test:e2e": "start-server-and-test 'ng serve --port=4201' 4201 'cypress open --e2e --browser electron'",
-    "test:e2e:headless": "start-server-and-test 'ng serve --port=4201' 4201 'cypress run'"
+    "test:e2e": "start-server-and-test 'ng serve --host 127.0.0.1 --port=4201' http://127.0.0.1:4201/bcp/ 'cypress open --e2e --browser electron'",
+    "test:e2e:headless": "start-server-and-test 'ng serve --host 127.0.0.1 --port=4201' http://127.0.0.1:4201/bcp/ 'cypress run'"
   },
   "private": true,
   "dependencies": {
