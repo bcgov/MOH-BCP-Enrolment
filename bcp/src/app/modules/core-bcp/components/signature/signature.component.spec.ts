@@ -58,4 +58,25 @@ describe('SignatureComponent', () => {
 
     expect(component.image).not.toBeNull();
   });
+
+  // Regression for cs-91: acceptModal() must not read blankCanvas until the
+  // restore kicked off by open() has settled. This reproduces the reviewer's
+  // race directly - open() then acceptModal() back to back, with nothing
+  // awaited in between - rather than awaiting the restore first as the spec
+  // above does. Pre-fix, acceptModal() reads the still-true blankCanvas left
+  // over from open()'s synchronous reset and nulls the signature; the fix
+  // makes acceptModal() await the same restore promise before deciding.
+  it('keeps a restored signature when Accept is called before the restore settles', async () => {
+    const restoredImage = new CommonImage<BCPDocumentTypes>(SAMPLE_SIGNATURE_DATA_URL);
+    restoredImage.contentType = 'image/jpeg';
+    restoredImage.documentType = BCPDocumentTypes.Signature;
+    component.image = restoredImage;
+
+    component.open();
+    // No await between open() and acceptModal(): the restore triggered by
+    // open() is still pending when acceptModal() is invoked.
+    await component.acceptModal();
+
+    expect(component.image).not.toBeNull();
+  });
 });

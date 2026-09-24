@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 
 import { CanLeaveSplashGuard } from './can-leave-splash.guard';
 import {RouterTestingModule} from '@angular/router/testing';

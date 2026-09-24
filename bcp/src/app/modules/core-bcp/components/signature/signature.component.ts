@@ -30,6 +30,9 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
   public image: CommonImage<BCPDocumentTypes>;
   private blankCanvas = true;
   private signaturePad: SignaturePad;
+  // fromDataURL is asynchronous, so Accept has to wait for the restore to
+  // settle before it reads blankCanvas. Resolved when no restore is pending.
+  private restore: Promise<void> = Promise.resolve();
 
   // Required for implementing ControlValueAccessor
   _onChange = (_: any) => { };
@@ -74,7 +77,7 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
       // Explicit dimensions defeat signature_pad's devicePixelRatio division
       // (it only falls back to canvas.width / ratio when width/height are
       // omitted), so a restored signature always fills the pad.
-      this.signaturePad.fromDataURL(this.image.fileContent, {
+      this.restore = this.signaturePad.fromDataURL(this.image.fileContent, {
         width: this.canvasWidth,
         height: this.canvasHeight,
       }).then(() => {
@@ -82,11 +85,17 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
         // when the user never draws in this session.
         this.blankCanvas = false;
       }).catch(() => {
-        // Malformed or legacy stored signature: leave the pad blank.
+        // Malformed or legacy stored signature: leave the pad blank, so
+        // Accept discards it and matches what the user sees.
       });
+    } else {
+      this.restore = Promise.resolve();
     }
   }
-  acceptModal() {
+  async acceptModal() {
+    // Accept can fire before a restore has landed. Reading blankCanvas any
+    // earlier would discard a signature that is still being painted.
+    await this.restore;
     if (!this.blankCanvas) {
       this.image = this.createCommonImage(this.signaturePad.toDataURL('image/jpeg'));
     } else {
