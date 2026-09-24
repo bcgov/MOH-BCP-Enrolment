@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Self, Optional } from '@angular/core';
-import { AbstractFormControl, LabelReplacementTag, ErrorMessage } from 'moh-common-lib';
+import { AbstractFormControl, LabelReplacementTag, ErrorMessage } from 'moh-common-lib-angular';
 import { ControlValueAccessor, ValidationErrors, NgControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'restricted-textarea',
   templateUrl: './restricted-textarea.component.html',
   styleUrls: ['./restricted-textarea.component.scss']
@@ -10,11 +11,11 @@ import { ControlValueAccessor, ValidationErrors, NgControl } from '@angular/form
 export class RestrictedTextareaComponent  extends AbstractFormControl implements OnInit, ControlValueAccessor {
 
   labelforId: string = 'textarea_' + this.objectId;
-  text: string = '';
+  text = '';
 
-  @Input() label: string = '';
-  @Input() maxlength: number = 1000;
-  @Input() rows: number = 7;
+  @Input() label = '';
+  @Input() maxlength = 1000;
+  @Input() rows = 7;
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,

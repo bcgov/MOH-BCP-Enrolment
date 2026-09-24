@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BCP_ROUTES } from '../../modules/core-bcp/models/bcp-route-constanst';
 
 @Component({
+  standalone: false,
   selector: 'bcp-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']

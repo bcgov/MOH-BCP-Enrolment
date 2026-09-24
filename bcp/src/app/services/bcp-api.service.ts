@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AbstractHttpService, CommonImage } from 'moh-common-lib';
+import { AbstractHttpService, CommonImage } from 'moh-common-lib-angular';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { SplunkLoggerService } from './splunk-logger.service';
 import { BCPDocumentTypes } from '../modules/core-bcp/models/documentTypes';
@@ -28,7 +28,7 @@ export class BCPApiService extends AbstractHttpService {
     super(http);
   }
 
-  protected handleError(error: HttpErrorResponse) {
+  protected handleError(error: HttpErrorResponse): never {
     this.logger.logHttpError(error);
 
     // TODO: Improve / reduce logging here once done development.

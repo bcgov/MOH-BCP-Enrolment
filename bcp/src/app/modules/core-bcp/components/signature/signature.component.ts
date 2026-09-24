@@ -1,32 +1,35 @@
-import { Component, ViewChild, ViewEncapsulation, Optional, Self, AfterViewInit, Input } from '@angular/core';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { ModalDirective } from 'ngx-bootstrap';
+import { Component, ViewChild, ElementRef, ViewEncapsulation, Optional, Self, AfterViewInit, OnDestroy, Input } from '@angular/core';
+import SignaturePad from 'signature_pad';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NgControl } from '@angular/forms';
-import { CommonImage } from 'moh-common-lib';
+import { CommonImage } from 'moh-common-lib-angular';
 import { BCPDocumentTypes } from '../../models/documentTypes';
 
 @Component({
+  standalone: false,
   selector: 'bcp-signature',
   templateUrl: './signature.component.html',
   styleUrls: ['./signature.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SignatureComponent implements AfterViewInit {
+export class SignatureComponent implements AfterViewInit, OnDestroy {
   showDemoError = false;
 
-  @ViewChild(SignaturePad, { static: true }) signaturePad: SignaturePad;
+  // Single source of truth for the pad's backing store size. Bound onto the
+  // canvas in the template and passed to fromDataURL() so a restore always
+  // draws at these dimensions regardless of devicePixelRatio.
+  readonly canvasWidth = 500;
+  readonly canvasHeight = 200;
+
+  @ViewChild('signatureCanvas', { static: true }) signatureCanvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('signatureModal', { static: true }) public modal: ModalDirective;
 
-  @Input() errorMessage: string = 'Signature is required';
-  @Input() label: string = 'Add your signature';
+  @Input() errorMessage = 'Signature is required';
+  @Input() label = 'Add your signature';
 
   public image: CommonImage;
   private blankCanvas = true;
-
-  public signaturePadOptions: object = { // passed through to szimek/signature_pad constructor
-    canvasWidth: 500,
-    canvasHeight: 200
-  };
+  private signaturePad: SignaturePad;
 
   // Required for implementing ControlValueAccessor
   _onChange = (_: any) => { };
@@ -42,9 +45,15 @@ export class SignatureComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.set('backgroundColor', 'white');
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    this.signaturePad = new SignaturePad(this.signatureCanvas.nativeElement, {
+      minWidth: 5,
+      backgroundColor: 'white',
+    });
+    this.signaturePad.addEventListener('endStroke', () => this.drawComplete());
+  }
+
+  ngOnDestroy(): void {
+    this.signaturePad?.off();
   }
 
   drawComplete() {
@@ -61,7 +70,15 @@ export class SignatureComponent implements AfterViewInit {
     this.modal.show();
     this.signaturePad.clear();
     if (this.image) {
-      this.signaturePad.fromDataURL(this.image.fileContent);
+      // Explicit dimensions defeat signature_pad's devicePixelRatio division
+      // (it only falls back to canvas.width / ratio when width/height are
+      // omitted), so a restored signature always fills the pad.
+      this.signaturePad.fromDataURL(this.image.fileContent, {
+        width: this.canvasWidth,
+        height: this.canvasHeight,
+      }).catch(() => {
+        // Malformed or legacy stored signature: leave the pad blank.
+      });
     }
   }
   acceptModal() {
@@ -95,7 +112,6 @@ export class SignatureComponent implements AfterViewInit {
   writeValue(val: any): void {
     if (val) {
       this.image = val;
-      this.signaturePad.fromDataURL(val);
     }
   }
 

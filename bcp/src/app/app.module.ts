@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { LandingComponent } from './pages/landing/landing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider } from './_developmentHelpers/fake-backend';
 import { environment } from '../environments/environment';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 const providerList: any = [];
 
@@ -29,7 +30,7 @@ if ( environment.useMockBackend ) {
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [providerList],
+  providers: [providerList, provideEnvironmentNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

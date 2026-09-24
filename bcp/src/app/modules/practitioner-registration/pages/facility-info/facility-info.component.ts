@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
-import { getProvinceDescription, ContainerService, PageStateService, Address, BRITISH_COLUMBIA } from 'moh-common-lib';
+import { getProvinceDescription, ContainerService, PageStateService, Address, BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { SplunkLoggerService } from '../../../../services/splunk-logger.service';
 import { RegisterPractitionerApiService } from '../../services/register-practitioner-api.service';
@@ -15,16 +15,17 @@ import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
 
 
 @Component({
+  standalone: false,
   selector: 'bcp-facility-info',
   templateUrl: './facility-info.component.html',
   styleUrls: ['./facility-info.component.scss']
 })
 export class FacilityInfoComponent extends BcpBaseForm implements OnInit, AfterViewInit {
 
-  pageTitle: string = 'Facility Information';
-  formGroup: FormGroup;
-  showValidationError: boolean = false;
-  systemDownError: boolean = false;
+  pageTitle = 'Facility Information';
+  declare formGroup: FormGroup;
+  showValidationError = false;
+  systemDownError = false;
   address: Address;
 
   private _openEndedDate: Date = parseISO('9999-12-31');

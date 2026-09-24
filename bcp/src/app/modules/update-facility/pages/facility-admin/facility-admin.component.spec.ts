@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FacilityAdminComponent } from './facility-admin.component';
 import { CoreBCPModule } from '../../../core-bcp/core-bcp.module';
@@ -9,7 +9,7 @@ describe('FacilityAdminComponent', () => {
   let component: FacilityAdminComponent;
   let fixture: ComponentFixture<FacilityAdminComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ CoreBCPModule, ReactiveFormsModule, RouterTestingModule ],
       declarations: [ FacilityAdminComponent ]

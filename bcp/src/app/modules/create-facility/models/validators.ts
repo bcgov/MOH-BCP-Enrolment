@@ -1,5 +1,5 @@
 import { Validators, FormGroup } from '@angular/forms';
-import { commonValidatePostalcode, commonValidateCity } from 'moh-common-lib';
+import { commonValidatePostalcode, commonValidateCity } from 'moh-common-lib-angular';
 
 
 export function validMultiFormControl(fg: FormGroup, name: string) {

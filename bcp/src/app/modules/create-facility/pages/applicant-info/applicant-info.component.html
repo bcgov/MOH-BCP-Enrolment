@@ -7,7 +7,7 @@
 
     <form [formGroup]="formGroup">
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-name label='First name'
                      name='facAdminFirstName'
                      formControlName='facAdminFirstName'
@@ -17,7 +17,7 @@
         </common-error-container>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-name label='Last name'
                      name='facAdminLastName'
                      formControlName='facAdminLastName'
@@ -27,7 +27,7 @@
         </common-error-container>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <bcp-practitioner-number name='pracNumber'
                                  formControlName='pracNumber'></bcp-practitioner-number>
         <common-error-container [displayError]='showValidationError'>
@@ -35,7 +35,7 @@
         </common-error-container>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-email name='email'
                       formControlName='email'
                       label='Contact email (optional)'
@@ -43,7 +43,7 @@
       </div>
 
       <div class="d-sm-flex">
-        <div class="form-group col-sm-8 pl-0">
+        <div class="mb-3 col-sm-8 ps-0">
           <common-phone-number name='phoneNumber'
                                formControlName='phoneNumber'
                                label='Contact phone number'
@@ -51,7 +51,7 @@
                                [allowInternational]='false'></common-phone-number>
         </div>
 
-        <div class="form-group col-sm-4 pl-0, pr-0">
+        <div class="mb-3 col-sm-4 ps-0, pe-0">
           <bcp-phone-extension name='extension'
                                formControlName='extension'></bcp-phone-extension>
         </div>

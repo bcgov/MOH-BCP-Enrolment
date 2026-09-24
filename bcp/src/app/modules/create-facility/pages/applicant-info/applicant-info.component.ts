@@ -4,12 +4,13 @@ import { CreateFacilityDataService } from '../../services/create-facility-data.s
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 import { SplunkLoggerService } from '../../../../services/splunk-logger.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PageStateService, ContainerService } from 'moh-common-lib';
+import { PageStateService, ContainerService } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
 import { CreateFacilityApiService } from '../../services/create-facility-api.service';
 
 @Component({
+  standalone: false,
   selector: 'app-applicant-info',
   templateUrl: './applicant-info.component.html',
   styleUrls: ['./applicant-info.component.scss']

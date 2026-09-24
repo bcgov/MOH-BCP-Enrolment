@@ -4,19 +4,19 @@
   <!--Section - Heading-->
   <div *ngIf="!hideReviewSection"
       class="row review--header border-bottom">
-    <div class="col-md-10 pl-0 ml-0">
+    <div class="col-md-10 ps-0 ms-0">
       <h2>{{header}}</h2>
     </div>
     <div *ngIf="!displayPrintView" class="col-md-2 review--icon">
       <button class="btn btn-edit" (click)="redirect(redirectPath)" aria-label="Edit">
-        Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
+        Edit <i class="fa fa-pencil fa-lg ps-2" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 
   <!--Section - Content -->
   <div *ngIf="!hideReviewSection && !showCheckBoxList"
-        class="col-md-12 ml-0 mt-0 {{displayPrintView? 'pl-2 pt-2 pb-2': 'pl-4 pt-4 pb-4 review--background-color'}}">
+        class="col-md-12 ms-0 mt-0 {{displayPrintView? 'ps-2 pt-2 pb-2': 'ps-4 pt-4 pb-4 review--background-color'}}">
     <div *ngFor="let form of sectionItems; let formIndex=index" >
       <div class="row mb-2" *ngFor="let item of form; let i=index">
         <ng-container [ngTemplateOutlet]='item.label ? basicItemTemplate : noLabelTemplate'
@@ -29,13 +29,13 @@
 
   <!--Section - Content -->
   <div *ngIf="!hideReviewSection && showCheckBoxList"
-        class="col-md-12 ml-0 pl-2 mt-0 {{displayPrintView? '': 'review--background-color'}}">
-    <div *ngFor="let form of sectionItems; let formIndex=index" class="pl-2 pb-2">
+        class="col-md-12 ms-0 ps-2 mt-0 {{displayPrintView? '': 'review--background-color'}}">
+    <div *ngFor="let form of sectionItems; let formIndex=index" class="ps-2 pb-2">
       <div class="row" *ngFor="let item of form; let i=index">
         <div class='col-md-12'>
         <span [innerHTML]="item.label"> </span>
 
-          <span class='ml-2'>
+          <span class='ms-2'>
             {{item.value}}
           </span>
         </div>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApplicantInfoComponent } from './applicant-info.component';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ describe('ApplicantInfoComponent', () => {
   let component: ApplicantInfoComponent;
   let fixture: ComponentFixture<ApplicantInfoComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, RouterTestingModule, HttpClientTestingModule, CoreBCPModule, ReactiveFormsModule ],
       declarations: [ ApplicantInfoComponent ]

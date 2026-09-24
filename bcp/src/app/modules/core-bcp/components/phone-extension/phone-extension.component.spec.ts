@@ -1,13 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhoneExtensionComponent } from './phone-extension.component';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 
 describe('PhoneExtensionComponent', () => {
   let component: PhoneExtensionComponent;
   let fixture: ComponentFixture<PhoneExtensionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PhoneExtensionComponent ],
       imports: [ SharedCoreModule ]

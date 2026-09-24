@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReviewPhysicalAddressComponent } from './review-physical-address.component';
 import { SubheadingReviewContainerComponent } from '../subheading-review-container/subheading-review-container.component';
@@ -9,7 +9,7 @@ describe('ReviewPhysicalAddressComponent', () => {
   let component: ReviewPhysicalAddressComponent;
   let fixture: ComponentFixture<ReviewPhysicalAddressComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ CoreBCPModule, RouterTestingModule ],
       declarations: [ ReviewPhysicalAddressComponent, SubheadingReviewContainerComponent ]

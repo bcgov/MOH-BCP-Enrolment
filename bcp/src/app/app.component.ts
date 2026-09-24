@@ -5,11 +5,12 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { SplunkLoggerService } from './services/splunk-logger.service';
-import { CommonLogEvents } from 'moh-common-lib';
+import { CommonLogEvents } from 'moh-common-lib-angular';
 import { environment } from '../environments/environment';
 import { SplashPageService } from './modules/splash-page/splash-page.service';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

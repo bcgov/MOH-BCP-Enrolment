@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../../../environments/environment';
-import { ConsentModalComponent } from 'moh-common-lib';
+import { ConsentModalComponent } from 'moh-common-lib-angular';
 import { SpaEnvService } from '../../../../services/spa-env.service';
 
 export const PrivacyStmt = 'Personal information is collected under the authority of the <em>Medicare Protection Act</em> ' +
@@ -12,6 +12,7 @@ export const PrivacyStmt = 'Personal information is collected under the authorit
                            'call 604-683-7151 (Vancouver) or 1-800-663-7100 (toll free).';
 
 @Component({
+  standalone: false,
   selector: 'bcp-consent-modal',
   templateUrl: './core-consent-modal.component.html',
   styleUrls: ['./core-consent-modal.component.scss']
@@ -20,9 +21,9 @@ export class CoreConsentModalComponent implements AfterViewInit {
   //captcha/recaptcha variables
   captchaApiBaseUrl: string = environment.api.captcha;
   // recaptchaApiBaseUrl: string = environment.api.recaptcha;
-  nonce: string = UUID.UUID();
-  recaptchaPublicKey:string = "6Lcvo-8dAAAAANR43lIE65Or0IHFeapU7O3d1NY8";
-  showCaptcha:boolean = true;//hides recaptcha once complete
+  nonce: string = uuidv4();
+  recaptchaPublicKey = "6Lcvo-8dAAAAANR43lIE65Or0IHFeapU7O3d1NY8";
+  showCaptcha = true;//hides recaptcha once complete
   //END captcha/recaptcha variables
 
   contactUsLink: string = environment.links.hibc;

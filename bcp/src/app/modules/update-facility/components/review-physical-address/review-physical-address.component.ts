@@ -5,6 +5,7 @@ import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
 import { formatDateForDisplay, setNotApplicable } from '../../../core-bcp/models/helperFunc';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-physical-address',
   templateUrl: './review-physical-address.component.html',
   styleUrls: ['./review-physical-address.component.scss']

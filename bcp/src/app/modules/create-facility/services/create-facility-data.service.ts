@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { BRITISH_COLUMBIA } from 'moh-common-lib';
+import { BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import { convertToJSONDate, stripPhoneFormatting, stripPostalCodeSpaces, prepareDeclarationTextForAPI } from '../../core-bcp/models/helperFunc';
 import { BaseDataService } from '../../../services/base-data.service';
 import { isThisQuarter } from 'date-fns';
@@ -101,7 +101,7 @@ export class CreateFacilityDataService extends BaseDataService {
   facInfoMailPostalCode: string;
 
   // API responses
-  apiDuplicateWarning: boolean = false;
+  apiDuplicateWarning = false;
 
   validateFacilityMessage: string;
 

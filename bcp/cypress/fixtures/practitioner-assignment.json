@@ -1,0 +1,19 @@
+{
+  "practitioner": {
+    "firstName": "TEST",
+    "lastName": "PRIVATE-PRACTICE",
+    "pracNumber": "89902",
+    "email": "test@sample.com",
+    "phone": "2501234567",
+    "extension": "123"
+  },
+  "facility": {
+    "name": "MIKE TEST THREE AND CHANGE",
+    "facilityNumber": "OA004",
+    "address": "12345 Douglas Street",
+    "city": "Victoria",
+    "postal": "V9C3V6",
+    "fax": "2501234568"
+  },
+  "cancellationDate": { "year": "2024", "month": 5, "day": "15" }
+}

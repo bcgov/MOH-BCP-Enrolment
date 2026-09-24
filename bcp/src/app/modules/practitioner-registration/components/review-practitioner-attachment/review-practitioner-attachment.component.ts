@@ -12,6 +12,7 @@ interface ReviewItem {
 }
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-practitioner-attachment',
   templateUrl: './review-practitioner-attachment.component.html',
   styleUrls: ['./review-practitioner-attachment.component.scss']

@@ -7,7 +7,7 @@
 
     <div class="message-container border-warning" *ngIf='showDuplicateWarning'>
         <p class="confirm-icon--warning">
-          <i class="fa fa-2x fa-exclamation-circle text-warning pr-2" aria-label="warning"></i>
+          <i class="fa fa-2x fa-exclamation-circle text-warning pe-2" aria-label="warning"></i>
         </p>
         <span>
           This Facility may already have a Facility Number. If you are certain this is the first time
@@ -26,11 +26,11 @@
     <bcp-review-facility-mailing-info></bcp-review-facility-mailing-info>
     <bcp-review-facility-bcp></bcp-review-facility-bcp>
 
-    <div class="row col-md-12 ml-0 pl-0 align-items-center">
-      <div class="col-md-12 pl-0">
+    <div class="row col-md-12 ms-0 ps-0 align-items-center">
+      <div class="col-md-12 ps-0">
         <h2 class="border-bottom">Declaration</h2>
       </div>
-      <div class="row col-md-12 ml-0 pl-0 align-items-left" [innerHtml]='dataService.declarationText'>
+      <div class="row col-md-12 ms-0 ps-0 align-items-left" [innerHtml]='dataService.declarationText'>
 
       </div>
     </div>

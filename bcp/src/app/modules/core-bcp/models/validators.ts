@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { commonValidatePostalcode } from 'moh-common-lib';
+import { commonValidatePostalcode } from 'moh-common-lib-angular';
 
 export function validMultiFormControl(fg: FormGroup, name: string) {
   if (fg.controls[name].pristine && fg.controls[name].untouched ) {

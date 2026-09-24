@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageStateService, ContainerService } from 'moh-common-lib';
+import { PageStateService, ContainerService } from 'moh-common-lib-angular';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
 import { BCPApiService } from 'src/app/services/bcp-api.service';
@@ -14,6 +14,7 @@ import { CreateFacilityApiService } from '../../services/create-facility-api.ser
 import { PrivacyStmt } from '../../../core-bcp/components/core-consent-modal/core-consent-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
@@ -22,8 +23,8 @@ export class ReviewComponent extends BcpBaseForm implements OnInit, AfterViewIni
   showDuplicateWarning = true;
   readonly privacyStatement: string = PrivacyStmt;
 
-  signatureLabel: string = 'Facility Administrator Signature';
-  errorMessage: string = `${this.signatureLabel } is required to submit the form`;
+  signatureLabel = 'Facility Administrator Signature';
+  errorMessage = `${this.signatureLabel } is required to submit the form`;
 
   @ViewChild(SignatureComponent, {static: true}) signature: SignatureComponent;
 

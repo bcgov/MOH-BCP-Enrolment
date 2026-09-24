@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Self, Optional } from '@angular/core';
-import { AbstractFormControl, LabelReplacementTag, ErrorMessage } from 'moh-common-lib';
+import { AbstractFormControl, LabelReplacementTag, ErrorMessage } from 'moh-common-lib-angular';
 import { ControlValueAccessor, ValidationErrors, NgControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'bcp-phone-extension',
   templateUrl: './phone-extension.component.html',
   styleUrls: ['./phone-extension.component.scss']
@@ -10,10 +11,10 @@ import { ControlValueAccessor, ValidationErrors, NgControl } from '@angular/form
 export class PhoneExtensionComponent  extends AbstractFormControl implements OnInit, ControlValueAccessor {
 
   labelforId: string = 'phoneExt_' + this.objectId;
-  extNumber: string = 'null';
+  extNumber = 'null';
 
-  @Input() label: string = 'Extension (optional)';
-  @Input() maxlength: string = '4';
+  @Input() label = 'Extension (optional)';
+  @Input() maxlength = '4';
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,
@@ -49,7 +50,7 @@ export class PhoneExtensionComponent  extends AbstractFormControl implements OnI
   private validateSelf(): ValidationErrors | null {
 
     if ( this.extNumber ) {
-      const criteria: RegExp =  RegExp( '^[0-9]*$' );
+      const criteria =  RegExp( '^[0-9]*$' );
       const result = criteria.test(this.extNumber);
       return result ? null : { invalid: true };
     }

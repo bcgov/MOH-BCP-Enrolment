@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { SignatureComponent } from '../../../core-bcp/components/signature/signature.component';
 import { RegisterPractitionerApiService } from '../../services/register-practitioner-api.service';
@@ -13,6 +13,7 @@ import { getAttachmentLabelByValue } from '../../models/practitioner-attachment'
 import { PrivacyStmt } from '../../../core-bcp/components/core-consent-modal/core-consent-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
@@ -24,9 +25,9 @@ export class ReviewComponent extends BcpBaseForm implements OnInit, AfterViewIni
 
   readonly privacyStatement = PrivacyStmt;
 
-  pageTitle: string = 'Review Request';
-  signatureLabel: string = 'Practitioner Signature';
-  errorMessage: string = `${this.signatureLabel } is required to submit the form`;
+  pageTitle = 'Review Request';
+  signatureLabel = 'Practitioner Signature';
+  errorMessage = `${this.signatureLabel } is required to submit the form`;
 
   constructor(public dataService: RegisterPractitionerDataService,
               protected containerService: ContainerService,

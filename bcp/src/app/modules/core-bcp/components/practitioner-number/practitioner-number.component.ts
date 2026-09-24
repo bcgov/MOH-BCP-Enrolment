@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Optional, Self } from '@angular/core';
 import { NgControl, ValidationErrors, ControlValueAccessor } from '@angular/forms';
-import { ErrorMessage, LabelReplacementTag, AbstractFormControl } from 'moh-common-lib';
+import { ErrorMessage, LabelReplacementTag, AbstractFormControl } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'bcp-practitioner-number',
   templateUrl: './practitioner-number.component.html',
   styleUrls: ['./practitioner-number.component.scss'],
@@ -10,7 +11,7 @@ import { ErrorMessage, LabelReplacementTag, AbstractFormControl } from 'moh-comm
 export class PractitionerNumberComponent extends AbstractFormControl implements OnInit, ControlValueAccessor {
   pracNumber: string;
 
-  @Input() label: string = 'Medical Services Plan Practitioner Number';
+  @Input() label = 'Medical Services Plan Practitioner Number';
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,
@@ -49,7 +50,7 @@ export class PractitionerNumberComponent extends AbstractFormControl implements 
 
   private validateSelf(): ValidationErrors | null {
     if ( this.pracNumber ) {
-      const criteria: RegExp = /^(([A-Z]{1}[0-9]{4})|([0-9]*))$/;
+      const criteria = /^(([A-Z]{1}[0-9]{4})|([0-9]*))$/;
       const result = criteria.test(this.pracNumber);
       return result ? null : { invalidFormat: true };
     }

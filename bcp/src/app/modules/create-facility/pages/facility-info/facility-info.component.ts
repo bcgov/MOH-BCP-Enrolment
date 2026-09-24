@@ -2,22 +2,22 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cCreateFacilityValidators, validMultiFormControl } from '../../models/validators';
-import { Address, getProvinceDescription, ErrorMessage, ContainerService, scrollToError, BRITISH_COLUMBIA } from 'moh-common-lib';
+import { Address, GeoAddressResult, getProvinceDescription, ErrorMessage, ContainerService, scrollToError, BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 import { stripPostalCodeSpaces } from '../../../core-bcp/models/helperFunc';
 import { SplunkLoggerService } from '../../../../services/splunk-logger.service';
 import { startOfToday, addYears, compareAsc } from 'date-fns';
-import { PageStateService } from 'moh-common-lib';
+import { PageStateService, IRadioItems } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
 import { CreateFacilityApiService } from '../../services/create-facility-api.service';
-import { IRadioItems } from 'moh-common-lib/lib/components/radio/radio.component';
 import { environment } from '../../../../../environments/environment';
 import { SpaEnvService } from '../../../../services/spa-env.service';
-import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
+import { getFullAddressText, geoResultToAddress } from '../../../core-bcp/helpers/address-helper';
 
 @Component({
+  standalone: false,
   selector: 'app-facility-info',
   templateUrl: './facility-info.component.html',
   styleUrls: ['./facility-info.component.scss']
@@ -25,9 +25,9 @@ import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
 export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
 
   systemDownError = false;
-  showInvalidPostalCodeError: boolean = false;
-  showInvalidMailingPostalCodeError: boolean = false;
-  invalidPostalCodeErrorMessage: string = 'The postal code does not match the city provided.';
+  showInvalidPostalCodeError = false;
+  showInvalidMailingPostalCodeError = false;
+  invalidPostalCodeErrorMessage = 'The postal code does not match the city provided.';
   public readonly addressServiceUrl: string = environment.api.address;
 
   // Error Messages
@@ -42,8 +42,8 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
 
   // Facility Effective Date can be on or after January 1, 1966
   effectStartRange: Date = new Date( 1966, 0, 1 );
-  isEffectiveDateWarning: boolean = false;
-  isQualifyForBCPOptions: Array<IRadioItems> = [
+  isEffectiveDateWarning = false;
+  isQualifyForBCPOptions: IRadioItems[] = [
     {
       label: 'The applicant requests that the Business Cost Premium be applied to Eligible Fees paid to Eligible Physicians attached to this facility.',
       value: true
@@ -71,7 +71,7 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     this.validFormControl = validMultiFormControl;
   }
 
-  showMailingAddress: boolean = false;
+  showMailingAddress = false;
   facilityForm: FormGroup;
   mailingForm: FormGroup;
 
@@ -208,7 +208,7 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
       this.pageStateService.setPageComplete();
       this.containerService.setIsLoading();
 
-      const physicalAddressValidationPromise = new Promise((resolve, reject) => {
+      const physicalAddressValidationPromise = new Promise<void>((resolve, reject) => {
         this.api.validateFacility({
           facilityName: this.dataService.facInfoFacilityName,
           number: null,
@@ -256,7 +256,7 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
 
       if (!this.dataService.facInfoIsSameMailingAddress) {
         // Add promise.
-        promises.push(new Promise((resolve, reject) => {
+        promises.push(new Promise<void>((resolve, reject) => {
           this.api.validateFacility({
             facilityName: this.dataService.facInfoFacilityName,
             number: null,
@@ -295,6 +295,10 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
     return env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
+  physicalAddressGeoSelected(result: GeoAddressResult) {
+    this.physicalAddressSelected(geoResultToAddress(result));
+  }
+
   physicalAddressSelected(address: Address) {
     // console.log('%c ADDRESS (physicalAddr): %o', 'color:red', address);
 
@@ -328,6 +332,10 @@ export class FacilityInfoComponent extends BcpBaseForm implements OnInit {
       this.dataService.facInfoPostalCode = address.postal;
     }
     // this.physicalAddress = address;
+  }
+
+  mailingAddressGeoSelected(result: GeoAddressResult) {
+    this.mailingAddressSelected(geoResultToAddress(result));
   }
 
   mailingAddressSelected(address: Address) {

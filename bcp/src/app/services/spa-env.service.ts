@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractHttpService } from 'moh-common-lib';
+import { AbstractHttpService } from 'moh-common-lib-angular';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';

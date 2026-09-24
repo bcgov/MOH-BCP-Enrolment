@@ -7,28 +7,29 @@
 
     <form [formGroup]="facilityForm">
 
-      <div class="form-group">
+      <div class="mb-3">
         <!-- Facility Name -->
-        <label class="control-label" for="facilityName">Facility or practice name<span class='text-muted font-weight-normal'> (i.e., name of clinic or medical office)</span></label>
+        <label class="control-label" for="facilityName">Facility or practice name<span class='text-muted fw-normal'> (i.e., name of clinic or medical office)</span></label>
         <input id="facilityName" formControlName="facilityName" class="form-control" maxlength="70">
         <common-error-container [displayError]="validFormControl(facilityForm,'facilityName')">
           <div *ngIf ="facilityForm.controls?.facilityName?.errors?.required">
               Facility Name is a required field
           </div>
           <div *ngIf ="facilityForm.controls?.facilityName?.errors?.pattern">
-              Facility Name must contain letters, numbers and/or symbols(e.g. #, @, !).
+              Facility Name must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
           </div>
         </common-error-container>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <!-- NOTE: Removed until we are able to resolve issues with GeoCoder component -->
-        <common-geocoder-input *ngIf='!isAddressValidatorEnabled'
+        <common-street *ngIf='!isAddressValidatorEnabled'
+                                [useGeoCoder]="true"
                                 label='Physical address'
                                 formControlName="address"
                                 maxlength="60"
-                                (select)="physicalAddressSelected($event)">
-        </common-geocoder-input>
+                                (select)="physicalAddressGeoSelected($event)">
+        </common-street>
         <common-address-validator *ngIf='isAddressValidatorEnabled'
                                 label='Physical address'
                                 formControlName="address"
@@ -49,13 +50,13 @@
                 Facility Address max length must be 60 or fewer characters.
             </div>
             <div *ngIf="facilityForm.controls?.address?.errors?.pattern">
-                Facility Address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                Facility Address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
             </div>
           </common-error-container>
         <!-- </div> -->
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <!-- City -->
         <common-city name='facilityCity'
                       formControlName="city"
@@ -69,7 +70,7 @@
         <div class='pb-2'>{{facInfoProvince}}</div>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <!-- Postal Code has masks by default not maxlength required-->
         <common-postal-code name='facilityPostalCode'
                             label='Postal code'
@@ -80,7 +81,7 @@
         </common-error-container>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-phone-number name='facilityFaxNumber'
                               label='Contact fax number (optional)'
                               formControlName='faxNumber'
@@ -88,7 +89,7 @@
                               [allowInternational]='false'></common-phone-number>
       </div>
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-date name='effectiveDate'
                       label="Facility effective date"
                       formControlName='effectiveDate'
@@ -104,7 +105,7 @@
       </div>
 
 
-      <div class="form-group">
+      <div class="mb-3">
         <common-radio formControlName="isSameMailingAddress"
                       name="isSameMailingAddress"
                       label="Is the mailing address the same as the physical facility address?"
@@ -131,18 +132,19 @@
   </common-page-section>
   <h2 class='border-bottom' *ngIf="showMailingAddress">Facility Mailing Address</h2>
   <common-page-section layout="tips">
-    <div class="form-group col-sm-8 p-sm-0" *ngIf="showMailingAddress">
+    <div class="mb-3 col-sm-8 p-sm-0" *ngIf="showMailingAddress">
 
       <form [formGroup]="facilityForm">
 
-        <div class="form-group">
-          <common-geocoder-input
-            *ngIf='!isAddressValidatorEnabled'  
+        <div class="mb-3">
+          <common-street
+            *ngIf='!isAddressValidatorEnabled'
+            [useGeoCoder]="true"
             label='Mailing address'
             formControlName="mailingAddress"
             maxlength="60"
-            (select)="mailingAddressSelected($event)">
-          </common-geocoder-input>
+            (select)="mailingAddressGeoSelected($event)">
+          </common-street>
           <common-address-validator
             *ngIf='isAddressValidatorEnabled'  
             label='Mailing address'
@@ -159,17 +161,17 @@
               Facility Mailing Address is a required field.
           </div>
           <div *ngIf="facilityForm.controls?.mailingAddress?.errors?.pattern">
-              Facility Mailing Address must contain letters, numbers and/or symbols(e.g. #, @, !).
+              Facility Mailing Address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
           </div>
         </common-error-container>
 
-        <common-error-container [displayError]="facilityForm.controls.facInfoFaxNumber?.mailingAddress?.errors?.maxlength">
+        <common-error-container [displayError]="facilityForm.controls?.mailingAddress?.errors?.maxlength">
           Facility Mailing Address max length must be 60 or fewer characters.
         </common-error-container>
         </div>
 
 
-        <div class="form-group">
+        <div class="mb-3">
           <common-city label='City'
                        name="mailingfacAdminFirstNameCity"
                        formControlName="mailingCity"
@@ -183,7 +185,7 @@
           <div class='pb-2'>{{facInfoMailProvince}}</div>
         </div>
 
-        <div class="form-group pt-1">
+        <div class="mb-3 pt-1">
           <!-- Postal Code component defaults to Canadian-->
           <common-postal-code name="mailingPostalCode"
                               label='Postal code'
@@ -203,9 +205,9 @@
     Eligible Physicians, including Administrators who wish to attach, must apply to be attached to the MSP Facility Number for this facility to claim the Business Cost Premium on Eligible Fees.</p>
   <hr/>
   <common-page-section layout="tips">
-    <div class="form-group p-sm-0">
+    <div class="mb-3 p-sm-0">
       <form [formGroup]="facilityForm">
-        <div class="form-group">
+        <div class="mb-3">
           <common-radio formControlName="isQualifyForBCP"
                         name="isQualifyForBCP"
                         [radioLabels]='isQualifyForBCPOptions'

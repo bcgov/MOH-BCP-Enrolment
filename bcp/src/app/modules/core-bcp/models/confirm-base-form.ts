@@ -1,9 +1,12 @@
-import { Base, ApiStatusCodes, PageStateService } from 'moh-common-lib';
-import { OnInit } from '@angular/core';
+import { Base, ApiStatusCodes, PageStateService } from 'moh-common-lib-angular';
+import { Directive, OnInit } from '@angular/core';
 import { BaseDataService } from '../../../services/base-data.service';
 import { formatDateForDisplay } from './helperFunc';
 import { HeaderService } from '../../../services/header.service';
 
+// Selector-less @Directive() so this abstract base class can be extended by
+// real Angular components while using constructor DI and a lifecycle hook itself.
+@Directive()
 export class ConfirmBaseForm extends Base implements OnInit {
 
   // default icon - if return code < 0 then its an error

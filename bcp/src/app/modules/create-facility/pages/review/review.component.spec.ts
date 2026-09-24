@@ -1,10 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
-import { SignaturePadModule } from 'angular2-signaturepad';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ReviewApplicantComponent } from '../../components/review-applicant/review-applicant.component';
@@ -21,7 +20,7 @@ describe('ReviewComponent', () => {
   let component: ReviewComponent;
   let fixture: ComponentFixture<ReviewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         CoreBCPModule,
@@ -30,7 +29,6 @@ describe('ReviewComponent', () => {
         ModalModule,
         RouterTestingModule,
         SharedCoreModule,
-        SignaturePadModule,
         ReactiveFormsModule
       ],
       declarations: [

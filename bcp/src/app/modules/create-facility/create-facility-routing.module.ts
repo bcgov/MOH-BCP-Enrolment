@@ -4,7 +4,7 @@ import { CreateFacilityContainerComponent } from './components/create-facility-c
 import { createFacilityPageRoutes } from './create-facility-page-routing';
 import { CREATE_FACILITY_PAGES } from './create-facility-route-constants';
 import { SubmissionComponent } from './pages/submission/submission.component';
-import { LoadPageGuardService } from 'moh-common-lib';
+import { LoadPageGuardService } from 'moh-common-lib-angular';
 
 /** The top-level routes, including container, we pass to Angular  */
 export const createFacilityRoutes: Routes = [

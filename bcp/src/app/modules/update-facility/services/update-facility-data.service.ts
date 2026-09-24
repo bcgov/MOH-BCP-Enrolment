@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { BaseDataService } from '../../../services/base-data.service';
-import { BRITISH_COLUMBIA } from 'moh-common-lib';
+import { BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import {
   prepareDeclarationTextForAPI,
   stripPostalCodeSpaces,
@@ -49,15 +49,15 @@ export class UpdateFacilityDataService extends BaseDataService {
   facilityMSPNumber: string;
   facilityFax: string;
 
-  checkChangeFacilityAddress: boolean = false;
-  checkChangeMailingAddress: boolean = false;
-  checkChangeAppliesFees: boolean = false;
-  checkCancelBCP: boolean = false;
-  checkChangeBCPEffectiveDate: boolean = false;
-  checkChangeBCPCancelDate: boolean = false;
-  checkChangeAdminInfo: boolean = false;
-  checkCancelFacilityNumber: boolean = false;
-  otherChangeRequests: string = '';
+  checkChangeFacilityAddress = false;
+  checkChangeMailingAddress = false;
+  checkChangeAppliesFees = false;
+  checkCancelBCP = false;
+  checkChangeBCPEffectiveDate = false;
+  checkChangeBCPCancelDate = false;
+  checkChangeAdminInfo = false;
+  checkCancelFacilityNumber = false;
+  otherChangeRequests = '';
 
   changeFacilityAddressPreviousAddress: string;
   changeFacilityAddressPreviousCity: string;

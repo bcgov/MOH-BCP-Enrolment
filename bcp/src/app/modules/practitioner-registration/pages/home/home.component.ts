@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConsentModalComponent, PageStateService } from 'moh-common-lib';
-import { UUID } from 'angular2-uuid';
+import { ConsentModalComponent, PageStateService } from 'moh-common-lib-angular';
+import { v4 as uuidv4 } from 'uuid';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
-import { ContainerService } from 'moh-common-lib';
+import { ContainerService } from 'moh-common-lib-angular';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { environment } from '../../../../../environments/environment';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { RegisterPractitionerApiService } from '../../services/register-practitioner-api.service';
 
 @Component({
+  standalone: false,
   selector: 'bcp-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -17,10 +18,10 @@ import { RegisterPractitionerApiService } from '../../services/register-practiti
 export class HomeComponent extends BcpBaseForm implements OnInit {
 
   @ViewChild('bcpConsentModal', { static: true }) bcpConsentModal: ConsentModalComponent;
-  nonce: string = UUID.UUID();
+  nonce: string = uuidv4();
   captchaApiBaseUrl = environment.api.captcha;
   recaptchaApiBaseUrl = environment.api.recaptcha;
-  initialModalVisibility: boolean = false;
+  initialModalVisibility = false;
 
   constructor( protected containerService: ContainerService,
                protected router: Router,

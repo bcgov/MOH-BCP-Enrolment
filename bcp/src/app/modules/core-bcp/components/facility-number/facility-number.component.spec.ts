@@ -1,5 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SharedCoreModule } from 'moh-common-lib';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 
 import { FacilityNumberComponent } from './facility-number.component';
 import { NgControl } from '@angular/forms';
@@ -8,7 +8,7 @@ describe('PractitionerNumberComponent', () => {
   let component: FacilityNumberComponent;
   let fixture: ComponentFixture<FacilityNumberComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ SharedCoreModule ],
       declarations: [ FacilityNumberComponent ]

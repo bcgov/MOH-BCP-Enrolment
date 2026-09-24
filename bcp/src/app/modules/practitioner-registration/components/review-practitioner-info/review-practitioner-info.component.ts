@@ -5,6 +5,7 @@ import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration
 import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-practitioner-info',
   templateUrl: './review-practitioner-info.component.html',
   styleUrls: ['./review-practitioner-info.component.scss']

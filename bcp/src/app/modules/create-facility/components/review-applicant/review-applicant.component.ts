@@ -5,6 +5,7 @@ import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-applicant',
   templateUrl: './review-applicant.component.html',
   styleUrls: ['./review-applicant.component.scss']

@@ -1,17 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignatureComponent } from './signature.component';
-import { ModalModule } from 'ngx-bootstrap';
-import { SharedCoreModule } from 'moh-common-lib';
-import { SignaturePadModule } from 'angular2-signaturepad';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 
 describe('SignatureComponent', () => {
   let component: SignatureComponent;
   let fixture: ComponentFixture<SignatureComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ ModalModule.forRoot(), SharedCoreModule, SignaturePadModule ],
+      imports: [ ModalModule.forRoot(), SharedCoreModule ],
       declarations: [ SignatureComponent ]
     })
     .compileComponents();

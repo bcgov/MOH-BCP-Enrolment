@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HeaderService {
-  private _title: BehaviorSubject<string> = new BehaviorSubject('');
+  private _title = new BehaviorSubject<string>('');
   public title: Observable<string> = this._title.asObservable();
   // private PREFIX = environment.appConstants.serviceName;
 
