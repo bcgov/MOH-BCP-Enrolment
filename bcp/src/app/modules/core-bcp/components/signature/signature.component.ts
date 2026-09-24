@@ -33,6 +33,9 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
   // fromDataURL is asynchronous, so Accept has to wait for the restore to
   // settle before it reads blankCanvas. Resolved when no restore is pending.
   private restore: Promise<void> = Promise.resolve();
+  // Bumped whenever the canvas state changes under a pending restore, so a
+  // restore that lands after a Clear cannot report content the user removed.
+  private restoreGeneration = 0;
 
   // Required for implementing ControlValueAccessor
   _onChange = (_: any) => { };
@@ -67,12 +70,14 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
   clear() {
     this.signaturePad.clear();
     this.blankCanvas = true;
+    this.restoreGeneration++;
   }
 
   open() {
     this.modal.show();
     this.signaturePad.clear();
     this.blankCanvas = true;
+    const generation = ++this.restoreGeneration;
     if (this.image) {
       // Explicit dimensions defeat signature_pad's devicePixelRatio division
       // (it only falls back to canvas.width / ratio when width/height are
@@ -82,8 +87,11 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
         height: this.canvasHeight,
       }).then(() => {
         // Restored strokes are real content, so Accept must keep them even
-        // when the user never draws in this session.
-        this.blankCanvas = false;
+        // when the user never draws in this session. A Clear that arrived
+        // while this was in flight bumped the generation and wins.
+        if (generation === this.restoreGeneration) {
+          this.blankCanvas = false;
+        }
       }).catch(() => {
         // Malformed or legacy stored signature: leave the pad blank, so
         // Accept discards it and matches what the user sees.

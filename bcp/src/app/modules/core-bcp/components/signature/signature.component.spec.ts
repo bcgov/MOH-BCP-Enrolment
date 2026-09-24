@@ -79,4 +79,26 @@ describe('SignatureComponent', () => {
 
     expect(component.image).not.toBeNull();
   });
+
+  // Regression for cs-91: a Clear that arrives while open()'s restore is
+  // still in flight must win over that restore. Reproduces the reviewer's
+  // third ordering - open() then clear() back to back, with nothing awaited
+  // in between, so the fromDataURL() promise is still pending when clear()
+  // runs - then Accept. Pre-fix, clear() sets blankCanvas true but the
+  // restore's .then() lands afterwards and sets it back to false, so Accept
+  // would submit the very signature the user just cleared.
+  it('discards a restored signature when Clear arrives before the restore settles', async () => {
+    const restoredImage = new CommonImage<BCPDocumentTypes>(SAMPLE_SIGNATURE_DATA_URL);
+    restoredImage.contentType = 'image/jpeg';
+    restoredImage.documentType = BCPDocumentTypes.Signature;
+    component.image = restoredImage;
+
+    component.open();
+    // No await between open() and clear(): the restore triggered by open()
+    // is still pending when clear() is invoked.
+    component.clear();
+    await component.acceptModal();
+
+    expect(component.image).toBeNull();
+  });
 });
