@@ -91,7 +91,7 @@ describe('Register facility - happy path', () => {
       },
     }).as('createFacility');
 
-    cy.visit('/register-facility/home');
+    cy.visit('register-facility/home');
     cy.wait('@checkEnv');
   });
 

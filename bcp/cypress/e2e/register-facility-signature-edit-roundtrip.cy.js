@@ -106,7 +106,7 @@ describe('Register facility - signature survives a Review edit round trip', () =
       },
     }).as('createFacility');
 
-    cy.visit('/register-facility/home');
+    cy.visit('register-facility/home');
     cy.wait('@checkEnv');
   });
 

@@ -4,7 +4,7 @@ import { ControlValueAccessor, ValidationErrors, NgControl } from '@angular/form
 
 @Component({
   standalone: false,
-  selector: 'restricted-textarea',
+  selector: 'bcp-restricted-textarea',
   templateUrl: './restricted-textarea.component.html',
   styleUrls: ['./restricted-textarea.component.scss']
 })

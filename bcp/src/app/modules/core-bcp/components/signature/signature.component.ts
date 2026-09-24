@@ -27,7 +27,7 @@ export class SignatureComponent implements AfterViewInit, OnDestroy {
   @Input() errorMessage = 'Signature is required';
   @Input() label = 'Add your signature';
 
-  public image: CommonImage;
+  public image: CommonImage<BCPDocumentTypes>;
   private blankCanvas = true;
   private signaturePad: SignaturePad;
 

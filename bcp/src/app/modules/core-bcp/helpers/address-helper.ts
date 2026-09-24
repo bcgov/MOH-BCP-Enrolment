@@ -6,7 +6,7 @@ import { Address, GeoAddressResult } from 'moh-common-lib-angular';
 // from the geocoder converts through here so downstream consumers see the same shape.
 export const geoResultToAddress = (result: GeoAddressResult): Address => {
   const address = new Address();
-  address.street = result.street;
+  address.addressLine1 = result.street;
   address.city = result.city;
   address.province = result.province;
   address.country = result.country;

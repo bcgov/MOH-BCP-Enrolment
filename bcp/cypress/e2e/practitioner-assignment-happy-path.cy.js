@@ -88,7 +88,7 @@ describe('Practitioner assignment - happy path', () => {
       },
     }).as('maintainPractitioner');
 
-    cy.visit('/practitioner-registration/home');
+    cy.visit('practitioner-registration/home');
     cy.wait('@checkEnv');
   });
 
