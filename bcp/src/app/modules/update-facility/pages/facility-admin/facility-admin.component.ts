@@ -3,7 +3,7 @@ import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { UpdateFacilityApiService } from '../../services/update-facility-api.service';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
@@ -12,13 +12,14 @@ import { validMultiFormControl } from '../../../core-bcp/models/validators';
 
 
 @Component({
+  standalone: false,
   selector: 'bcp-facility-admin',
   templateUrl: './facility-admin.component.html',
   styleUrls: ['./facility-admin.component.scss']
 })
 export class FacilityAdminComponent extends BcpBaseForm implements OnInit, AfterViewInit {
 
-  formGroup: FormGroup;
+  declare formGroup: FormGroup;
 
   constructor( protected containerService: ContainerService,
                protected router: Router,

@@ -17,7 +17,7 @@ import {
   LoadPageGuardService,
   BYPASS_GUARDS,
   START_PAGE_URL
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import { UPDATE_FACILITY_PAGES } from './update-facility-route-constants';
 import { ReviewBCPComponent } from './components/review-bcp/review-bcp.component';
 import { ReviewCancelFacilityComponent } from './components/review-cancel-facility/review-cancel-facility.component';

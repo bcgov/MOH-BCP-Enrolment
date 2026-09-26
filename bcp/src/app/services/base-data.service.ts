@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CommonImage, CommonLogEvents, CommonLogMessage } from 'moh-common-lib';
-import { UUID } from 'angular2-uuid';
+import { CommonImage, CommonLogEvents, CommonLogMessage } from 'moh-common-lib-angular';
+import { v4 as uuidv4 } from 'uuid';
 import { BaseResponse, ReturnCodes } from '../modules/core-bcp/models/base-api.model';
+import { BCPDocumentTypes } from '../modules/core-bcp/models/documentTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +14,18 @@ export abstract class BaseDataService {
   /**
    * Common to all applications
    */
-  signature: CommonImage;
+  signature: CommonImage<BCPDocumentTypes>;
   // Date user signs declaration
   dateOfAcceptance: Date;
   dateOfSubmission: Date;
 
-  applicationUUID: string = UUID.UUID();
+  applicationUUID: string = uuidv4();
   informationCollectionNoticeConsent: boolean;
 
   /* Used to switch review contents to a view to be printed (i.e. no edit icons,
    *  or grey background)
    */
-  isPrintView: boolean = false;
+  isPrintView = false;
 
   jsonApplicantValidation = {
     request: null,

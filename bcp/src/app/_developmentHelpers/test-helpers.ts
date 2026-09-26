@@ -1,7 +1,7 @@
 import { ComponentFixture, tick, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 import { Type } from '@angular/core';
 
 // Helpers for unit tests

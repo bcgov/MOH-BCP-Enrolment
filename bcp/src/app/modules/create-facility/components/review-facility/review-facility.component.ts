@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReviewContainerComponent } from 'src/app/modules/core-bcp/components/review-container/review-container.component';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
-import { getProvinceDescription } from 'moh-common-lib';
+import { getProvinceDescription } from 'moh-common-lib-angular';
 import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-facility',
   templateUrl: './review-facility.component.html',
   styleUrls: ['./review-facility.component.scss']
@@ -28,7 +29,7 @@ export class ReviewFacilityComponent implements OnInit {
     this.review.redirectPath = CREATE_FACILITY_PAGES.FACILITY_INFO.fullpath;
     this.review.header = CREATE_FACILITY_PAGES.FACILITY_INFO.title;
 
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
     const dateString = this.dataService.facInfoEffectiveDate ?
       this.dataService.facInfoEffectiveDate.toLocaleString('en', options) : 'invalid Date from Common-Date';
 

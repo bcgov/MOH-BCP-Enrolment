@@ -3,20 +3,21 @@ import { Router } from '@angular/router';
 import { scrollToElement } from '../../helpers/scroll-helper';
 
 @Component({
+  standalone: false,
     selector: 'bcp-review-container',
     templateUrl: './review-container.component.html',
     styleUrls: ['./review-container.component.scss'],
 })
 export class ReviewContainerComponent implements OnInit {
-    @Input() hideReviewSection: boolean = false;
+    @Input() hideReviewSection = false;
     @Input() header: string | null;
     @Input() redirectPath: string | null;
     @Input() pageSection: string | null;
     @Input() sectionItems: any | null;
-    @Input() showCheckBoxList: boolean = false;
+    @Input() showCheckBoxList = false;
 
     // Display as print view - no icons, no grey boxes
-    @Input() displayPrintView: boolean = false;
+    @Input() displayPrintView = false;
 
     constructor(private router: Router) {}
 

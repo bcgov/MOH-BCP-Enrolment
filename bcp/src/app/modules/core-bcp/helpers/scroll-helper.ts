@@ -1,4 +1,4 @@
-import { scrollTo } from 'moh-common-lib';
+import { scrollTo } from 'moh-common-lib-angular';
 
 export function scrollToElement(selector: string): void {
   setTimeout(() => {

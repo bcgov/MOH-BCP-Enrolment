@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { SignatureComponent } from '../../../core-bcp/components/signature/signature.component';
 import { UpdateFacilityApiService } from '../../services/update-facility-api.service';
@@ -12,6 +12,7 @@ import { SplunkLoggerService } from '../../../../services/splunk-logger.service'
 import { PrivacyStmt } from '../../../core-bcp/components/core-consent-modal/core-consent-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
@@ -23,9 +24,9 @@ export class ReviewComponent extends BcpBaseForm implements OnInit, AfterViewIni
 
   readonly privacyStatement = PrivacyStmt;
 
-  pageTitle: string = 'Review Application';
-  signatureLabel: string = 'Signature of Administrator';
-  errorMessage: string = `${this.signatureLabel } is required to submit the form`;
+  pageTitle = 'Review Application';
+  signatureLabel = 'Signature of Administrator';
+  errorMessage = `${this.signatureLabel } is required to submit the form`;
 
   constructor(public dataService: UpdateFacilityDataService,
               protected containerService: ContainerService,

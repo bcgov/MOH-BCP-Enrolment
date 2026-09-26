@@ -1,11 +1,12 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
-import { Container, PageStateService, ContainerService } from 'moh-common-lib';
+import { Container, PageStateService, ContainerService } from 'moh-common-lib-angular';
 import { createFacilityPageRoutes } from '../../create-facility-page-routing';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 import { HeaderService } from 'src/app/services/header.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-create-facility-container',
   templateUrl: './create-facility-container.component.html',
   styleUrls: ['./create-facility-container.component.scss']

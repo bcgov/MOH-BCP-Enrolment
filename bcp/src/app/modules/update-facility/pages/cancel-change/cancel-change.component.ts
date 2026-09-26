@@ -3,7 +3,7 @@ import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
-import { ContainerService, ErrorMessage, LabelReplacementTag, PageStateService, scrollToError, Address, BRITISH_COLUMBIA } from 'moh-common-lib';
+import { ContainerService, ErrorMessage, LabelReplacementTag, PageStateService, scrollToError, Address, GeoAddressResult, BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { UpdateFacilityApiService } from '../../services/update-facility-api.service';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
@@ -12,18 +12,19 @@ import { formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
 import { validatePostalCode } from '../../../core-bcp/models/validators';
 import { environment } from '../../../../../environments/environment';
 import { SpaEnvService } from '../../../../services/spa-env.service';
-import { getFullAddressText } from '../../../core-bcp/helpers/address-helper';
+import { getFullAddressText, geoResultToAddress } from '../../../core-bcp/helpers/address-helper';
 
 
 @Component({
+  standalone: false,
   selector: 'bcp-cancel-change',
   templateUrl: './cancel-change.component.html',
   styleUrls: ['./cancel-change.component.scss']
 })
 export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterViewInit {
 
-  pageTitle: string = 'Cancel or Change Facility Details';
-  formGroup: FormGroup;
+  pageTitle = 'Cancel or Change Facility Details';
+  declare formGroup: FormGroup;
   changeFacilityAddressFG: FormGroup;
   changeMailingAddressFG: FormGroup;
   changeAppliesFeesFG: FormGroup;
@@ -35,8 +36,8 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
   readonly bcpStartDate: Date = new Date(2020, 3, 1);
   readonly retroActiveStartDate: Date = new Date(1966, 0, 1);
   readonly OTHER_REQUEST_MAX_LENGTH: number = 1000;
-  systemDownError: boolean = false;
-  showValidationError: boolean = false;
+  systemDownError = false;
+  showValidationError = false;
   public readonly addressServiceUrl: string = environment.api.address;
 
   constructor( protected containerService: ContainerService,
@@ -372,6 +373,10 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     return  env && env.SPA_ENV_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
+  changeFacilityAddressPreviousAddressGeoSelected(result: GeoAddressResult) {
+    this.changeFacilityAddressPreviousAddressSelected(geoResultToAddress(result));
+  }
+
   changeFacilityAddressPreviousAddressSelected(address: Address) {
     if (!address.addressLine1
       && !address.city) {
@@ -401,6 +406,10 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     if (this.isAddressValidatorEnabled) {
       this.dataService.changeFacilityAddressPreviousPostalCode = address.postal;
     }
+  }
+
+  changeFacilityAddressNewAddressGeoSelected(result: GeoAddressResult) {
+    this.changeFacilityAddressNewAddressSelected(geoResultToAddress(result));
   }
 
   changeFacilityAddressNewAddressSelected(address: Address) {
@@ -434,6 +443,10 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     }
   }
 
+  changeMailingAddressPreviousAddressGeoSelected(result: GeoAddressResult) {
+    this.changeMailingAddressPreviousAddressSelected(geoResultToAddress(result));
+  }
+
   changeMailingAddressPreviousAddressSelected(address: Address) {
     if (!address.addressLine1
       && !address.city) {
@@ -463,6 +476,10 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
     if (this.isAddressValidatorEnabled) {
       this.dataService.changeMailingAddressPreviousPostalCode = address.postal;
     }
+  }
+
+  changeMailingAddressNewAddressGeoSelected(result: GeoAddressResult) {
+    this.changeMailingAddressNewAddressSelected(geoResultToAddress(result));
   }
 
   changeMailingAddressNewAddressSelected(address: Address) {
@@ -498,12 +515,14 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
 
   get dateErrorMessage(): ErrorMessage {
     return {
+      required: `${LabelReplacementTag} is required.`,
       invalidRange: `${LabelReplacementTag} must be after ${formatDateForDisplay(this.bcpStartDate)}.`
     };
   }
 
   get retroActiveStartDateErrorMessage(): ErrorMessage {
     return {
+      required: `${LabelReplacementTag} is required.`,
       invalidRange: `${LabelReplacementTag} must be after ${formatDateForDisplay(this.retroActiveStartDate)}.`
     };
   }

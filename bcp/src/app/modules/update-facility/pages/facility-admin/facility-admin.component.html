@@ -6,21 +6,21 @@
   <hr />
   
   <common-page-section>
-    <div class="form-group">
+    <div class="mb-3">
       <common-name label="First name"
                   name='firstName'
                   formControlName='firstName'
                   [maxlength]='15'></common-name>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
       <common-name label="Last name"
                   name='lastName'
                   formControlName='lastName'
                   [maxlength]='35'></common-name>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
       <common-email label="Contact email (optional)"
                     name='email'
                     formControlName='email'
@@ -28,7 +28,7 @@
     </div>
 
     <div class="d-sm-flex">
-      <div class="form-group col-sm-8 pl-0">
+      <div class="mb-3 col-sm-8 ps-0">
         <common-phone-number name='phone'
                               formControlName='phone'
                               label='Contact phone number'
@@ -36,7 +36,7 @@
                               [allowInternational]='false'></common-phone-number>
       </div>
 
-      <div class="form-group col-sm-4 pl-0, pr-0">
+      <div class="mb-3 col-sm-4 ps-0 pe-0">
         <bcp-phone-extension name='phoneExt'
                              formControlName='phoneExt'
                              label='Extension (optional)'></bcp-phone-extension>
@@ -47,7 +47,7 @@
   <h2>Facility Information</h2>
   <hr/>
   <common-page-section>
-    <div class='form-group'>
+    <div class='mb-3'>
       <div>
         <label class="control-label" for="facilityName">Facility or Practice Name</label>
         <input id="facilityName" formControlName="facilityName" class="form-control" maxlength="70">
@@ -56,19 +56,19 @@
             Facility Name is a required field
           </div>
           <div *ngIf ="formGroup.controls?.facilityName?.errors?.pattern">
-            Facility Name must contain letters, numbers and/or symbols(e.g. #, @, !).
+            Facility Name must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
           </div>
         </common-error-container>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
       <bcp-facility-number name='facilityMSPNumber'
                            formControlName='facilityMSPNumber'
                            [maxlength]="5"></bcp-facility-number>
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
       <common-phone-number name='facilityFax'
                           formControlName='facilityFax'
                           label='Contact fax number (optional)'

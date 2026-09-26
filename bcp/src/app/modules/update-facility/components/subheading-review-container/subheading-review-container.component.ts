@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ReviewContainerComponent } from '../../../core-bcp/components/review-container/review-container.component';
 
 @Component({
+  standalone: false,
     selector: 'bcp-subheading-review-container',
     templateUrl: './subheading-review-container.component.html',
     styleUrls: ['./subheading-review-container.component.scss'],

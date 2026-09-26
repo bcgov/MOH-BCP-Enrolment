@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RestrictedTextareaComponent } from './restricted-textarea.component';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 import { FormsModule } from '@angular/forms';
 
 describe('RestrictedTextareaComponent', () => {
   let component: RestrictedTextareaComponent;
   let fixture: ComponentFixture<RestrictedTextareaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RestrictedTextareaComponent ],
       imports: [ SharedCoreModule, FormsModule ]

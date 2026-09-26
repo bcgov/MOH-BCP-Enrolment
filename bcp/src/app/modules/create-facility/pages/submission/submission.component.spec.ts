@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubmissionComponent } from './submission.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 
 import { ReviewApplicantComponent } from '../../components/review-applicant/review-applicant.component';
 import { ReviewFacilityComponent } from '../../components/review-facility/review-facility.component';
@@ -16,7 +16,7 @@ describe('SubmissionComponent', () => {
   let component: SubmissionComponent;
   let fixture: ComponentFixture<SubmissionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ CoreBCPModule, RouterTestingModule, SharedCoreModule ],
       declarations: [

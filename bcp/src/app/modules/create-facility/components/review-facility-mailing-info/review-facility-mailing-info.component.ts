@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReviewContainerComponent } from 'src/app/modules/core-bcp/components/review-container/review-container.component';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
-import { getProvinceDescription } from 'moh-common-lib';
+import { getProvinceDescription } from 'moh-common-lib-angular';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-facility-mailing-info',
   templateUrl: './review-facility-mailing-info.component.html',
   styleUrls: ['./review-facility-mailing-info.component.scss']

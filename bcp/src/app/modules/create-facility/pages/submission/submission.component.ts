@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
 import { formatDateForDisplay, setNotApplicable } from '../../../core-bcp/models/helperFunc';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
-import { ApiStatusCodes, PageStateService } from 'moh-common-lib';
+import { ApiStatusCodes, PageStateService } from 'moh-common-lib-angular';
 import { ConfirmBaseForm } from '../../../core-bcp/models/confirm-base-form';
 import { HeaderService } from '../../../../services/header.service';
 import { PrivacyStmt } from '../../../core-bcp/components/core-consent-modal/core-consent-modal.component';
@@ -17,6 +17,7 @@ enum WarningMessage {
 const DUPE_WARNING_STATUS = '3';
 
 @Component({
+  standalone: false,
   selector: 'app-submission',
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.scss'],
@@ -25,13 +26,13 @@ const DUPE_WARNING_STATUS = '3';
 export class SubmissionComponent extends ConfirmBaseForm implements OnInit {
 
   /** An application is still a "success" even if it's under review */
-  isUnderReview: boolean = false;
+  isUnderReview = false;
 
   warningMessage: WarningMessage;
   readonly privacyStatement: string = PrivacyStmt;
   readonly practitionerAttachmentLink: string = environment.links.practitionerAttachment;
 
-  private _warningConfirmationMsg: string = 'Your application has been submitted. To complete your application, contact Health Insurance BC <u>two business days</u> following the date of submission noted below at (604) 456-6950 (lower mainland) or 1-866-456-6950 (elsewhere in B.C.).';
+  private _warningConfirmationMsg = 'Your application has been submitted. To complete your application, contact Health Insurance BC <u>two business days</u> following the date of submission noted below at (604) 456-6950 (lower mainland) or 1-866-456-6950 (elsewhere in B.C.).';
 
   constructor(protected dataService: CreateFacilityDataService,
               protected pageStateService: PageStateService,

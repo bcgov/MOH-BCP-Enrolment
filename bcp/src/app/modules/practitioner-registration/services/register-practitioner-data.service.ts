@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { BaseDataService } from '../../../services/base-data.service';
-import { BRITISH_COLUMBIA } from 'moh-common-lib';
+import { BRITISH_COLUMBIA } from 'moh-common-lib-angular';
 import {
   prepareDeclarationTextForAPI,
   stripPostalCodeSpaces,

@@ -11,19 +11,19 @@ const routes: Routes = [
   },
   {
     path: BCP_ROUTES.CREATE_FACILITY,
-    loadChildren: './modules/create-facility/create-facility.module#CreateFacilityModule'
+    loadChildren: () => import('./modules/create-facility/create-facility.module').then(m => m.CreateFacilityModule)
   },
   {
     path: BCP_ROUTES.UPDATE_FACILITY,
-    loadChildren: './modules/update-facility/update-facility.module#UpdateFacilityModule'
+    loadChildren: () => import('./modules/update-facility/update-facility.module').then(m => m.UpdateFacilityModule)
   },
   {
     path: BCP_ROUTES.PRACTITIONER_REGISTRATION,
-    loadChildren: './modules/practitioner-registration/practitioner-registration.module#PractitionerRegistrationModule'
+    loadChildren: () => import('./modules/practitioner-registration/practitioner-registration.module').then(m => m.PractitionerRegistrationModule)
   },
   {
     path: BCP_ROUTES.MAINTENANCE,
-    loadChildren: './modules/splash-page/splash-page.module#SplashPageModule'
+    loadChildren: () => import('./modules/splash-page/splash-page.module').then(m => m.SplashPageModule)
   },
 ];
 

@@ -24,29 +24,29 @@
 // Comment out unused component styles, so they won't be bundled in final CSS.
 // If they're ever used in the future we can just un-comment.
 
+@import "bootstrap/scss/functions";
 @import "./app/styles/variables.scss";
-@import "~bootstrap/scss/bootstrap";
-@import "~bootstrap/scss/_functions";
+@import "bootstrap/scss/bootstrap";
 
-@import "~font-awesome/scss/variables";
-@import "~font-awesome/scss/mixins";
-$fa-font-path: '~font-awesome/fonts';
+@import "font-awesome/scss/variables";
+@import "font-awesome/scss/mixins";
+$fa-font-path: '../node_modules/font-awesome/fonts';
 @font-face {
     font-family: 'FontAwesome';
-    src: url('#{$fa-font-path}/fontawesome-webfont.ttf?v=${fa-version}') format('truetype');
+    src: url('#{$fa-font-path}/fontawesome-webfont.ttf?v=#{$fa-version}') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
-@import "~font-awesome/scss/core";
-@import "~font-awesome/scss/larger";
-@import "~font-awesome/scss/fixed-width";
-@import "~font-awesome/scss/list";
-@import "~font-awesome/scss/bordered-pulled";
-@import "~font-awesome/scss/animated";
-@import "~font-awesome/scss/rotated-flipped";
-@import "~font-awesome/scss/stacked";
-@import "~font-awesome/scss/icons";
-@import "~font-awesome/scss/screen-reader";
+@import "font-awesome/scss/core";
+@import "font-awesome/scss/larger";
+@import "font-awesome/scss/fixed-width";
+@import "font-awesome/scss/list";
+@import "font-awesome/scss/bordered-pulled";
+@import "font-awesome/scss/animated";
+@import "font-awesome/scss/rotated-flipped";
+@import "font-awesome/scss/stacked";
+@import "font-awesome/scss/icons";
+@import "font-awesome/scss/screen-reader";
 
 @import "./app/styles/overrides";
 
@@ -75,7 +75,7 @@ label:not(.no-bold) {
 }
 
 // Required for the ng-select module that are within province/country
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "@ng-select/ng-select/themes/default.theme.css";
 
 .ng-select.ng-select-disabled {
   &>.ng-select-container {

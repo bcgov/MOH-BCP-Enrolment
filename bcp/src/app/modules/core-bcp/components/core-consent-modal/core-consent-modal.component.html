@@ -1,6 +1,5 @@
 <common-consent-modal #bcpConsentModal
                       [title]="'Information Collection Notice'"
-                      [processName]="'BCP'"
                       [agreeLabel]="'I have read and understand this information'"
                       [disableContinue]="!hasToken"
                       (accept)="handleAccept($event)">

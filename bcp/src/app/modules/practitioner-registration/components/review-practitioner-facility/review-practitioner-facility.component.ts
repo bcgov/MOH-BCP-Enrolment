@@ -3,9 +3,10 @@ import { ReviewContainerComponent } from '../../../core-bcp/components/review-co
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
 import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
-import { getProvinceDescription } from 'moh-common-lib';
+import { getProvinceDescription } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-practitioner-facility',
   templateUrl: './review-practitioner-facility.component.html',
   styleUrls: ['./review-practitioner-facility.component.scss']

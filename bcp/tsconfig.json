@@ -1,30 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "outDir": "./dist/out-tsc",
     "esModuleInterop": true,
     "baseUrl": "./",
-    "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "moduleResolution": "bundler",
     "importHelpers": true,
-    "target": "es5",
-    "paths": {
-      "core-js/es7/reflect": ["node_modules/core-js/proposals/reflect-metadata"],
-      "core-js/es6/*": ["node_modules/core-js/es/*"]
-    },
+    "target": "ES2022",
+    "module": "ES2022",
+    "skipLibCheck": true,
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "skipLibCheck": true
+    ]
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "fullTemplateTypeCheck": true
   }
 }

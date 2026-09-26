@@ -1,4 +1,4 @@
-$canvasWidth: 500px; // must match values in ts file
+$canvasWidth: 500px; // Sass cannot read the TS constant: signature.component.ts (canvasWidth/canvasHeight) is the source of truth, keep this in sync with it
 
 
 bcp-signature {
@@ -6,7 +6,7 @@ bcp-signature {
         max-width: $canvasWidth;
     }
     
-    signature-pad canvas {
+    .signature-pad-canvas {
         background-color: #eee;
     }
     

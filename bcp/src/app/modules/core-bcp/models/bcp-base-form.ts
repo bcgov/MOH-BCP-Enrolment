@@ -1,9 +1,12 @@
-import { AbstractReactForm , ContainerService, PageStateService} from 'moh-common-lib';
-import { OnDestroy, AfterViewInit, OnInit } from '@angular/core';
+import { AbstractReactForm , ContainerService, PageStateService} from 'moh-common-lib-angular';
+import { Directive, OnDestroy, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
+// Selector-less @Directive() so this abstract base class can be extended by
+// real Angular components while using constructor DI and lifecycle hooks itself.
+@Directive()
 export class BcpBaseForm extends AbstractReactForm implements OnInit, AfterViewInit, OnDestroy {
 
   links = environment.links;

@@ -4,7 +4,7 @@ import { PRACTITIONER_REGISTRATION_PAGES } from './practitioner-registration-rou
 import { SubmissionComponent } from './pages/submission/submission.component';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { pages } from './practitioner-registration-page-routes';
-import { LoadPageGuardService } from 'moh-common-lib';
+import { LoadPageGuardService } from 'moh-common-lib-angular';
 
 const routes: Routes = [
   {

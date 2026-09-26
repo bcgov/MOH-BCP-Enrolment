@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CancelChangeComponent } from './cancel-change.component';
 import { CoreBCPModule } from '../../../core-bcp/core-bcp.module';
@@ -10,7 +10,7 @@ describe('CancelChangeComponent', () => {
   let component: CancelChangeComponent;
   let fixture: ComponentFixture<CancelChangeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ CoreBCPModule, FormsModule, ReactiveFormsModule, RouterTestingModule ],
       declarations: [ CancelChangeComponent, RestrictedTextareaComponent ]

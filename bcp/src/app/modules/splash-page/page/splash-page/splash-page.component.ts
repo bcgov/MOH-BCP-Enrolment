@@ -6,7 +6,8 @@ import * as moment from 'moment';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'fpcare-splash-page',
+  standalone: false,
+  selector: 'bcp-splash-page',
   templateUrl: './splash-page.component.html',
   styleUrls: ['./splash-page.component.scss']
 })

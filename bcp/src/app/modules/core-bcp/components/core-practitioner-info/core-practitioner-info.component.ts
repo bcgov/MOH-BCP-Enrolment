@@ -12,14 +12,15 @@ export interface CorePractitionerInfoFormItems {
 }
 
 @Component({
+  standalone: false,
   selector: 'bcp-core-practitioner-info',
   templateUrl: './core-practitioner-info.component.html',
   styleUrls: ['./core-practitioner-info.component.scss']
 })
 export class CorePractitionerInfoComponent {
 
-  @Input() showValidationError: boolean = false;
-  validationErrorMessage: string = 'This field does not match our records.';
+  @Input() showValidationError = false;
+  validationErrorMessage = 'This field does not match our records.';
 
   public items: CorePractitionerInfoFormItems;
 

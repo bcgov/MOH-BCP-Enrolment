@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { CorePractitionerInfoFormItems } from '../../../core-bcp/components/core-practitioner-info/core-practitioner-info.component';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { RegisterPractitionerApiService } from '../../services/register-practitioner-api.service';
 import { ValidationResponse, ReturnCodes } from '../../../core-bcp/models/base-api.model';
@@ -12,16 +12,17 @@ import { SplunkLoggerService } from '../../../../services/splunk-logger.service'
 
 
 @Component({
+  standalone: false,
   selector: 'bcp-practitioner-info',
   templateUrl: './practitioner-info.component.html',
   styleUrls: ['./practitioner-info.component.scss']
 })
 export class PractitionerInfoComponent extends BcpBaseForm implements OnInit, AfterViewInit {
 
-  pageTitle: string = 'Practitioner Information';
-  formGroup: FormGroup;
-  showValidationError: boolean = false;
-  systemDownError: boolean = false;
+  pageTitle = 'Practitioner Information';
+  declare formGroup: FormGroup;
+  showValidationError = false;
+  systemDownError = false;
 
 
   constructor( protected containerService: ContainerService,

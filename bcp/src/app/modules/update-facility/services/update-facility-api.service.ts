@@ -3,7 +3,7 @@ import { BCPApiService } from '../../../services/bcp-api.service';
 import { HttpClient } from '@angular/common/http';
 import { SplunkLoggerService } from '../../../services/splunk-logger.service';
 import { UpdateFacilityDataService } from './update-facility-data.service';
-import { CommonImage } from 'moh-common-lib';
+import { CommonImage } from 'moh-common-lib-angular';
 import { flatMap, catchError } from 'rxjs/operators';
 import { BCPDocumentTypes } from '../../core-bcp/models/documentTypes';
 
@@ -18,7 +18,7 @@ export class UpdateFacilityApiService extends BCPApiService {
     super(http, logger, dataService);
   }
 
-  submitForm(jsonPayLoad, signature: CommonImage, applicationUUID) {
+  submitForm(jsonPayLoad, signature: CommonImage<BCPDocumentTypes>, applicationUUID) {
     return this.uploadSignature(signature, applicationUUID)
       .pipe(
         flatMap(attachRes => this.submitJson(jsonPayLoad, applicationUUID, signature)),

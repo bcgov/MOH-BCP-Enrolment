@@ -5,6 +5,7 @@ import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
 import { setNotApplicable, convertToYesNo, convertToJSONDate, formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-bcp',
   templateUrl: './review-bcp.component.html',
   styleUrls: ['./review-bcp.component.scss']

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
-import { ApiStatusCodes, PageStateService } from 'moh-common-lib';
+import { ApiStatusCodes, PageStateService } from 'moh-common-lib-angular';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
 import { ConfirmBaseForm } from '../../../core-bcp/models/confirm-base-form';
 import { PrivacyStmt } from '../../../core-bcp/components/core-consent-modal/core-consent-modal.component';
@@ -8,6 +8,7 @@ import { HeaderService } from '../../../../services/header.service';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'bcp-submission',
   templateUrl: './submission.component.html',
   styleUrls: ['./submission.component.scss'],

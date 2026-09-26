@@ -4,6 +4,7 @@ import { CreateFacilityDataService } from '../../services/create-facility-data.s
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 
 @Component({
+  standalone: false,
   selector: 'bcp-review-facility-bcp',
   templateUrl: './review-facility-bcp.component.html',
   styleUrls: ['./review-facility-bcp.component.scss']

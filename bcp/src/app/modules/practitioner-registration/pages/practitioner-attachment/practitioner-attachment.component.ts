@@ -2,15 +2,15 @@ import { Component, OnInit, AfterViewInit, DoCheck } from '@angular/core';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ContainerService, ErrorMessage, PageStateService, LabelReplacementTag } from 'moh-common-lib';
+import { ContainerService, ErrorMessage, PageStateService, LabelReplacementTag, IRadioItems } from 'moh-common-lib-angular';
 import { isBefore, isAfter, addDays, subDays, compareAsc } from 'date-fns';
 import { BcpBaseForm } from '../../../core-bcp/models/bcp-base-form';
 import { PRACTITIONER_ATTACHMENT, PRAC_ATTACHMENT_TYPE } from '../../models/practitioner-attachment';
-import { IRadioItems } from 'moh-common-lib/lib/components/radio/radio.component';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
 
 @Component({
+  standalone: false,
   selector: 'bcp-practitioner-attachment',
   templateUrl: './practitioner-attachment.component.html',
   styleUrls: ['./practitioner-attachment.component.scss']
@@ -25,10 +25,10 @@ export class PractitionerAttachmentComponent extends BcpBaseForm implements OnIn
     super(router, containerService, pageStateService);
   }
 
-  pageTitle: string = 'Practitioner Attachment';
+  pageTitle = 'Practitioner Attachment';
 
   // Radio buttons
-  radioItems: Array<IRadioItems> = [
+  radioItems: IRadioItems[] = [
     {
       label: PRACTITIONER_ATTACHMENT.NEW.label,
       value: PRACTITIONER_ATTACHMENT.NEW.value,
@@ -42,7 +42,7 @@ export class PractitionerAttachmentComponent extends BcpBaseForm implements OnIn
       value: PRACTITIONER_ATTACHMENT.CHANGE.value,
     },
   ];
-  changeAttachmentHasValue: boolean = false;
+  changeAttachmentHasValue = false;
 
   facilityEffectiveDateErrMsg: ErrorMessage;
   facilityCancelDateErrMsg: ErrorMessage;
@@ -90,10 +90,12 @@ export class PractitionerAttachmentComponent extends BcpBaseForm implements OnIn
     if ( this.effectiveDateStartRange && this.effectiveDateEndRange ) {
       // Displays effective end range as the day before the cancel date
       this.facilityEffectiveDateErrMsg = {
+        required: `${LabelReplacementTag} is required.`,
         invalidRange: `${LabelReplacementTag} must be between ${formatDateForDisplay(this.effectiveDateStartRange)} and ${formatDateForDisplay(this.effectiveDateEndRange)}.`
       };
     } else {
       this.facilityEffectiveDateErrMsg = {
+        required: `${LabelReplacementTag} is required.`,
         invalidRange: `${LabelReplacementTag} must be on or after ${formatDateForDisplay(this.effectiveDateStartRange)}.`
       };
     }
@@ -105,10 +107,12 @@ export class PractitionerAttachmentComponent extends BcpBaseForm implements OnIn
 
       // Displays cancel start range as the day after the effective date
       this.facilityCancelDateErrMsg = {
+        required: `${LabelReplacementTag} is required.`,
         invalidRange: `${LabelReplacementTag} must be between ${formatDateForDisplay(this.cancelDateStartRange)} and ${formatDateForDisplay(this.cancelDateEndRange)}.`
       };
     } else {
       this.facilityCancelDateErrMsg = {
+        required: `${LabelReplacementTag} is required.`,
         invalidRange: `${LabelReplacementTag} must be on or after ${formatDateForDisplay(this.cancelDateStartRange)}.`
       };
     }

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { Container, ContainerService, PageStateService } from 'moh-common-lib';
+import { Container, ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { pages } from '../../practitioner-registration-page-routes';
 import { HeaderService } from '../../../../services/header.service';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
 
 
 @Component({
+  standalone: false,
   selector: 'bcp-registration-container',
   templateUrl: './registration-container.component.html',
   styleUrls: ['./registration-container.component.scss']

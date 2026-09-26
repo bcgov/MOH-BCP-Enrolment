@@ -1,20 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SharedCoreModule } from 'moh-common-lib';
-import { CaptchaModule } from 'moh-common-lib/captcha';
-import { ReCaptchaModule } from 'moh-common-lib/recaptcha';
+import { SharedCoreModule } from 'moh-common-lib-angular';
+import { CaptchaModule } from 'moh-common-lib-angular/captcha';
 import { CoreBCPModule } from '../../../core-bcp/core-bcp.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ CoreBCPModule, HttpClientTestingModule, RouterTestingModule, SharedCoreModule, CaptchaModule, ReCaptchaModule ],
+      imports: [ CoreBCPModule, HttpClientTestingModule, RouterTestingModule, SharedCoreModule, CaptchaModule ],
       declarations: [ HomeComponent ]
     })
     .compileComponents();

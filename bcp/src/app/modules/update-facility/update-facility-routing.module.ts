@@ -4,7 +4,7 @@ import { UPDATE_FACILITY_PAGES } from './update-facility-route-constants';
 import { SubmissionComponent } from './pages/submission/submission.component';
 import { FacilityContainerComponent } from './components/facility-container/facility-container.component';
 import { pages } from './update-facility-page-routes';
-import { LoadPageGuardService } from 'moh-common-lib';
+import { LoadPageGuardService } from 'moh-common-lib-angular';
 
 const routes: Routes = [
   {

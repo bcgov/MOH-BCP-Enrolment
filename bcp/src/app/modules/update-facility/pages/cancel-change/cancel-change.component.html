@@ -14,13 +14,13 @@
     <hr/>
     
     <a name='physical-address'></a>
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Change facility physical address'
                        formControlName='checkChangeFacilityAddress'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeFacilityAddress'
-         class='border-left ml-4 pl-3'>
+         class='border-start ms-4 ps-3'>
       <h3>Previous facility physical address</h3>
       <hr/>
 
@@ -28,16 +28,17 @@
 
         <!-- Change Facility Address -->
 
-        <div class='ml-4'>
+        <div class='ms-4'>
           <div class="row">
             <div class="col-md-8">
-              <div class="form-group">
-                <common-geocoder-input
+              <div class="mb-3">
+                <common-street
                                   *ngIf='!isAddressValidatorEnabled'
+                                  [useGeoCoder]="true"
                                   label='Facility physical address'
                                   formControlName='changeFacilityAddressPreviousAddress'
                                   maxlength='60'
-                                  (select)='changeFacilityAddressPreviousAddressSelected($event)'></common-geocoder-input>
+                                  (select)='changeFacilityAddressPreviousAddressGeoSelected($event)'></common-street>
                 <common-address-validator
                                   *ngIf='isAddressValidatorEnabled'
                                   label='Facility physical address'
@@ -54,12 +55,12 @@
                       Facility address max length must be 60 or fewer characters.
                   </div>
                   <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressPreviousAddress?.errors?.pattern">
-                      Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                      Facility address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
                   </div>
                 </common-error-container>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-city label='City'
                             name="changeFacilityAddressPreviousCity"
                             formControlName="changeFacilityAddressPreviousCity"
@@ -67,12 +68,12 @@
                             [maxlength]="30"></common-city>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <div class='label'>Province</div>
                 <div class='pb-2'>British Columbia</div>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-postal-code name="changeFacilityAddressPreviousPostalCode"
                                     label='Postal code'
                                     placeholder=''
@@ -95,7 +96,7 @@
           </div>
           <div class="row">
             <div class="col-md-8">
-              <div class="form-group">
+              <div class="mb-3">
                 <common-phone-number name='changeFacilityAddressPreviousFax'
                                     formControlName='changeFacilityAddressPreviousFax'
                                     label='Contact fax number (optional)'
@@ -109,17 +110,18 @@
         <h3>New facility physical address</h3>
         <hr/>
 
-        <div class='ml-4'>
+        <div class='ms-4'>
           <div class="row">
             <div class="col-md-8">
-              <div class="form-group">
+              <div class="mb-3">
                 <!-- Label has intentional trailing space for accessiblity validators -->
-                <common-geocoder-input
+                <common-street
                                   *ngIf='!isAddressValidatorEnabled'
+                                  [useGeoCoder]="true"
                                   label='Facility physical address '
                                   formControlName='changeFacilityAddressNewAddress'
                                   maxlength='60'
-                                  (select)='changeFacilityAddressNewAddressSelected($event)'></common-geocoder-input>
+                                  (select)='changeFacilityAddressNewAddressGeoSelected($event)'></common-street>
                 <common-address-validator
                                   *ngIf='isAddressValidatorEnabled'
                                   label='Facility physical address '
@@ -136,12 +138,12 @@
                       Facility address max length must be 60 or fewer characters.
                   </div>
                   <div *ngIf="changeFacilityAddressFG.controls?.changeFacilityAddressNewAddress?.errors?.pattern">
-                      Facility address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                      Facility address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
                   </div>
                 </common-error-container>
               </div>
     
-              <div class="form-group">
+              <div class="mb-3">
                 <common-city label='City'
                               name="changeFacilityAddressNewCity"
                               formControlName="changeFacilityAddressNewCity"
@@ -149,12 +151,12 @@
                               [maxlength]="30"></common-city>
               </div>
     
-              <div class="form-group">
+              <div class="mb-3">
                 <div class='label'>Province</div>
                 <div class='pb-2'>British Columbia</div>
               </div>
     
-              <div class="form-group">
+              <div class="mb-3">
                 <common-postal-code name="changeFacilityAddressNewPostalCode"
                                     label='Postal code'
                                     placeholder=''
@@ -162,7 +164,7 @@
                 </common-postal-code>
               </div>
     
-              <div class="form-group">
+              <div class="mb-3">
                 <common-phone-number name='changeFacilityAddressNewFax'
                                     formControlName='changeFacilityAddressNewFax'
                                     label='Contact fax number (optional)'
@@ -175,7 +177,7 @@
 
         <div class="row">
           <div class="col-md-8">
-            <div class="form-group">
+            <div class="mb-3">
               <common-date name='changeFacilityAddressEffectiveDate'
                             formControlName='changeFacilityAddressEffectiveDate'
                             label='Effective date of address change'
@@ -192,27 +194,28 @@
 <!-- Change Mailing Address-->
 
     <a name='mailing-address'></a>
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Change facility mailing address'
                         formControlName='checkChangeMailingAddress'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeMailingAddress'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <h3>Previous mailing address</h3>
       <hr/>
 
       <form [formGroup]="changeMailingAddressFG">
-        <div class='ml-4'>
+        <div class='ms-4'>
           <div class="row">
             <div class="col-md-8">
-              <div class="form-group">
-                <common-geocoder-input
+              <div class="mb-3">
+                <common-street
                                   *ngIf='!isAddressValidatorEnabled'
+                                  [useGeoCoder]="true"
                                   label='Mailing address'
                                   formControlName='changeMailingAddressPreviousAddress'
                                   maxlength='60'
-                                  (select)='changeMailingAddressPreviousAddressSelected($event)'></common-geocoder-input>
+                                  (select)='changeMailingAddressPreviousAddressGeoSelected($event)'></common-street>
                 <common-address-validator
                                   *ngIf='isAddressValidatorEnabled'
                                   label='Mailing address'
@@ -229,12 +232,12 @@
                       Mailing address max length must be 60 or fewer characters.
                   </div>
                   <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressPreviousAddress?.errors?.pattern">
-                      Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                      Mailing address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
                   </div>
                 </common-error-container>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-city label='City'
                               name="changeMailingAddressPreviousCity"
                               formControlName="changeMailingAddressPreviousCity"
@@ -242,12 +245,12 @@
                               [maxlength]="30"></common-city>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <div class='label'>Province</div>
                 <div class='pb-2'>British Columbia</div>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-postal-code name="changeMailingAddressPreviousPostalCode"
                                     label='Postal code'
                                     placeholder=''
@@ -273,17 +276,18 @@
         <h3>New Mailing Address</h3>
         <hr/>
 
-        <div class='ml-4'>
+        <div class='ms-4'>
           <div class="row">
             <div class="col-md-8">
-              <div class="form-group">
+              <div class="mb-3">
                 <!-- Label has intentional trailing space for accessiblity validators -->
-                <common-geocoder-input
+                <common-street
                                   *ngIf='!isAddressValidatorEnabled'
+                                  [useGeoCoder]="true"
                                   label='Mailing address '
                                   formControlName='changeMailingAddressNewAddress'
                                   maxlength='60'
-                                  (select)='changeMailingAddressNewAddressSelected($event)'></common-geocoder-input>
+                                  (select)='changeMailingAddressNewAddressGeoSelected($event)'></common-street>
                 <common-address-validator
                                   *ngIf='isAddressValidatorEnabled'
                                   label='Mailing address '
@@ -300,12 +304,12 @@
                       Mailing address max length must be 60 or fewer characters.
                   </div>
                   <div *ngIf="changeMailingAddressFG.controls?.changeMailingAddressNewAddress?.errors?.pattern">
-                      Mailing address must contain letters, numbers and/or symbols(e.g. #, @, !).
+                      Mailing address must contain letters, numbers and/or symbols(e.g. #, &#64;, !).
                   </div>
                 </common-error-container>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-city label='City'
                               name="changeMailingAddressNewCity"
                               formControlName="changeMailingAddressNewCity"
@@ -313,12 +317,12 @@
                               [maxlength]="30"></common-city>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <div class='label'>Province</div>
                 <div class='pb-2'>British Columbia</div>
               </div>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <common-postal-code name="changeMailingAddressNewPostalCode"
                                     label='Postal code'
                                     placeholder=''
@@ -331,7 +335,7 @@
 
         <div class="row">
           <div class="col-md-8">
-            <div class="form-group">
+            <div class="mb-3">
               <common-date name='changeMailingAddressEffectiveDate'
                             formControlName='changeMailingAddressEffectiveDate'
                             label='Effective date of address change'
@@ -352,15 +356,15 @@
 
 <!-- BCP Change applies to fees -->
     
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='The applicant requests that BCP applies to Eligible Fees of Eligible Physicians attached to this facility.'
                         formControlName='checkChangeAppliesFees'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeAppliesFees'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeAppliesFeesFG">
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='changeAppliesFeesEffectiveDate'
                        formControlName='changeAppliesFeesEffectiveDate'
                        label='Effective date'
@@ -374,15 +378,15 @@
 
 <!-- BCP Cancel -->
     
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Cancel BCP'
                         formControlName='checkCancelBCP'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkCancelBCP'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="cancelBCPFG">
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='cancelBCPEffectiveDate'
                         formControlName='cancelBCPEffectiveDate'
                         label='Cancel effective date'
@@ -394,15 +398,15 @@
 
 <!-- BCP Change Effective Date -->
     
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Change BCP effective date'
                         formControlName='checkChangeBCPEffectiveDate'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeBCPEffectiveDate'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeBCPEffectiveDateFG">
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='changeBCPEffectiveDateEffectiveDate'
                         formControlName='changeBCPEffectiveDateEffectiveDate'
                         label='New BCP effective date'
@@ -414,15 +418,15 @@
 
 <!-- BCP Change Cancel Date -->
     
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Change BCP cancellation date'
                         formControlName='checkChangeBCPCancelDate'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeBCPCancelDate'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeBCPCancelDateFG">
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='changeBCPCancelDateCancelDate'
                         formControlName='changeBCPCancelDateCancelDate'
                         label='New BCP cancel date'
@@ -439,18 +443,18 @@
 
 <!-- BCP Change Cancel Date -->
 
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Change Administrator information'
                         formControlName='checkChangeAdminInfo'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkChangeAdminInfo'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="changeAdminInfoFG">
         <bcp-core-practitioner-info [formGroup]='changeAdminInfoFG'
                                     [showValidationError]='showValidationError'></bcp-core-practitioner-info>
 
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='changeAdminInfoEffectiveDate'
                         formControlName='changeAdminInfoEffectiveDate'
                         label='Effective date of change'
@@ -466,15 +470,15 @@
     <h2 class='mt-5'>Cancellation of Facility Number</h2>
     <p>To authorize cancellation of a MSP Facility Number</p>
     <hr/>
-    <div class="form-group pl-4">
+    <div class="mb-3 ps-4">
       <common-checkbox label='Cancel Facility Number'
                         formControlName='checkCancelFacilityNumber'></common-checkbox>
     </div>
 
     <div *ngIf='dataService.checkCancelFacilityNumber'
-          class='border-left ml-4 pl-3'>
+          class='border-start ms-4 ps-3'>
       <form [formGroup]="cancelFacilityNumberFG">
-        <div class="form-group">
+        <div class="mb-3">
           <common-date name='cancelFacilityNumberCancelDate'
                         formControlName='cancelFacilityNumberCancelDate'
                         label='Cancellation Date'
@@ -489,12 +493,12 @@
     <hr/>
 
     <a name='other-request'></a>
-    <div class='form-group'>
-      <restricted-textarea label='Please enter any other change or request here'
+    <div class='mb-3'>
+      <bcp-restricted-textarea label='Please enter any other change or request here'
                             name='otherChangeRequests'
                             formControlName='otherChangeRequests'
                             id='otherChangeRequests'
-                            [maxlength]='OTHER_REQUEST_MAX_LENGTH'></restricted-textarea>
+                            [maxlength]='OTHER_REQUEST_MAX_LENGTH'></bcp-restricted-textarea>
     </div>
 
     <common-error-container [displayError]='containsMissingInfoError'>

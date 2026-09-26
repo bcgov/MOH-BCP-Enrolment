@@ -1,10 +1,11 @@
 import { Component, Optional, Self, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NgControl, ValidationErrors } from '@angular/forms';
-import { ErrorMessage, LabelReplacementTag, AbstractFormControl } from 'moh-common-lib';
+import { ErrorMessage, LabelReplacementTag, AbstractFormControl } from 'moh-common-lib-angular';
 
 
 // TODO: Convert to use the abstract form control class - figure out where this is used
 @Component({
+  standalone: false,
   selector: 'bcp-facility-number',
   templateUrl: './facility-number.component.html',
   styleUrls: ['./facility-number.component.scss'],
@@ -13,8 +14,8 @@ export class FacilityNumberComponent extends AbstractFormControl implements OnIn
 
   public facNumber: string;
 
-  @Input() label: string = 'Medical Services Plan Facility Number';
-  @Input() maxlength: string = '9';
+  @Input() label = 'Medical Services Plan Facility Number';
+  @Input() maxlength = '9';
 
   _defaultErrMsg: ErrorMessage = {
     required: `${LabelReplacementTag} is required.`,
@@ -54,12 +55,12 @@ export class FacilityNumberComponent extends AbstractFormControl implements OnIn
 
   private validateSelf(): ValidationErrors | null {
     if ( this.facNumber ) {
-      const criteria: RegExp = /^\w*$/;
+      const criteria = /^\w*$/;
       const result = criteria.test(this.facNumber);
       if (!result) {
         return { invalidFormat: true };
       }
-      const minLengthCriteria: RegExp = /^\w{5,9}$/; // Restrict length to 5-9 characters long.
+      const minLengthCriteria = /^\w{5,9}$/; // Restrict length to 5-9 characters long.
       const minLengthResult = minLengthCriteria.test(this.facNumber);
       if (!minLengthResult) {
         return { invalidLength: true };

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 import { SplashPageRoutingModule } from './splash-page-routing.module';
 import { SplashPageComponent } from './page/splash-page/splash-page.component';
 

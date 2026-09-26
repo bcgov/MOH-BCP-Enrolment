@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ErrorMessage, Address } from 'moh-common-lib';
+import { ErrorMessage, Address, GeoAddressResult } from 'moh-common-lib-angular';
 import { BaseDataService } from '../../../../services/base-data.service';
 import { environment } from '../../../../../environments/environment';
 import { SpaEnvService } from '../../../../services/spa-env.service';
+import { geoResultToAddress } from '../../helpers/address-helper';
 
 @Component({
+  standalone: false,
   selector: 'bcp-core-facility-info',
   templateUrl: './core-facility-info.component.html',
   styleUrls: ['./core-facility-info.component.scss']
@@ -13,8 +15,8 @@ import { SpaEnvService } from '../../../../services/spa-env.service';
 export class CoreFacilityInfoComponent {
 
   public readonly addressServiceUrl: string = environment.api.address;
-  @Input() public showValidationError: boolean = false;
-  public validationErrorMessage: string = 'This field does not match our records.';
+  @Input() public showValidationError = false;
+  public validationErrorMessage = 'This field does not match our records.';
 
   @Output() public addressSelected: EventEmitter<Address> = new EventEmitter<Address>();
 
@@ -24,13 +26,17 @@ export class CoreFacilityInfoComponent {
 
   @Input() public formGroup: FormGroup;
 
-  facilityLabel: string = 'Facility or practice name';
-  physicalAddrLabel: string = 'Physical address';
+  facilityLabel = 'Facility or practice name';
+  physicalAddrLabel = 'Physical address';
 
   constructor(private spaEnvService: SpaEnvService) {}
 
   physicalAddressSelected(address: Address) {
     this.addressSelected.emit(address);
+  }
+
+  physicalAddressGeoSelected(result: GeoAddressResult) {
+    this.addressSelected.emit(geoResultToAddress(result));
   }
 
   get isAddressValidatorEnabled(): boolean {

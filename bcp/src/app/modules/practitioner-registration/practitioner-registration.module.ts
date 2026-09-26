@@ -17,7 +17,7 @@ import {
   LoadPageGuardService,
   BYPASS_GUARDS,
   START_PAGE_URL
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import { PRACTITIONER_REGISTRATION_PAGES } from './practitioner-registration-route-constants';
 import {
   ReviewPractitionerAttachmentComponent
