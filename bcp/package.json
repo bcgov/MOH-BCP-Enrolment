@@ -1,6 +1,6 @@
 {
   "name": "moh-bcp",
-  "version": "2.3.8",
+  "version": "2.3.9",
   "engines": {
     "node": ">=22.23.0 <23"
   },
