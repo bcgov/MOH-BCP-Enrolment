@@ -25,4 +25,10 @@ describe('ReviewFacilityInfoComponent', () => {
     expect(component).toBeTruthy();
     fixture.detectChanges();
   });
+
+  it('should display fax formatted from raw digits', () => {
+    component.dataService.facilityFax = '0958029359';
+    fixture.detectChanges();
+    expect(component.review.sectionItems[0][2].value).toEqual('(095) 802-9359');
+  });
 });

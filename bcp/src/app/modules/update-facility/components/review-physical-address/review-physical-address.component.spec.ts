@@ -26,4 +26,13 @@ describe('ReviewPhysicalAddressComponent', () => {
     expect(component).toBeTruthy();
     fixture.detectChanges();
   });
+
+  it('should display previous and new fax formatted from raw digits', () => {
+    component.dataService.checkChangeFacilityAddress = true;
+    component.dataService.changeFacilityAddressPreviousFax = '0958029359';
+    component.dataService.changeFacilityAddressNewFax = '5555555555';
+    fixture.detectChanges();
+    expect(component.review.sections[0].items[4].value).toEqual('(095) 802-9359');
+    expect(component.review.sections[1].items[4].value).toEqual('(555) 555-5555');
+  });
 });

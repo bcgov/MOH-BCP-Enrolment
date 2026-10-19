@@ -31,6 +31,12 @@ export function stripPhoneFormatting( str: string ) {
   return null;
 }
 
+// Formats a 10 digit phone number as (555) 555-5555 for display; any other value is returned unchanged
+export function formatPhoneForDisplay( str: string ): string {
+  const digits = str ? str.replace(/\D/g, '') : '';
+  return digits.length === 10 ? `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}` : str;
+}
+
 // Strips spaces from postal code
 export function stripPostalCodeSpaces( str: string ) {
   if ( str ) {

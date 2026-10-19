@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReviewContainerComponent } from 'src/app/modules/core-bcp/components/review-container/review-container.component';
 import { CreateFacilityDataService } from '../../services/create-facility-data.service';
-import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
+import { setNotApplicable, formatPhoneForDisplay } from '../../../core-bcp/models/helperFunc';
 import { CREATE_FACILITY_PAGES } from '../../create-facility-route-constants';
 
 @Component({
@@ -23,7 +23,7 @@ export class ReviewApplicantComponent implements OnInit {
 
   reviewItems() {
 
-    const phoneNumberEntry = { label: 'Contact phone number', value: this.dataService.facAdminPhoneNumber };
+    const phoneNumberEntry = { label: 'Contact phone number', value: formatPhoneForDisplay( this.dataService.facAdminPhoneNumber ) };
     if ( this.dataService.facAdminExtension ) {
       phoneNumberEntry.value = phoneNumberEntry.value.concat( ' Ext. ' + this.dataService.facAdminExtension );
     }

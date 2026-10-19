@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReviewContainerComponent } from '../../../core-bcp/components/review-container/review-container.component';
 import { RegisterPractitionerDataService } from '../../services/register-practitioner-data.service';
 import { PRACTITIONER_REGISTRATION_PAGES } from '../../practitioner-registration-route-constants';
-import { setNotApplicable } from '../../../core-bcp/models/helperFunc';
+import { setNotApplicable, formatPhoneForDisplay } from '../../../core-bcp/models/helperFunc';
 
 @Component({
   standalone: false,
@@ -24,7 +24,7 @@ export class ReviewPractitionerInfoComponent implements OnInit {
     this.review.redirectPath = PRACTITIONER_REGISTRATION_PAGES.PRACTITIONER_INFO.fullpath;
     this.review.header = PRACTITIONER_REGISTRATION_PAGES.PRACTITIONER_INFO.title;
 
-    const phoneNumberEntry = { label: 'Phone number', value: this.dataService.pracInfoPhoneNumber };
+    const phoneNumberEntry = { label: 'Phone number', value: formatPhoneForDisplay( this.dataService.pracInfoPhoneNumber ) };
     if ( this.dataService.pracInfoPhoneNumberExt ) {
       phoneNumberEntry.value = phoneNumberEntry.value.concat( ' Ext. ' + this.dataService.pracInfoPhoneNumberExt );
     }
