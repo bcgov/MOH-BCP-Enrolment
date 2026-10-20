@@ -39,4 +39,18 @@ describe('ReviewPractitionerInfoComponent', () => {
     fixture.detectChanges();
     expect(component.review.sectionItems[0][4].value).toEqual('phonenumber Ext. extension');
   });
+
+  it('should display phone formatted from raw digits', () => {
+    component.dataService.pracInfoPhoneNumber = '5555555555';
+    component.dataService.pracInfoPhoneNumberExt = null;
+    fixture.detectChanges();
+    expect(component.review.sectionItems[0][4].value).toEqual('(555) 555-5555');
+  });
+
+  it('should append the extension to the formatted phone', () => {
+    component.dataService.pracInfoPhoneNumber = '5555555555';
+    component.dataService.pracInfoPhoneNumberExt = '123';
+    fixture.detectChanges();
+    expect(component.review.sectionItems[0][4].value).toEqual('(555) 555-5555 Ext. 123');
+  });
 });

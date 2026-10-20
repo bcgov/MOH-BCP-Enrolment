@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReviewContainerComponent } from '../../../core-bcp/components/review-container/review-container.component';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
 import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
-import { setNotApplicable, convertToYesNo, formatDateForDisplay } from '../../../core-bcp/models/helperFunc';
+import { setNotApplicable, convertToYesNo, formatDateForDisplay, formatPhoneForDisplay } from '../../../core-bcp/models/helperFunc';
 
 @Component({
   standalone: false,
@@ -27,7 +27,7 @@ export class ReviewChangeAdminComponent implements OnInit {
 
     const phoneNumberEntry = {
       label: 'Phone number',
-      value: setNotApplicable(this.dataService.changeAdminInfoPhoneNumber)
+      value: setNotApplicable(formatPhoneForDisplay(this.dataService.changeAdminInfoPhoneNumber))
     };
     if (this.dataService.changeAdminInfoPhoneNumberExt) {
       phoneNumberEntry.value = phoneNumberEntry.value.concat(' Ext. ' + this.dataService.changeAdminInfoPhoneNumberExt);

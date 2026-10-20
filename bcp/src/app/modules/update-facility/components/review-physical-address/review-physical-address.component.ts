@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubheadingReviewContainerComponent } from '../subheading-review-container/subheading-review-container.component';
 import { UpdateFacilityDataService } from '../../services/update-facility-data.service';
 import { UPDATE_FACILITY_PAGES } from '../../update-facility-route-constants';
-import { formatDateForDisplay, setNotApplicable } from '../../../core-bcp/models/helperFunc';
+import { formatDateForDisplay, setNotApplicable, formatPhoneForDisplay } from '../../../core-bcp/models/helperFunc';
 
 @Component({
   standalone: false,
@@ -35,7 +35,7 @@ export class ReviewPhysicalAddressComponent implements OnInit {
             { label: 'City', value: setNotApplicable(this.dataService.changeFacilityAddressPreviousCity) },
             { label: 'Province', value: 'British Columbia' },
             { label: 'Postal code', value: setNotApplicable(this.dataService.changeFacilityAddressPreviousPostalCode) },
-            { label: 'Fax number (optional)', value: setNotApplicable(this.dataService.changeFacilityAddressPreviousFax) },
+            { label: 'Fax number (optional)', value: setNotApplicable(formatPhoneForDisplay(this.dataService.changeFacilityAddressPreviousFax)) },
           ]
         },
         {
@@ -46,7 +46,7 @@ export class ReviewPhysicalAddressComponent implements OnInit {
             { label: 'City', value: setNotApplicable(this.dataService.changeFacilityAddressNewCity) },
             { label: 'Province', value: 'British Columbia' },
             { label: 'Postal code', value: setNotApplicable(this.dataService.changeFacilityAddressNewPostalCode) },
-            { label: 'Fax number (optional)', value: setNotApplicable(this.dataService.changeFacilityAddressNewFax) },
+            { label: 'Fax number (optional)', value: setNotApplicable(formatPhoneForDisplay(this.dataService.changeFacilityAddressNewFax)) },
           ]
         },
         {

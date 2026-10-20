@@ -25,4 +25,10 @@ describe('ReviewPractitionerFacilityComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display fax formatted from raw digits', () => {
+    component.dataService.pracFacilityFaxNumber = '0958029359';
+    component.reviewItems();
+    expect(component.review.sectionItems[0][6].value).toEqual('(095) 802-9359');
+  });
 });

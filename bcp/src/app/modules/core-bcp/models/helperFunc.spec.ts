@@ -1,4 +1,4 @@
-import {setNotApplicable, formatDateForDisplay, convertToJSONDate, stripPhoneFormatting, stripPostalCodeSpaces} from './helperFunc';
+import {setNotApplicable, formatDateForDisplay, convertToJSONDate, stripPhoneFormatting, stripPostalCodeSpaces, formatPhoneForDisplay} from './helperFunc';
 
 describe('setNotApplicable', () => {
     it('should return value when value passed is defined', () => {
@@ -61,5 +61,25 @@ describe('stripPostalCodeSpaces', () => {
     it('should return null when postal code is undefined', () => {
         expect(stripPostalCodeSpaces(undefined)).toEqual(null);
         expect(stripPostalCodeSpaces(null)).toEqual(null);
+    });
+});
+
+describe('formatPhoneForDisplay', () => {
+    it('should format 10 raw digits as (xxx) xxx-xxxx', () => {
+        expect(formatPhoneForDisplay('5555555555')).toEqual('(555) 555-5555');
+        expect(formatPhoneForDisplay('0958029359')).toEqual('(095) 802-9359');
+    });
+
+    it('should pass an already formatted number through unchanged', () => {
+        expect(formatPhoneForDisplay('(555) 555-5555')).toEqual('(555) 555-5555');
+    });
+
+    it('should return a value that is not 10 digits unchanged', () => {
+        expect(formatPhoneForDisplay('555555')).toEqual('555555');
+    });
+
+    it('should leave null and empty values for setNotApplicable to turn into N/A', () => {
+        expect(setNotApplicable(formatPhoneForDisplay(null))).toEqual('N/A');
+        expect(setNotApplicable(formatPhoneForDisplay(''))).toEqual('N/A');
     });
 });

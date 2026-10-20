@@ -25,4 +25,18 @@ describe('ReviewApplicantComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display contact phone formatted from raw digits', () => {
+    component.dataService.facAdminPhoneNumber = '5555555555';
+    component.dataService.facAdminExtension = null;
+    component.reviewItems();
+    expect(component.review.sectionItems[0][4].value).toEqual('(555) 555-5555');
+  });
+
+  it('should append the extension to the formatted contact phone', () => {
+    component.dataService.facAdminPhoneNumber = '5555555555';
+    component.dataService.facAdminExtension = '123';
+    component.reviewItems();
+    expect(component.review.sectionItems[0][4].value).toEqual('(555) 555-5555 Ext. 123');
+  });
 });

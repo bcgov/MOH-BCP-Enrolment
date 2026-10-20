@@ -25,4 +25,12 @@ describe('ReviewChangeAdminComponent', () => {
     expect(component).toBeTruthy();
     fixture.detectChanges();
   });
+
+  it('should display phone formatted from raw digits with extension', () => {
+    component.dataService.checkChangeAdminInfo = true;
+    component.dataService.changeAdminInfoPhoneNumber = '5555555555';
+    component.dataService.changeAdminInfoPhoneNumberExt = '123';
+    fixture.detectChanges();
+    expect(component.review.sectionItems[0][4].value).toEqual('(555) 555-5555 Ext. 123');
+  });
 });
