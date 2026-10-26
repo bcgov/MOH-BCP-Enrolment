@@ -16,6 +16,9 @@
       <div *ngIf="controlDir?.errors?.overLimit">
         {{_defaultErrMsg.overLimit}}
       </div>
+      <div *ngIf="controlDir?.errors?.invalidCharacters">
+        Remove or replace these characters: {{controlDir.errors.invalidCharacters}}. Only standard keyboard letters, numbers, symbols and line breaks are allowed.
+      </div>
     </common-error-container>
   </div>
   <div class="col-6">
