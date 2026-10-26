@@ -63,7 +63,7 @@ export class CancelChangeComponent extends BcpBaseForm implements OnInit, AfterV
       checkChangeBCPCancelDate: [this.dataService.checkChangeBCPCancelDate, []],
       checkChangeAdminInfo: [this.dataService.checkChangeAdminInfo, []],
       checkCancelFacilityNumber: [this.dataService.checkCancelFacilityNumber, []],
-      otherChangeRequests: [this.dataService.otherChangeRequests, [Validators.pattern(/^[ -~]+$/)]],
+      otherChangeRequests: [this.dataService.otherChangeRequests, []],
     });
 
     this.changeFacilityAddressFG = this.fb.group({
